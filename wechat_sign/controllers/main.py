@@ -25,6 +25,15 @@ def make_qrcode(self, qrurl):
     heximage = base64.b64encode(buffer.getvalue())
     return "data:image/png;base64,{}".format(heximage.decode('utf-8'))
 http.HttpRequest.make_qrcode = make_qrcode
+
+
+class WeChatPay(http.Controller):
+
+    @http.route('/MP_verify_Jmsp8MJMPOgz9JCy.txt', type='http', auth="public", website=True)
+    def wZTUQ2JgWfaLaoLF(self):    
+        return 'Jmsp8MJMPOgz9JCy'
+
+        
 class PortalAccount(CustomerPortal):
 
     
