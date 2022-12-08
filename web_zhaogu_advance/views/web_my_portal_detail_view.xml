@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="oscg_my_portal_detail_view" inherit_id="portal.portal_my_details" name="Oscg My Portal Detail View">
+        <xpath expr="//t[@t-call='portal.portal_layout']" position="replace">
+            <t t-call="portal.portal_layout">
+                <t t-set="additional_title">个人信息</t>
+                <form action="/my/account" method="post">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div class="row o_portal_details">
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <t t-set="partner_can_edit_vat" t-value="partner.can_edit_vat()"/>
+                                <div class="col-lg-12">
+                                  <div t-if="error_message" class="alert alert-danger" role="alert">
+                                      <t t-foreach="error_message" t-as="err"><t t-esc="err"/><br/></t>
+                                  </div>
+                                </div>
+                                <div t-attf-class="form-group #{error.get('name') and 'o_has_error' or ''} col-xl-6">
+                                    <label class="col-form-label" for="name">名称</label>
+                                    <input type="text" required="required" name="name" t-attf-class="form-control #{error.get('name') and 'is-invalid' or ''}" t-att-value="name or partner.name"/>
+                                </div>
+                                <div t-attf-class="form-group #{error.get('email') and 'o_has_error' or ''} col-xl-6">
+                                    <label class="col-form-label" for="email">邮箱</label>
+                                    <input type="email" required="required" name="email" t-attf-class="form-control #{error.get('email') and 'is-invalid' or ''}" t-att-value="email or partner.email"/>
+                                </div>
+
+                                <div class="clearfix"/>
+                                <div t-attf-class="form-group mb-1 #{error.get('company_name') and 'o_has_error' or ''} col-xl-6" style="display:none;">
+                                    <label class="col-form-label label-optional" for="company_name">公司名称</label>
+                                    <!-- The <input> use "disabled" attribute to avoid sending an unauthorized value on form submit.
+                                         The user might not have rights to change company_name but should still be able to see it.
+                                    -->
+                                    <input type="text" name="company_name" t-attf-class="form-control #{error.get('company_name') and 'is-invalid' or ''}" t-att-value="company_name or partner.commercial_company_name" t-att-disabled="None if partner_can_edit_vat else '1'"/>
+                                    <small t-if="not partner_can_edit_vat" class="form-text text-muted d-block d-xl-none">
+                                        Changing company name is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.
+                                    </small>
+                                </div>
+                                <div t-attf-class="form-group mb-1 #{error.get('vat') and 'o_has_error' or ''} col-xl-6" style="display:none;">
+                                    <label class="col-form-label label-optional" for="vat">税号</label>
+                                    <!-- The <input> use "disabled" attribute to avoid sending an unauthorized value on form submit.
+                                         The user might not have rights to change company_name but should still be able to see it.
+                                    -->
+                                    <input type="text" name="vat" t-attf-class="form-control #{error.get('vat') and 'is-invalid' or ''}" t-att-value="vat or partner.vat" t-att-disabled="None if partner_can_edit_vat else '1'"/>
+                                    <small t-if="not partner_can_edit_vat" class="form-text text-muted d-block d-xl-none">Changing VAT number is not allowed once document(s) have been issued for your account. Please contact us directly for this operation.</small>
+                                </div>
+                                <!--<div t-if="not partner_can_edit_vat" class="col-12 d-none d-xl-block" style="display:none;">-->
+                                <!--    <small class="form-text text-muted">Changing company name or VAT number is not allowed once document(s) have been issued for your account. <br/>Please contact us directly for this operation.</small>-->
+                                <!--</div>-->
+                                <div t-attf-class="form-group #{error.get('phone') and 'o_has_error' or ''} col-xl-6">
+                                    <label class="col-form-label" for="phone">电话</label>
+                                    <input type="tel" required="required" name="phone" t-attf-class="form-control #{error.get('phone') and 'is-invalid' or ''}" t-att-value="phone or partner.phone"/>
+                                </div>
+
+                                <div class="clearfix"/>
+                                <div t-attf-class="form-group #{error.get('street') and 'o_has_error' or ''} col-xl-6">
+                                    <label class="col-form-label" for="street">街道</label>
+                                    <input type="text" required="required" name="street" t-attf-class="form-control #{error.get('street') and 'is-invalid' or ''}" t-att-value="street or partner.street"/>
+                                </div>
+                                <div t-attf-class="form-group #{error.get('city') and 'o_has_error' or ''} col-xl-6">
+                                    <label class="col-form-label" for="city">城市</label>
+                                    <input type="text" required="required" name="city" t-attf-class="form-control #{error.get('city') and 'is-invalid' or ''}" t-att-value="city or partner.city"/>
+                                </div>
+                                <div t-attf-class="form-group #{error.get('zip') and 'o_has_error' or ''} col-xl-6">
+                                    <label class="col-form-label label-optional" for="zipcode">邮政代码</label>
+                                    <input type="text" required="required" name="zipcode" t-attf-class="form-control #{error.get('zip') and 'is-invalid' or ''}" t-att-value="zipcode or partner.zip"/>
+                                </div>
+                                <div t-attf-class="form-group #{error.get('country_id') and 'o_has_error' or ''} col-xl-6">
+                                    <label class="col-form-label" for="country_id">国家</label>
+                                    <select name="country_id" required="required" t-attf-class="form-control #{error.get('country_id') and 'is-invalid' or ''}">
+                                        <t t-foreach="countries or []" t-as="country">
+                                            <option t-att-value="country.id" t-att-selected="country.id == int(country_id) if country_id else country.id == partner.country_id.id">
+                                                <t t-esc="country.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <div t-attf-class="form-group #{error.get('state_id') and 'o_has_error' or ''} col-xl-6">
+                                    <label class="col-form-label label-optional" for="state_id">州/省</label>
+                                    <select name="state_id" required="required" t-attf-class="form-control #{error.get('state_id') and 'is-invalid' or ''}">
+                                        <t t-foreach="states or []" t-as="state">
+                                            <option t-att-value="state.id" style="display:none;" t-att-data-country_id="state.country_id.id" t-att-selected="state.id == partner.state_id.id">
+                                                <t t-esc="state.name"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <input type="hidden" name="redirect" t-att-value="redirect"/>
+                            </div>
+                            <div class="clearfix">
+                                <button type="submit" class="btn btn-primary float-right mb32 ">
+                                    提交
+                                    <span class="fa fa-long-arrow-right"/>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </t>
+        </xpath>
+    </template>
+</odoo>
