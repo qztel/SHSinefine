@@ -115,14 +115,20 @@ class Controller(http.Controller):
     def sale_portal_save_order(self, order_id=None, user_name=None, shipping_no=None, lines=None, **kwargs):
         try:
             sale_order = request.env['sale.order'].sudo().model_get_portal_order(force_id=order_id)
+            shipping_id = request.env['shipping.bill'].sudo().search([('name', '=', shipping_no)])
             if not shipping_no:
                 return request.redirect('/sale/portal/fill_order?%s' % url_encode(
                     {'order_id': order_id, 'shipping_no': shipping_no, 'error_message': '运单号不能为空'}))
             if not sale_order.order_line:
                 return request.redirect('/sale/portal/fill_order?%s' % url_encode(
                     {'order_id': order_id, 'shipping_no': shipping_no, 'error_message': '明细不能为空'}))
-
             sale_order.write({'shipping_no':shipping_no})
+            if shipping_id:
+                sale_order.shipping_bill_id = shipping_id.id
+                shipping_id.sale_order_id = sale_order.id
+                shipping_id.state = 'paired'
+                if shipping_id.state == 'paired':
+                    shipping_id.multi_action_compute()
         except Exception as e:
             return request.redirect('/sale/portal/fill_order?%s' % url_encode(
                 {'order_id': order_id, 'error_message': str(e)}))
@@ -152,22 +158,8 @@ class Controller(http.Controller):
         if request.env.user == request.env.ref('base.public_user'):
             redirect_url = '/sale/portal/orders'
             return request.redirect('/web/login?redirect=%s'%redirect_url)
-
-#        if ytype == 'all':
-#            sale_orders = request.env['sale.order'].sudo().search([('partner_id', '=', partner)])
-#        elif ytype == 'draft':
-#            sale_orders = request.env['shipping.bill'].sudo().search([('state', 'in', ['draft', 'paired']), ('sale_partner_id', '=', partner)]).mapped('sale_order_id')
-#        elif ytype == 'valuedno':
-#            sale_orders = request.env['shipping.bill'].sudo().search([('state', '=', 'valued'), ('sale_invoice_payment_state', '=', '支付未完成'), ('sale_partner_id', '=', partner)]).mapped('sale_order_id')
-#        elif ytype == 'valued':
-#            sale_orders = request.env['shipping.bill'].sudo().search(
-#                [('state', '=', 'valued'), ('sale_invoice_payment_state', '=', '支付已完成'), ('sale_partner_id', '=', partner)]).mapped('sale_order_id')
-#        elif ytype == 'arrived':
-#            sale_orders = request.env['shipping.bill'].sudo().search([('state', '=', 'arrived'), ('sale_partner_id', '=', partner)]).mapped('sale_order_id')
-#        else:
-#            return request.redirect(request.httprequest.referrer)
         if ytype == 'draft':
-            sale_orders = request.env['sale.order'].sudo().search([('partner_id', '=', partner), ('state', '=', 'draft'), ('shipping_bill_id', '=' , False)])     
+            sale_orders = request.env['sale.order'].sudo().search([('partner_id', '=', partner), ('state', '=', 'draft'), ('shipping_bill_id', '=' , False)])
         elif ytype == 'valuedno':
             sale_orders = request.env['shipping.bill'].sudo().search([('state', '=', 'valued'), ('sale_invoice_payment_state', '=', '支付未完成'), ('sale_partner_id', '=', partner)]).mapped('sale_order_id')
         elif ytype == 'valued':
@@ -181,5 +173,6 @@ class Controller(http.Controller):
 
         values = {'sale_orders':sale_orders}
         return request.render('zhaogu_sale.sale_portal_orders_template', values)
+
 
 
