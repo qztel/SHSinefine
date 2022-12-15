@@ -25,12 +25,13 @@ class PaymentTransaction(models.Model):
         :return: The dict of acquirer-specific processing values
         :rtype: dict
         """
-        super()._get_specific_processing_values(processing_values)
+        res = super()._get_specific_processing_values(processing_values)
         if self.provider != 'iotpay':
             return res
 
-        base_url = self.acquirer_id.get_base_url()
-        base_url = base_url.replace('http', 'https')
+        #base_url = self.acquirer_id.get_base_url()
+        #base_url = base_url.replace('http', 'https')
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
         ip_addr = request.httprequest.environ['REMOTE_ADDR']
         rendering_values = {
             'mchId': self.acquirer_id.iotpay_merchant_id,  #商户ID
