@@ -10,14 +10,14 @@
     'category': 'project',
     'version': '0.1',
     'depends': [
-        'base', 'pos'
+        'base', 'point_of_sale'
         ],
     'data': [
 
     ],
     'assets': {
         'web.assets_qweb': [
-            'oscg_pos_report_xml/static/src/xml/**/*',
+            'oscg_pos_report_xml/static/src/xml/oscg_pos_report_xml.xml',
         ],
     },
     'installable': True,
