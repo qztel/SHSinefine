@@ -11,7 +11,7 @@
                         <br/>
                     </t>
                 </div>
-                <div style="width:70%; text-align:right;font-size:12px;">
+                <div style="width:80%; text-align:right;font-size:12px;">
                     <t t-if="!receipt.company.logo">
                         <h2 class="pos-receipt-center-align">
                             <t t-esc="receipt.company.name" />
