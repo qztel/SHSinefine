@@ -27,5 +27,9 @@
         <field name="code">iotpay</field>
         <field name="payment_type">inbound</field>
     </record>
+    <record model="ir.config_parameter" id="iot_pay_nofity_url">
+        <field name="key">iot_pay.nofity_url</field>
+        <field name="value">https://yueming-shi-shsinefine.odoo.com</field>
+    </record>
 
 </odoo>
