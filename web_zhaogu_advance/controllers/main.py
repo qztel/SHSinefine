@@ -39,7 +39,7 @@ class ZhaoguWeb(http.Controller):
 
     @http.route(['/payment/shipping'], type='http', auth="user", methods=['GET'], website=True)
     def website_shipping_payment(self, order=None):
-        values = self._prepare_portal_layout_values()
+        values = {}
         partner = request.env.user.partner_id
         shipping_order = request.env['shipping.bill'].browse(int(order))
         invoices = shipping_order.sale_invoice_ids
