@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="portal_my_invoices_list" name="My Invoices and Payments">
+  <t t-call="portal.portal_layout">
+    <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+    <t t-call="portal.portal_searchbar">
+        <t t-set="title">待支付</t>
+    </t>
+    <t t-if="invoices" t-call="portal.portal_table">
+        <thead>
+            <tr class="active">
+                <th>应收凭单 #</th>
+                <th>应收凭单日期</th>
+                <th class='d-none d-md-table-cell'>到期日期</th>
+                <th></th>
+                <th>状态</th>
+                <th class="text-right">到期金额</th>
+            </tr>
+        </thead>
+        <tbody>
+            <t t-foreach="invoices" t-as="invoice">
+                <tr>
+                    <td>
+                        <a t-att-href="invoice.get_portal_url()" t-att-title="invoice.name">
+                            <t t-esc="invoice.name" t-if="invoice.name != '/'"/>
+                            <em t-else="">应收凭单草稿</em>
+                        </a>
+                    </td>
+                    <td><span t-field="invoice.invoice_date"/></td>
+                    <td class='d-none d-md-table-cell'><span t-field="invoice.invoice_date_due"/></td>
+                    <td class="tx_status">
+                        <t t-if="invoice.state == 'posted' and invoice.payment_state not in ('in_payment', 'paid', 'reversed')">
+                            <span class="badge badge-pill badge-info"><i class="fa fa-fw fa-clock-o" aria-label="Opened" title="Opened" role="img"></i><span class="d-none d-md-inline"> 等待付款</span></span>
+                        </t>
+                    </td>
+                    <td>
+                        <a title="立即支付" aria-label="立即支付" class="btn btn-sm btn-primary" role="button" t-att-href="invoice.get_portal_url()">
+                            <i class="fa fa-arrow-circle-right"></i><span class="d-none d-md-inline"> 立即支付</span>
+                        </a>
+                    </td>
+                    <td class="text-right"><span t-esc="-invoice.amount_residual if invoice.move_type == 'out_refund' else invoice.amount_residual" t-options='{"widget": "monetary", "display_currency": invoice.currency_id}'/></td>
+                </tr>
+            </t>
+        </tbody>
+    </t>
+  </t>
+</template>
+</odoo>
