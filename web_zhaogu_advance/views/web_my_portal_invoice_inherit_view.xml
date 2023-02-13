@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="oscg_my_portal_detail_view" inherit_id="portal.portal_my_invoices" name="Oscg My Portal Invoice Inherit">
+    <template id="oscg_my_portal_detail_view" inherit_id="account.portal_my_invoices" name="Oscg My Portal Invoice Inherit">
         <xpath expr="//t/t[@t-call='portal.portal_table']/tbody/t" position="replace">
             <t t-foreach="invoices" t-as="invoice">
                     <tr t-if="invoice.state == 'posted' and invoice.payment_state not in ('in_payment', 'paid', 'reversed')">
