@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="oscg_my_portal_detail_view" inherit_id="portal.portal_my_invoices" name="Oscg My Portal Invoice Inherit">
-        <xpath expr="//t/t[@t-call='portal.portal_table']/tbody/t" position="attributes">
-            <attribute name="t-if">"invoice.state == 'posted' and invoice.payment_state not in ('in_payment', 'paid', 'reversed')"</attribute>
+        <xpath expr="//t/t[@t-call='portal.portal_table']/tbody/t" position="replace">
+            <t t-foreach="invoices" t-as="invoice">
+                    <tr t-if="invoice.state == 'posted' and invoice.payment_state not in ('in_payment', 'paid', 'reversed')">
+                        <td>
+                            <a t-att-href="invoice.get_portal_url()" t-att-title="invoice.name">
+                                <t t-esc="invoice.name" t-if="invoice.name != '/'"/>
+                                <em t-else="">Draft Invoice</em>
+                            </a>
+                        </td>
+                        <td><span t-field="invoice.invoice_date"/></td>
+                        <td class='d-none d-md-table-cell'><span t-field="invoice.invoice_date_due"/></td>
+                        <td class="tx_status">
+                            <t t-if="invoice.state == 'posted' and invoice.payment_state not in ('in_payment', 'paid', 'reversed')">
+                                <span class="badge badge-pill badge-info"><i class="fa fa-fw fa-clock-o" aria-label="Opened" title="Opened" role="img"></i><span class="d-none d-md-inline"> Waiting for Payment</span></span>
+                            </t>
+                            <t t-if="invoice.state == 'posted' and invoice.payment_state in ('paid', 'in_payment')">
+                                <span class="badge badge-pill badge-success"><i class="fa fa-fw fa-check" aria-label="Paid" title="Paid" role="img"></i><span class="d-none d-md-inline"> Paid</span></span>
+                            </t>
+                            <t t-if="invoice.state == 'posted' and invoice.payment_state == 'reversed'">
+                                <span class="badge badge-pill badge-success"><i class="fa fa-fw fa-check" aria-label="Reversed" title="Reversed" role="img"></i><span class="d-none d-md-inline"> Reversed</span></span>
+                            </t>
+                            <t t-if="invoice.state == 'cancel'">
+                                <span class="badge badge-pill badge-warning"><i class="fa fa-fw fa-remove" aria-label="Cancelled" title="Cancelled" role="img"></i><span class="d-none d-md-inline"> Cancelled</span></span>
+                            </t>
+                        </td>
+                        <td class="text-right"><span t-esc="-invoice.amount_residual if invoice.move_type == 'out_refund' else invoice.amount_residual" t-options='{"widget": "monetary", "display_currency": invoice.currency_id}'/></td>
+                    </tr>
+                </t>
         </xpath>
     </template>
 </odoo>
