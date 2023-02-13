@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 <template id="portal_my_invoices_list" name="My Invoices and Payments">
-  <t t-call="website.layout">
+  <t t-call="portal.portal_layout">
     <t t-set="breadcrumbs_searchbar" t-value="True"/>
 
     <t t-call="portal.portal_searchbar">

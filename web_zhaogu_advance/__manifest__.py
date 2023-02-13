@@ -12,7 +12,6 @@
         "views/web_zhaogu_shipping_detail_view.xml",
         "views/web_my_portal_detail_view.xml",
         "views/web_my_portal_invoice_list_view.xml",
-        "views/web_my_portal_invoice_inherit_view.xml",
         "data/ir_config_parameter_token.xml",
     ],
     'qweb':[
