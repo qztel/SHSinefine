@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 <template id="portal_my_invoices_list" name="My Invoices and Payments">
-  <t t-call="portal.portal_layout">
+  <t t-call="website.layout">
     <t t-set="breadcrumbs_searchbar" t-value="True"/>
 
     <t t-call="portal.portal_searchbar">
@@ -15,7 +15,7 @@
                 <th class='d-none d-md-table-cell'>到期日期</th>
                 <th></th>
                 <th>状态</th>
-                <th class="text-right">到期金额</th>
+                <th class="text-right">金额</th>
             </tr>
         </thead>
         <tbody>

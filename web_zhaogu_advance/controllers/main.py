@@ -49,14 +49,6 @@ class ZhaoguWeb(http.Controller):
         })
         return request.render("web_zhaogu_advance.portal_my_invoices_list", values)
 
-
-        # if shipping_order and shipping_order.sale_partner_id.id == partner.id:
-        #     invoices_id = shipping_order.sale_order_id.invoice_ids[0]
-        #     url = invoices_id.get_portal_url()
-        #     return request.redirect(url)
-        # else:
-        #     return request.redirect(request.httprequest.referrer)
-
     @http.route(['/rebubble/shipping'], type='http', auth="user", methods=['GET'], website=True)
     def website_shipping_rebubble(self, order=None):
         partner = request.env.user.partner_id
