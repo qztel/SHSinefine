@@ -14,13 +14,14 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
 
     def apply(self):
         _today = date.today()
+
         site = False
+        logistics_provider = False
+        logistics_tracking_code = False
+
         # 创建大包裹
         large_parcel = self.env['shipping.large.parcel'].create({
-            'name': '123',
-            'waybill_number': '1234',
-            'logistics_provider': '12345',
-            'logistics_tracking_code': '123456',
+            'name': self.env['ir.sequence'].next_by_code('shipping.large.parcel'),
         })
 
         dispatch_time = datetime.strptime(str(large_parcel.create_date), '%Y年%m月%d日 %H:%M:%S')
@@ -37,6 +38,9 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
                 ('state', '=', 'valued')], limit=1)
             if not site:
                 site = shipping_bill.sale_site_id.id
+            if not logistics_provider or not logistics_tracking_code:
+                logistics_provider = logistics
+                logistics_tracking_code = tracking_no
 
             shipping_bill.write({
                 'out_date': _today,
@@ -46,7 +50,11 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
                 'large_parcel': large_parcel.id
             })
 
-        large_parcel.site_id = site
+        large_parcel.write({
+            'site_id': site,
+            'logistics_provider': logistics_provider,
+            'logistics_tracking_code': logistics_tracking_code
+        })
 
         # 发送邮件
         name = large_parcel.name or ''
@@ -56,7 +64,7 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
             'subject': '包裹已发到你的站点。',
             'email_from': 'info@sinefine.store',
             'email_to': large_parcel.site_id.email,
-            'body_html': '<p>您站点的包裹已于' + dispatch_time + '发出：' + name + '</p>' + '<p>运单号：' + name + '</p>' + '<p>物流商：' + logistics + '</p>' + '<p>物流追踪码：' + tracking_no + '</p>'
+            'body_html': '<p>您站点的包裹已于' + dispatch_time + '发出：' + '</p>' + '<p>包裹号：' + name + '</p>' + '<p>物流商：' + logistics + '</p>' + '<p>物流追踪码：' + tracking_no + '</p>'
         })
         mail.send()
 
