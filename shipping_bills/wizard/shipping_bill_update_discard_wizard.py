@@ -19,13 +19,14 @@ class ShippingBillUpdateDiscardWizard(models.TransientModel):
             _datas = data.split('\t')
             if len(_datas) != 1:
                 raise UserError(f'第{i+1}次 数据异常')
-            name = _datas[0]
-            name = name.strip()
+            _name = _datas[0]
+            _name = _name.strip()
 
-            shipping_bill = self.env['shipping.bill'].search([('name','=',name),],limit=1)
+            shipping_bill = self.env['shipping.bill'].search([
+                '|',('name','=',_name),('sale_fetch_no','=',_name)],limit=1)
 
             if not shipping_bill:
-                raise UserError(f'未找到 {name} 的单据')
+                raise UserError(f'未找到 {_name} 的单据')
             shipping_bill.write({
                 'discarded_date': _today,
                 'state': 'discarded',

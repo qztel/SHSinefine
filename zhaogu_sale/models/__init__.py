@@ -6,3 +6,4 @@ from . import product_prdouct
 from . import product_brand
 from . import product_material
 from . import product_sale_category
+from . import shipping_bill

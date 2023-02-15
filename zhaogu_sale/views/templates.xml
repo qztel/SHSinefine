@@ -122,6 +122,9 @@
                         </div>
                     </div>
                 </div>
+
+                <label><input name="no_change" type="checkbox" value="1"/>免泡</label>
+
                 <t t-if="error_message">
                     <div>
                         <span>错误信息:</span>

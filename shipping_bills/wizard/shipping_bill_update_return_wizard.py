@@ -24,13 +24,14 @@ class ShippingBillUpdateReturnWizard(models.TransientModel):
 #                    return_address.strip(), return_contact.strip(), return_mobile.strip(),\
 #                     return_name.strip(),  
             
-            name, return_name = _datas
-            name, return_name = name.strip(), return_name.strip(),  
+            _name, return_name = _datas
+            _name, return_name = _name.strip(), return_name.strip(),
 
-            shipping_bill = self.env['shipping.bill'].search(['|',('name','=',name),('picking_code','=',name),('state','=','valued')],limit=1)
+            shipping_bill = self.env['shipping.bill'].search([
+                '|',('name','=',_name),('sale_fetch_no','=',_name),('state','=','valued')],limit=1)
 
             if not shipping_bill:
-                raise UserError(f'未找到 {name} 的单据')
+                raise UserError(f'未找到 {_name} 的单据')
             shipping_bill.write({
                 'returned_date': _today,
                 'state': 'returned',
