@@ -24,7 +24,7 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
             'name': self.env['ir.sequence'].next_by_code('shipping.large.parcel'),
         })
 
-        dispatch_time = large_parcel.create_date.strptime('%Y年%m月%d日 %H:%M:%S')
+        dispatch_time = large_parcel.create_date.strftime('%Y年%m月%d日 %H:%M:%S')
         for i, data in enumerate(self.data.split('\n')):
             if not data:
                 continue
