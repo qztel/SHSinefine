@@ -63,9 +63,9 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
         })
 
         # 发送邮件
-        template = self.env.ref('shipping_bills.mail_template_guidelines', raise_if_not_found=False)
-        email = template.sudo().send_mail(large_parcel.id, raise_exception=True)
-        email_email = self.env['mail.mail'].sudo().browse(email)
-        email_email.sudo().send()
+        template = self.env.ref('shipping_bills.mail_template_shipping_large_parcel', raise_if_not_found=False)
+        email = template.send_mail(large_parcel.id, raise_exception=True)
+        email_email = self.env['mail.mail'].browse(email)
+        email_email.send()
 
 
