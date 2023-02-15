@@ -18,6 +18,7 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
         site = False
         logistics_provider = False
         logistics_tracking_code = False
+        parcel_exists = False
 
         # 创建大包裹
         large_parcel = self.env['shipping.large.parcel'].create({
@@ -36,6 +37,8 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
             shipping_bill = self.env['shipping.bill'].search([
                 '|', ('name', '=', _name), ('sale_fetch_no', '=', _name),
                 ('state', '=', 'valued')], limit=1)
+            if shipping_bill and not parcel_exists:
+                parcel_exists = True
             if not site:
                 site = shipping_bill.sale_site_id.id
             if not logistics_provider or not logistics_tracking_code:
@@ -50,6 +53,8 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
                 'large_parcel': large_parcel.id
             })
 
+        if not parcel_exists:
+            raise UserError('不存在对应的包裹。')
         large_parcel.write({
             'site_id': site,
             'logistics_provider': logistics_provider,
