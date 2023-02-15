@@ -4,7 +4,7 @@
         <field name="name">站点包裹已发出</field>
         <field name="model_id" ref="model_shipping_large_parcel"/>
         <field name="subject">您站点的包裹已发出。</field>
-        <field name="partner_to">{{ object.site_id.email }}</field>
+        <field name="email_to">{{ object.site_id.email }}</field>
         <field name="body_html" type="html">
             <div style="border:1px solid black;width:70%;margin:0 auto;padding:20px;">
                 <p style="margin:0px 0 12px 0;box-sizing:border-box;">您站点的包裹已于<span t-esc="object.create_date.strftime('%Y年%m月%d日 %H:%M:%S')" contenteditable="false"></span>发出。</p>
