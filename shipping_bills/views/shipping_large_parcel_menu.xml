@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.ui.view" id="shipping_large_parcel_line">
+        <field name="name">menu.shipping_large_parcel.line</field>
+        <field name="model">shipping.large.parcel</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="waybill_number"/>
+                <field name="logistics_provider"/>
+                <field name="logistics_tracking_code"/>
+                <field name="customer_waybill_ids" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="shipping_large_parcel_form">
+        <field name="name">menu.shipping_large_parcel.form</field>
+        <field name="model">shipping.large.parcel</field>
+        <field name="arch" type="xml">
+            <form string="Partners">
+                <header>
+
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    <div class="oe_title mb24">
+                        <h1>
+                            <field id="name" class="o_text_overflow" name="name" default_focus="1"/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="waybill_number"/>
+                            <field name="logistics_provider"/>
+                        </group>
+                        <group>
+                            <field name="logistics_tracking_code"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="客户运单" name="Customer waybill">
+                            <field name="customer_waybill_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="shipping_large_parcel_win">
+        <field name="name">大包裹</field>
+        <field name="res_model">shipping.large.parcel</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>
