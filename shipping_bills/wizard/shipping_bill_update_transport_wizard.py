@@ -55,6 +55,7 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
 
         if not parcel_exists:
             raise UserError('不存在对应的包裹。')
+
         large_parcel.write({
             'site_id': site,
             'logistics_provider': logistics_provider,
@@ -62,15 +63,9 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
         })
 
         # 发送邮件
-        name = large_parcel.name or ''
-        logistics = large_parcel.logistics_provider or ''
-        tracking_no = large_parcel.logistics_tracking_code or ''
-        mail = self.env['mail.mail'].create({
-            'subject': '包裹已发到你的站点。',
-            'email_from': 'info@sinefine.store',
-            'email_to': large_parcel.site_id.email,
-            'body_html': '<p>您站点的包裹已于' + dispatch_time + '发出：' + '</p>' + '<p>包裹号：' + name + '</p>' + '<p>物流商：' + logistics + '</p>' + '<p>物流追踪码：' + tracking_no + '</p>'
-        })
-        mail.send()
+        template = self.env.ref('shipping_bills.mail_template_guidelines', raise_if_not_found=False)
+        email = template.sudo().send_mail(large_parcel.id, raise_exception=True)
+        email_email = self.env['mail.mail'].sudo().browse(email)
+        email_email.sudo().send()
 
 

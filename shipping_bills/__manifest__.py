@@ -23,6 +23,7 @@
         'data/ir_sequence.xml',
         'data/product_product.xml',
         'data/ir_cron.xml',
+        'data/mail_template_date.xml',
         'wizard/action.xml',
         'wizard/menu.xml',
         'wizard/shipping_bill_update_transport_wizard.xml',
