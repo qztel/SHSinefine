@@ -29,7 +29,7 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
             if not data:
                 continue
             _datas = data.split('\t')
-            if len(_datas) != 4:
+            if len(_datas) != 3:
                 raise UserError(f'第{i+1}次 数据异常')
             _name, logistics, tracking_no = _datas
             _name, logistics, tracking_no = _name.strip(), logistics.strip(), tracking_no.strip()
