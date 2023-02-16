@@ -25,10 +25,7 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
                 raise UserError(f'第{i+1}次 数据异常')
             _name, logistics, tracking_no = _datas
             _name, logistics, tracking_no = _name.strip(), logistics.strip(), tracking_no.strip()
-            # shipping_bill = self.env['shipping.bill'].search([
-            #     '|', ('name', '=', _name), ('sale_fetch_no', '=', _name),
-            #     ('state', '=', 'valued')], limit=1)
-            shipping_bill = self.env['shipping.bill'].search([('name', '=', _name)])
+            shipping_bill = self.env['shipping.bill'].search(['|', ('name', '=', _name), ('sale_fetch_no', '=', _name),('state', '=', 'valued')], limit=1)
 
             shipping_bills |= shipping_bill
 
