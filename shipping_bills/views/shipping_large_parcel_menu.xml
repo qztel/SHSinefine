@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <odoo>
-    <record model="ir.ui.view" id="shipping_large_parcel_line">
-        <field name="name">menu.shipping_large_parcel.line</field>
+    <record model="ir.ui.view" id="shipping_large_parcel_tree">
+        <field name="name">menu.shipping_large_parcel.tree</field>
         <field name="model">shipping.large.parcel</field>
         <field name="arch" type="xml">
             <tree>
@@ -10,7 +10,7 @@
                 <field name="logistics_provider"/>
                 <field name="logistics_tracking_code"/>
                 <field name="create_date" string="发出时间"/>
-                <field name="customer_waybill_ids" invisible="1"/>
+                <field name="shipping_bill_ids" invisible="1"/>
             </tree>
         </field>
     </record>
@@ -43,7 +43,7 @@
                     </group>
                     <notebook>
                         <page string="客户运单" name="Customer waybill">
-                            <field name="customer_waybill_ids"/>
+                            <field name="shipping_bill_ids"/>
                         </page>
                     </notebook>
                 </sheet>
@@ -51,7 +51,7 @@
         </field>
     </record>
 
-    <record model="ir.actions.act_window" id="shipping_large_parcel_win">
+    <record model="ir.actions.act_window" id="action_shipping_large_parcel">
         <field name="name">大包裹</field>
         <field name="res_model">shipping.large.parcel</field>
         <field name="view_mode">tree,form</field>
