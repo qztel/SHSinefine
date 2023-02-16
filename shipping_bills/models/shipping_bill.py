@@ -43,6 +43,9 @@ class ShippingBill(models.Model):
     # 已付款
     sale_invoice_ids = fields.Many2many('account.move',string='结算单号',related='sale_order_id.invoice_ids')
 
+    # 大包裹
+    large_parcel = fields.Many2one('shipping.large.parcel', string="大包裹", readonly=True)
+
     def _compute_sale_invoice_payment_state(selfs):
         for self in selfs:
             invoices = self.sale_invoice_ids
@@ -68,6 +71,7 @@ class ShippingBill(models.Model):
 
     # 已退运
     has_bought_safety = fields.Boolean('购买保险')
+    no_change = fields.Boolean('免泡')
     can_change = fields.Boolean('可改泡')
     has_changed = fields.Boolean('申请改泡')
     is_changed_done = fields.Boolean('改泡完成')
@@ -102,7 +106,7 @@ class ShippingBill(models.Model):
                 continue
             sale_order.write({'shipping_bill_id': self.id, 'fetch_no':self.picking_code})
 #            sale_order.set_fetch_no()
-            self.write({'sale_order_id':sale_order.id, 'state':'paired'})
+            self.write({'sale_order_id':sale_order.id, 'state':'paired', 'no_change':sale_order.no_change})
 
     def multi_action_compute(selfs):
         for self in selfs:
@@ -111,7 +115,11 @@ class ShippingBill(models.Model):
             volume = self.length * self.width * self.height  # 体积
             shipping_factor = self.shipping_factor_id
 
-            size_weight = max([self.actual_weight, volume/shipping_factor.factor])
+            if self.no_change:
+                size_weight = self.actual_weight
+            else:
+                size_weight = max([self.actual_weight, volume/shipping_factor.factor])
+
             weight = math.ceil(size_weight * 1000 / shipping_factor.next_weight_to_ceil) * shipping_factor.next_weight_to_ceil
 
             if weight < shipping_factor.first_weight:

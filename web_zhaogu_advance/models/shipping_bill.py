@@ -85,18 +85,6 @@ class ShippingBill(models.Model):
                             },
                         },
                     }
-                    # 给站点人发邮件
-                    name = self.name or ''
-                    logistics = self.logistics or ''
-                    tracking_no = self.tracking_no or ''
-                    mail = self.env['mail.mail'].create({
-                        'subject': '包裹已发到你的站点。',
-                        'email_from': 'info@sinefine.store',
-                        'email_to': self.sale_site_id.email,
-                        'body_html': '<p>运单号：' + name + '</p>' + '<p>物流商：' + logistics + '</p>' + '<p>物流追踪码：' + tracking_no + '</p>'
-                    })
-                    mail.send()
-
                     self.wx_information_send(token, data)
                 elif vals.get('state') == 'arrived':
                     data = {

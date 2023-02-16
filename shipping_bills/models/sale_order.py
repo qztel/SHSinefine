@@ -14,6 +14,7 @@ class SaleOrder(models.Model):
     shipping_bill_id = fields.Many2one('shipping.bill')
     shipping_bill_state = fields.Selection(related='shipping_bill_id.state',store=True)
 
+    no_change = fields.Boolean('免泡')
 
     @api.constrains('shipping_no')
     def check_shipping_no_unique(selfs):

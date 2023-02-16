@@ -14,6 +14,7 @@
         'views/product_brand.xml',
         'views/product_material.xml',
         'views/product_sale_category.xml',
+        'views/shipping_bill.xml',
         'views/templates.xml',
     ],
     'installable': True,
