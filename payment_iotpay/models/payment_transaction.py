@@ -5,7 +5,7 @@ import json
 import requests
 from werkzeug import urls
 from odoo.http import request
-from odoo import _, api, models
+from odoo import _, api, models, fields
 from odoo.exceptions import ValidationError
 
 from odoo.addons.payment_iotpay.controllers.main import IoTPayController
@@ -16,6 +16,8 @@ _logger = logging.getLogger(__name__)
 class PaymentTransaction(models.Model):
     _inherit = 'payment.transaction'
 
+    
+    
     def _get_specific_processing_values(self, processing_values):
         """ Override of payment to return Alipay-specific rendering values.
 
@@ -29,9 +31,9 @@ class PaymentTransaction(models.Model):
         if self.provider != 'iotpay':
             return res
 
-        #base_url = self.acquirer_id.get_base_url()
+        base_url = self.acquirer_id.iotpay_notify_url
         #base_url = base_url.replace('http', 'https')
-        base_url = self.env['ir.config_parameter'].sudo().get_param('iot_pay.nofity_url')
+        #base_url = self.env['ir.config_parameter'].sudo().get_param('iot_pay.nofity_url')
         ip_addr = request.httprequest.environ['REMOTE_ADDR']
         rendering_values = {
             'mchId': self.acquirer_id.iotpay_merchant_id,  #商户ID

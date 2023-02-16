@@ -31,6 +31,7 @@ class PaymentAcquirer(models.Model):
     iotpay_job_no = fields.Char(string="Merchant Job No")
     iotpay_md5_signature_key = fields.Char(
         string="MD5 Signature Key", required_if_provider='iotpay', groups='base.group_system')
+    iotpay_notify_url = fields.Char(string='IOTPAY支付回调地址')
 
     @api.model
     def _get_compatible_acquirers(self, *args, currency_id=None, **kwargs):
