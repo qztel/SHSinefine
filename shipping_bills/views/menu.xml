@@ -21,7 +21,7 @@
               action="action_shipping_bill_signed" sequence="40"/>
 
     <menuitem id="menu_shipping_large_parcel" name="大包裹"  parent="menu_shipping_bills"
-              action="shipping_large_parcel_win" sequence="50"/>
+              action="action_shipping_large_parcel" sequence="50"/>
 
 
 

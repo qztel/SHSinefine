@@ -18,7 +18,7 @@
                        </tr>
                    </thead>
                     <tbody>
-                        <tr t-foreach="object.customer_waybill_ids" t-as="line">
+                        <tr t-foreach="object.shipping_bill_ids" t-as="line">
                             <td><span t-esc="line.name"/></td>
                             <td><span t-esc="line.sale_fetch_no"/></td>
                         </tr>

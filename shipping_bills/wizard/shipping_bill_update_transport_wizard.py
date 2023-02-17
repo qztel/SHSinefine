@@ -15,17 +15,8 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
     def apply(self):
         _today = date.today()
 
-        site = False
-        logistics_provider = False
-        logistics_tracking_code = False
-        parcel_exists = False
-
-        # 创建大包裹
-        large_parcel = self.env['shipping.large.parcel'].create({
-            'name': self.env['ir.sequence'].next_by_code('shipping.large.parcel'),
-        })
-
-        dispatch_time = large_parcel.create_date.strftime('%Y年%m月%d日 %H:%M:%S')
+        groupby_arr = []
+        shipping_bills = self.env['shipping.bill']
         for i, data in enumerate(self.data.split('\n')):
             if not data:
                 continue
@@ -34,38 +25,34 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
                 raise UserError(f'第{i+1}次 数据异常')
             _name, logistics, tracking_no = _datas
             _name, logistics, tracking_no = _name.strip(), logistics.strip(), tracking_no.strip()
-            shipping_bill = self.env['shipping.bill'].search([
-                '|', ('name', '=', _name), ('sale_fetch_no', '=', _name),
-                ('state', '=', 'valued')], limit=1)
-            if shipping_bill and not parcel_exists:
-                parcel_exists = True
-            if not site:
-                site = shipping_bill.sale_site_id.id
-            if not logistics_provider or not logistics_tracking_code:
-                logistics_provider = logistics
-                logistics_tracking_code = tracking_no
+            shipping_bill = self.env['shipping.bill'].search(['|', ('name', '=', _name), ('sale_fetch_no', '=', _name),('state', '=', 'valued')], limit=1)
+
+            shipping_bills |= shipping_bill
 
             shipping_bill.write({
                 'out_date': _today,
                 'logistics': logistics,
                 'tracking_no': tracking_no,
                 'state': 'transported',
-                'large_parcel': large_parcel.id
             })
-
-        if not parcel_exists:
+        if not shipping_bills:
             raise UserError('不存在对应的包裹。')
 
-        large_parcel.write({
-            'site_id': site,
-            'logistics_provider': logistics_provider,
-            'logistics_tracking_code': logistics_tracking_code
-        })
+        # 创建大包裹
 
-        # 发送邮件
-        template = self.env.ref('shipping_bills.mail_template_shipping_large_parcel', raise_if_not_found=False)
-        email = template.send_mail(large_parcel.id, raise_exception=True)
-        email_email = self.env['mail.mail'].browse(email)
-        email_email.send()
+        # 获取大包裹分组
+        for term in shipping_bills.mapped(lambda s: (s.logistics, s.tracking_no, s.sale_site_id.id)):
+            this_shipping_bills = shipping_bills.filtered(lambda s: (s.logistics, s.tracking_no, s.sale_site_id.id) == term)
 
+            if not this_shipping_bills:
+                continue
+
+            large_parcel = self.env['shipping.large.parcel'].create({
+                'name': self.env['ir.sequence'].next_by_code('shipping.large.parcel'),
+                'site_id': term[2],
+                'logistics_provider': term[0],
+                'logistics_tracking_code': term[1],
+                'shipping_bill_ids': [(6, 0, this_shipping_bills.ids)]
+            })
+            large_parcel.resend_email()
 
