@@ -49,11 +49,8 @@ class ShippingBill(models.Model):
     def _compute_sale_invoice_payment_state(selfs):
         for self in selfs:
             invoices = self.sale_invoice_ids
-            if invoices and invoices[-1].payment_state == 'paid':
-                sale_invoice_payment_state = '支付已完成'
-            else:
-                sale_invoice_payment_state = '支付未完成'
-            self.sale_invoice_payment_state = sale_invoice_payment_state
+            flag = invoices and all([invoice.payment_state == 'paid' for invoice in invoices])
+            self.sale_invoice_payment_state = '支付已完成' if flag else '支付未完成'
 
     def _search_sale_invoice_payment_state(cls, operator, value):
         assert operator in ("=", "!="), "Invalid domain operator"
