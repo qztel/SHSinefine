@@ -31,9 +31,9 @@ class PaymentTransaction(models.Model):
         if self.provider != 'iotpay':
             return res
 
-        #base_url = self.acquirer_id.iotpay_notify_url
+        base_url = self.acquirer_id.iotpay_notify_url
         #base_url = base_url.replace('http', 'https')
-        base_url = self.env['ir.config_parameter'].sudo().get_param('iot_pay.nofity_url')
+        #base_url = self.env['ir.config_parameter'].sudo().get_param('iot_pay.nofity_url')
         ip_addr = request.httprequest.environ['REMOTE_ADDR']
         rendering_values = {
             'mchId': self.acquirer_id.iotpay_merchant_id,  #商户ID

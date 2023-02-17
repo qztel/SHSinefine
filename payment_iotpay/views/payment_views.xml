@@ -12,7 +12,7 @@
                     <field name="iotpay_merchant_id" />
                     <field name="iotpay_job_no" />
                     <field name="iotpay_md5_signature_key" />
-                    <!-- <field name="iotpay_notify_url"/>-->
+                    <field name="iotpay_notify_url"/>
                 </group>
             </xpath>
         </field>
