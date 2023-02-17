@@ -43,7 +43,14 @@
                     </group>
                     <notebook>
                         <page string="客户运单" name="Customer waybill">
-                            <field name="shipping_bill_ids"/>
+                            <field name="shipping_bill_ids">
+                                <field name="name"/>
+                                <field name="picking_code"/>
+                                <field name="sale_partner_id"/>
+                                <field name="sale_site_id"/>
+                                <field name="in_date"/>
+                                <field name="shipping_factor_id"/>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>
