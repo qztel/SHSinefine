@@ -13,12 +13,14 @@ class ShippingLargeParcel(models.Model):
     logistics_tracking_code = fields.Char('物流追踪码', readonly=True)
     shipping_bill_ids = fields.One2many('shipping.bill', 'large_parcel_id', string='客户运单', readonly=True)
     site_id = fields.Many2one('res.partner', '站点')
+    is_sent = fields.Boolean()
 
 
-    def resend_email(self):
+    def send_email(self):
         # 发送邮件
         template = self.env.ref('shipping_bills.mail_template_shipping_large_parcel')
         email = template.send_mail(self.id, raise_exception=True)
         email_email = self.env['mail.mail'].browse(email)
         email_email.send()
+        self.is_sent = True
 

@@ -15,7 +15,6 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
     def apply(self):
         _today = date.today()
 
-        groupby_arr = []
         shipping_bills = self.env['shipping.bill']
         for i, data in enumerate(self.data.split('\n')):
             if not data:
@@ -41,8 +40,9 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
         # 创建大包裹
 
         # 获取大包裹分组
-        for term in shipping_bills.mapped(lambda s: (s.logistics, s.tracking_no, s.sale_site_id.id)):
-            this_shipping_bills = shipping_bills.filtered(lambda s: (s.logistics, s.tracking_no, s.sale_site_id.id) == term)
+        _term_lambda = lambda s: (s.logistics, s.tracking_no, s.sale_site_id.id)
+        for term in set(shipping_bills.mapped(_term_lambda)):
+            this_shipping_bills = shipping_bills.filtered(lambda s:_term_lambda(s) == term)
 
             if not this_shipping_bills:
                 continue
@@ -54,5 +54,5 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
                 'logistics_tracking_code': term[1],
                 'shipping_bill_ids': [(6, 0, this_shipping_bills.ids)]
             })
-            large_parcel.resend_email()
+            large_parcel.send_email()
 
