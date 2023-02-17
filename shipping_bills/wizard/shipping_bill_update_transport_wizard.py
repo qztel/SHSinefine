@@ -54,5 +54,5 @@ class ShippingBillUpdateTransportWizard(models.TransientModel):
                 'logistics_tracking_code': term[1],
                 'shipping_bill_ids': [(6, 0, this_shipping_bills.ids)]
             })
-            large_parcel.send_email()
+            large_parcel.resend_email()
 

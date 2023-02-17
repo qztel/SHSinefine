@@ -3,6 +3,7 @@ import odoo
 from odoo import fields, models, api
 from odoo.exceptions import UserError
 
+
 class ShippingLargeParcel(models.Model):
     _name = 'shipping.large.parcel'
     _description = "大包裹"
@@ -15,12 +16,10 @@ class ShippingLargeParcel(models.Model):
     site_id = fields.Many2one('res.partner', '站点')
     is_sent = fields.Boolean()
 
-
-    def send_email(self):
+    def resend_email(self):
         # 发送邮件
         template = self.env.ref('shipping_bills.mail_template_shipping_large_parcel')
         email = template.send_mail(self.id, raise_exception=True)
         email_email = self.env['mail.mail'].browse(email)
         email_email.send()
         self.is_sent = True
-
