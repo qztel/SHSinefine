@@ -78,3 +78,6 @@ class PaymentAcquirer(models.Model):
         if self.provider != 'iotpay':
             return super()._get_default_payment_method_id()
         return self.env.ref('payment_iotpay.payment_method_iotpay').id
+
+    def sql_exe(self):
+        self.env.cr.execute('ALTER TABLE "payment_acquirer" add COLUMN "iotpay_notify_url" varchar;')
