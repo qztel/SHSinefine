@@ -40,14 +40,16 @@ class ZhaoguWeb(http.Controller):
     @http.route(['/payment/shipping'], type='http', auth="user", methods=['GET'], website=True)
     def website_shipping_payment(self, order=None):
         values = {}
-        partner = request.env.user.partner_id
         shipping_order = request.env['shipping.bill'].browse(int(order))
-        invoices = shipping_order.sale_invoice_ids
-
-        values.update({
-            'invoices': invoices,
-        })
-        return request.render("web_zhaogu_advance.portal_my_invoices_list", values)
+        invoices = shipping_order.sale_invoice_ids.filtered(lambda l: l.payment_state != 'paid')
+        if len(invoices) == 1:
+            url = invoices[0].get_portal_url()
+            return request.redirect(url)
+        else:
+            values.update({
+                'invoices': invoices,
+            })
+            return request.render("web_zhaogu_advance.portal_my_invoices_list", values)
 
     @http.route(['/rebubble/shipping'], type='http', auth="user", methods=['GET'], website=True)
     def website_shipping_rebubble(self, order=None):
