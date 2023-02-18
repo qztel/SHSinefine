@@ -53,7 +53,7 @@ class ShippingBill(models.Model):
             self.sale_invoice_payment_state = '支付已完成' if flag else '支付未完成'
 
     def _search_sale_invoice_payment_state(cls, operator, value):
-        assert operator in ("=", "!="), "Invalid domain operator"
+        #assert operator in ("=", "!="), "Invalid domain operator"
         if operator == '=':
             selfs = cls.search([]).filtered(lambda s:s.sale_invoice_payment_state == value)
         else:
