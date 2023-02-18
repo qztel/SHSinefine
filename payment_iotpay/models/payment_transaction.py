@@ -103,7 +103,6 @@ class PaymentTransaction(models.Model):
         :raise: ValidationError if inconsistent data were received
         :raise: ValidationError if the data match no transaction
         """
-        _logger.info(data)
         tx = super()._get_tx_from_feedback_data(provider, data)
         if provider != 'iotpay':
             return tx
@@ -131,7 +130,9 @@ class PaymentTransaction(models.Model):
         sign = data.get('sign')
         if sign != sign_check:
             raise ValidationError(
-                "IoTPay:  Expected signature %s but received %s." % (sign_check, sign)
+                "IoTPay: " + _(
+                    "Expected signature %(sc)s but received %(sign)s.", sc=sign_check, sign=sign
+                )
             )
 
         return tx
