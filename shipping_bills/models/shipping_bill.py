@@ -53,7 +53,7 @@ class ShippingBill(models.Model):
             self.sale_invoice_payment_state = '支付已完成' if flag else '支付未完成'
 
     def _search_sale_invoice_payment_state(cls, operator, value):
-        assert operator in ("=", "!="), "Invalid domain operator"
+        #assert operator in ("=", "!="), "Invalid domain operator"
         if operator == '=':
             selfs = cls.search([]).filtered(lambda s:s.sale_invoice_payment_state == value)
         else:
@@ -98,7 +98,7 @@ class ShippingBill(models.Model):
     # 匹配预报单
     def multi_action_match(selfs):
         for self in selfs.filtered(lambda s:s.name and not s.sale_order_id):
-            sale_order = selfs.env['sale.order'].search([('shipping_no','=',self.name),('shipping_bill_id','=',False)],limit=1)
+            sale_order = selfs.env['sale.order'].search([('shipping_no','ilike',self.name),('shipping_bill_id','=',False)],limit=1)
             if not sale_order:
                 continue
             sale_order.write({'shipping_bill_id': self.id, 'fetch_no':self.picking_code})

@@ -131,7 +131,7 @@ class PaymentTransaction(models.Model):
         if sign != sign_check:
             raise ValidationError(
                 "IoTPay: " + _(
-                    "Expected signature %(sc) but received %(sign)s.", sc=sign_check, sign=sign
+                    "Expected signature %(sc)s but received %(sign)s.", sc=sign_check, sign=sign
                 )
             )
 

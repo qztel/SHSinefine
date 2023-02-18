@@ -57,7 +57,7 @@ class PaymentAcquirer(models.Model):
         data_to_sign = sorted(val.items())
         # Format key-value pairs of parameters that should be signed
         data_to_sign = [f"{k}={v}" for k, v in data_to_sign
-                        if k not in ['sign', 'sign_type']]
+                        if k not in ['sign', 'sign_type'] and bool(v)]
         # Build the data string of &-separated key-value pairs
         data_string = '&'.join(data_to_sign)
         data_string += "&key=%s" % self.iotpay_md5_signature_key
