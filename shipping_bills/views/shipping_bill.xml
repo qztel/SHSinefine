@@ -79,6 +79,7 @@
                         </group>
                         <group name="32">
                             <field name="has_bought_safety"/>
+                            <field name="no_change"/>
                             <field name="can_change"/>
                             <field name="has_changed"/>
                             <field name="is_changed_done"/>
