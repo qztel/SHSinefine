@@ -103,6 +103,7 @@ class PaymentTransaction(models.Model):
         :raise: ValidationError if inconsistent data were received
         :raise: ValidationError if the data match no transaction
         """
+        _logger.info(data)
         tx = super()._get_tx_from_feedback_data(provider, data)
         if provider != 'iotpay':
             return tx
