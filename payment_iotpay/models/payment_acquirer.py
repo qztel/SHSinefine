@@ -40,9 +40,9 @@ class PaymentAcquirer(models.Model):
         """
        
         acquirers = super()._get_compatible_acquirers(*args, currency_id=currency_id, **kwargs)
-        website_id = kwargs.get('website')
-        if not website_id and request.env.context.get('website_id'):
-            acquirers = acquirers.filtered(lambda a: a.website_id == int(request.env.context.get('website_id')))
+        website_id = kwargs.get('website_id')
+        if not website_id and self._context.get('website_id'):
+            acquirers = acquirers.filtered(lambda a: a.website_id == int(self._context.get('website_id')))
         currency = self.env['res.currency'].browse(currency_id).exists()
         if currency and not currency.name in ['CNY', 'CAD', 'USD']:
             acquirers = acquirers.filtered(lambda a: a.provider != 'iotpay')
