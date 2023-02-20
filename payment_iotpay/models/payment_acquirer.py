@@ -46,9 +46,9 @@ class PaymentAcquirer(models.Model):
 
         agent = request.httprequest.environ['HTTP_USER_AGENT']
         if 'micromessenger' in  agent.lower():
-            acquirers = acquirers.filtered(lambda a: a.provider == 'iotpay' and (a.iotpay_channel in ['WX_JSAPI', 'UPI_SEQ', 'ALIPAY_PC']))
+            acquirers = acquirers.filtered(lambda a: a.provider != 'iotpay' or (a.provider == 'iotpay' and a.iotpay_channel in ['WX_JSAPI', 'UPI_SEQ', 'ALIPAY_PC']))
         else:
-            acquirers = acquirers.filtered(lambda a: a.provider == 'iotpay' and (a.iotpay_channel in ['WX_NATIVE', 'UPI_SEQ', 'ALIPAY_PC']))
+            acquirers = acquirers.filtered(lambda a:  a.provider != 'iotpay' or (a.provider == 'iotpay' and a.iotpay_channel in ['WX_NATIVE', 'UPI_SEQ', 'ALIPAY_PC']))
 
         return acquirers
 
