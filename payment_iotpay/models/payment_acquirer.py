@@ -38,8 +38,11 @@ class PaymentAcquirer(models.Model):
         """ Override of payment to unlist Alipay acquirers for unsupported currencies. 
              IOTPay 只支持 加元、美元和人民币
         """
+        _logger.info(args)
+        _logger.info(currency_id)
+        _logger.info(kwargs)
         acquirers = super()._get_compatible_acquirers(*args, currency_id=currency_id, **kwargs)
-
+        _logger.info(acquirers)
         currency = self.env['res.currency'].browse(currency_id).exists()
         if currency and not currency.name in ['CNY', 'CAD', 'USD']:
             acquirers = acquirers.filtered(lambda a: a.provider != 'iotpay')
@@ -49,7 +52,7 @@ class PaymentAcquirer(models.Model):
             acquirers = acquirers.filtered(lambda a: a.provider != 'iotpay' or (a.provider == 'iotpay' and a.iotpay_channel in ['WX_JSAPI', 'UPI_SEQ', 'ALIPAY_PC']))
         else:
             acquirers = acquirers.filtered(lambda a:  a.provider != 'iotpay' or (a.provider == 'iotpay' and a.iotpay_channel in ['WX_NATIVE', 'UPI_SEQ', 'ALIPAY_PC']))
-
+        _logger.info(acquirers)
         return acquirers
 
     def _iotpay_build_sign(self, val):
