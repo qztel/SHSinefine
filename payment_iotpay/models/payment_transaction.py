@@ -166,7 +166,7 @@ class PaymentTransaction(models.Model):
 
         self.acquirer_reference = "%s : %s" % (data.get('channelOrderNo', False), data.get('payOrderId', False))
         status = data.get('status', False)
-        if status == '2':
+        if status in ('2', '3'):
             self._set_done()
         else:
             _logger.info(
