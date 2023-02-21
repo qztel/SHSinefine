@@ -41,7 +41,7 @@ class ZhaoguWeb(http.Controller):
     def website_shipping_payment(self, order=None):
         values = {}
         shipping_order = request.env['shipping.bill'].browse(int(order))
-        invoices = shipping_order.sale_invoice_ids.filtered(lambda l: l.payment_state != 'paid')
+        invoices = shipping_order.sale_invoice_ids.filtered(lambda l: l.payment_state not in ['paid', 'reversed', 'invoicing_legacy'] and l.state != 'cancel')
         if len(invoices) == 1:
             url = invoices[0].get_portal_url()
             return request.redirect(url)
