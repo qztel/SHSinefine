@@ -150,11 +150,11 @@ class PaymentTransaction(models.Model):
         if self.provider != 'iotpay':
             return
 
-        if float_compare(float(data.get('amount', '0.0')), self.amount * 100, 2) != 0:
+        if float_compare(float(data.get('amount', '0.0')), float_round(self.amount * 100, 2) , 2) != 0:
             # mc_gross is amount + fees
             logging_values = {
                 'amount': data.get('amount', '0.0'),
-                'total': self.amount * 100,
+                'total': float_round(self.amount * 100, 2),
                 'fees': self.fees,
                 'reference': self.reference,
             }
