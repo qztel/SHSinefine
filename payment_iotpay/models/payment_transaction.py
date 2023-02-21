@@ -7,7 +7,7 @@ from werkzeug import urls
 from odoo.http import request
 from odoo import _, api, models, fields
 from odoo.exceptions import ValidationError
-
+from odoo.tools.float_utils import float_round
 from odoo.addons.payment_iotpay.controllers.main import IoTPayController
 
 _logger = logging.getLogger(__name__)
@@ -40,7 +40,7 @@ class PaymentTransaction(models.Model):
             'mchOrderNo': self.reference,   #商户订单号
             'currency': self.currency_id.name,   #币种
             'channelId': self.acquirer_id.iotpay_channel,   #支付渠道
-            'amount': int(self.amount * 100),     #支付金额
+            'amount': int(float_round(self.amount * 100, 2)),     #支付金额
             'clientIp': ip_addr,    #客户端IP
             'device': 'WEB',        #终端设备号(门店号或收银设备ID)，注意：PC网页或公众号内支付请传"WEB"
             'returnUrl': urls.url_join(base_url, IoTPayController._return_url),   #支付结束跳转URL
