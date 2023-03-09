@@ -7,6 +7,6 @@
 
     <menuitem id="menu_product_sale_category" name="分类" parent="stock.menu_stock_config_settings" action="action_product_sale_category" />
 
-
+    <menuitem id="menu_product_category_determined" name="分类待定" parent="stock.menu_stock_config_settings" action="action_product_category_determined" />
 
 </odoo>
