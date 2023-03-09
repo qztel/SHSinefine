@@ -142,7 +142,7 @@ class Controller(http.Controller):
         sale_order = request.env['sale.order'].sudo().browse(int(order_id))
         try:
             if product_other:
-                self.env['product.category.determined'].create({
+                request.env['product.category.determined'].create({
                     'name': product_other
                 })
             sale_order.portal_update_line(sale_category_id, product_brand_id, product_material_id, qty, order_line_id)
