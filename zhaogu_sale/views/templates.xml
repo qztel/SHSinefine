@@ -172,9 +172,11 @@
                 $("select[name='sale_category_id']").parent('div').attr("class","col-8")
                 $("input[name='product_other']").parent('div').attr("class","col-4")
                 $("input[name='product_other']").parent('div').css('display', 'block')
+                $("input[name='product_other']").attr('required', 'true')
               } else {
                 $("select[name='sale_category_id']").parent('div').attr("class","col-12")
                 $("input[name='product_other']").parent('div').css('display', 'none')
+                $("input[name='product_other']").attr('required', 'false')
               }
             }
             btn_state($("select[name='sale_category_id']"))
