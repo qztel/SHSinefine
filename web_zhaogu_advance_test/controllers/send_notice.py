@@ -43,23 +43,23 @@ class WechatTest(http.Controller):
             "miniprogram": {},
             "client_msg_id": "MSG_000001",
             "data": {
-                "title": {
+                "first": {
                     "value": "您好，您的包裹已到达仓库。",
                     "color": "#173177"
                 },
-                "primary_industry": {
+                "dp": {
                     "value": '123',
                     "color": "#173177"
                 },
-                "deputy_industry": {
+                "bv": {
                     "value": '123',
                     "color": "#173177"
                 },
-                "content": {
+                "pv": {
                     "value": "请在72小时内完成支付，否则订单将被取消。",
                     "color": "#173177"
                 },
-                "example": {
+                "remark": {
                     "value": "请在72小时内完成支付，否则订单将被取消。",
                     "color": "#173177"
                 },
