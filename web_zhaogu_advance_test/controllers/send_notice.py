@@ -43,19 +43,23 @@ class WechatTest(http.Controller):
             "miniprogram": {},
             "client_msg_id": "MSG_000001",
             "data": {
-                "first": {
+                "title": {
                     "value": "您好，您的包裹已到达仓库。",
                     "color": "#173177"
                 },
-                "orderno": {
+                "primary_industry": {
                     "value": '123',
                     "color": "#173177"
                 },
-                "amount": {
+                "deputy_industry": {
                     "value": '123',
                     "color": "#173177"
                 },
-                "remark": {
+                "content": {
+                    "value": "请在72小时内完成支付，否则订单将被取消。",
+                    "color": "#173177"
+                },
+                "example": {
                     "value": "请在72小时内完成支付，否则订单将被取消。",
                     "color": "#173177"
                 },
@@ -68,4 +72,4 @@ class WechatTest(http.Controller):
 
         res = odoo_session.post(url=send_url, data=bytes(data_json, 'utf-8'), headers=headers)
 
-        return user_template
+        return res
