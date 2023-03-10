@@ -14,6 +14,7 @@
         'views/product_brand.xml',
         'views/product_material.xml',
         'views/product_sale_category.xml',
+        'views/product_category_determined.xml',
         'views/shipping_bill.xml',
         'views/templates.xml',
     ],
