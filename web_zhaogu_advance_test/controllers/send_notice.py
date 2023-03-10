@@ -37,7 +37,7 @@ class WechatTest(http.Controller):
         # 发送消息
         send_url = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=%s' % token
         data = {
-            "touser": "o0To05i0US0IDDfR-ek5ouBLuQgg",
+            "touser": "o0To05t7cA7KP8WXPhUL5zYGrZJY",
             "template_id": "f3VKVUygvzO7mDJbW2_F0MwNYvzX_g2fmSs8jyh4Blc",
             "url": "https://test.sinefine.store",
             "miniprogram": {},
