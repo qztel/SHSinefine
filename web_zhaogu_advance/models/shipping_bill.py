@@ -24,7 +24,7 @@ class ShippingBill(models.Model):
                     data = {
                         "touser": openid,
                         "template_id": "3yfETXzY9V-3xPLWlxOGc7ItkNWPLCyusqKaLQkQgDI",
-                        "url": "",
+                        "url": "https://trans.sinefine.store/web/login",
                         "miniprogram": {},
                         "client_msg_id": "",
                         "data": {
