@@ -18,7 +18,7 @@ class IrConfigParameter(models.Model):
             appid, secret)
         res = odoo_session.get(url=url)
         res_json = json.loads(res.text)
-        raise UserError(res_json)
+        raise UserError(res_json['access_token'])
         token = res_json['access_token']
         access_token = self.env['ir.config_parameter'].search([('key', '=', 'wechat.access_token2')])
         access_token.write({
