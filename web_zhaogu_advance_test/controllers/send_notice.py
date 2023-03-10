@@ -72,4 +72,4 @@ class WechatTest(http.Controller):
 
         res = odoo_session.post(url=send_url, data=bytes(data_json, 'utf-8'), headers=headers)
 
-        return res
+        return res.text
