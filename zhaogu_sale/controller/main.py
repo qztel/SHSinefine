@@ -137,10 +137,14 @@ class Controller(http.Controller):
             return request.redirect('/')
 
     @http.route('/sale/portal/save_line', type='http', auth='public', methods=['GET'], csrf=False)
-    def sale_portal_save_order_line(self, order_id, order_line_id, sale_category_id, product_brand_id, product_material_id,
+    def sale_portal_save_order_line(self, order_id, order_line_id, sale_category_id, product_other, product_brand_id, product_material_id,
                                     qty, shipping_no=None,**kwargs):
         sale_order = request.env['sale.order'].sudo().browse(int(order_id))
         try:
+            if product_other:
+                request.env['product.category.determined'].sudo().create({
+                    'name': product_other
+                })
             sale_order.portal_update_line(sale_category_id, product_brand_id, product_material_id, qty, order_line_id)
         except UserError as e:
             params = {

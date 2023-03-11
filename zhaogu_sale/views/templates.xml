@@ -157,103 +157,136 @@
 
     <template id="sale_portal_fill_order_line_template" name="添加明细行">
         <t t-call="website.layout">
-        <script crossorigin="anonymous" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" src="https://lib.baomitu.com/jquery/3.6.0/jquery.js">
-          </script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+	    <script crossorigin="anonymous" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" src="https://lib.baomitu.com/jquery/3.6.0/jquery.js">
+		  </script>
+	    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"/>
+	    <script>
+		  $(document).ready(function(){
+		    $('#product-brand-id').select2()
+		    $('#sale-category-id').select2()
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"/>
-        <script>
-          $(document).ready(function(){
-            $('#product-brand-id').select2()
-            $('#sale-category-id').select2()
-          })
-        </script>
-        <style>
-          .select2-selection {
-            height:44px !important;
-          }
-          .select2-selection__arrow {
-            height: 44px !important;
-          }
-          .select2-selection__rendered {
-          	height: 44px !important;
-          }
-        </style>
-        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-            <link rel="stylesheet" type="text/css" href="/zhaogu_sale/static/src/css/fill_order_line.css"/>
-            <div style="height:60px;line-height:60px;text-align:center;">
-                <span style="font-weight:bold;font-size:24px;">添加明细</span>
-            </div>
-            <form>
-                <div>
-                    <input type="hidden" name="order_id" t-att-value="order_id"/>
-                    <input type="hidden" name="order_line_id" t-att-value="order_line_id"/>
-                    <input type="hidden" name="shipping_no" t-att-value="shipping_no"/>
-                </div>
-                <div t-if="error_message" class="form-group field-name">
-                    <label for="name">错误信息:</label>
-                    <div class="row">
-                        <div class="col-12">
-                          <input type="text" name="error_message" class="form-control-input form-control-sm" t-att-value="error_message" disabled="disabled"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group field-name">
-                    <label for="name">产品:</label>
-                    <span class="s_website_form_mark" style="color:#1A67FF;"> *</span>
-                    <div class="row">
-                        <div class="col-12">
-                          <select name="sale_category_id" id="sale-category-id" class="form-control-input form-control-sm">
-                              <option value="0"/>
-                              <option t-foreach="sale_categories" t-as="category" t-att-value="category[0]" t-esc="category[1]" t-att-selected="str(category[0])==str(sale_category_id)"/>
-                          </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group field-name">
-                    <label for="name">品牌:</label>
-                    <span class="s_website_form_mark" style="color:#1A67FF;"> *</span>
-                    <div class="row">
-                        <div class="col-12">
-                          <select name="product_brand_id" id="product-brand-id" class="form-control-input form-control-sm" style="height:44px;">
-                              <option value="0"/>
-                              <option t-foreach="product_brands" t-as="brand" t-att-value="brand[0]" t-esc="brand[1]" t-att-selected="str(brand[0])==str(product_brand_id)"/>
-                          </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group field-name">
-                    <label for="name">材质:</label>
-                    <span class="s_website_form_mark" style="color:#1A67FF;"> *</span>
-                    <div class="row">
-                        <div class="col-12">
-                          <select name="product_material_id" class="form-control-input form-control-sm">
-                              <option value="0"/>
-                              <option t-foreach="product_materials" t-as="material" t-att-value="material[0]" t-esc="material[1]" t-att-selected="str(material[0])==str(product_material_id)"/>
-                          </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group field-name">
-                    <label for="name">数量:</label>
-                    <span class="s_website_form_mark" style="color:#1A67FF;"> *</span>
-                    <div class="row">
-                        <div class="col-12">
-                          <input type="text" name="qty" class="form-control-input form-control-sm" t-att-value="qty"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="btn-div">
-                  <t t-if="order_line_id">
-                    <input type="submit" class="sub-butn" value="修改" formaction="/sale/portal/save_line/"/>
-                  </t>
-                  <t t-if="not order_line_id">
-                      <input type="submit" class="sub-butn" value="添加" formaction="/sale/portal/save_line/"/>
-                  </t>
-                  <input type="submit" class="sub-butn" value="返回" formaction="/sale/portal/fill_order/"/>
-                </div>
-            </form>
-        </t>
+		    function btn_state(btn) {
+		      const val = btn.val()
+		      if(val == '195') {
+			$("select[name='sale_category_id']").parent('div').attr("class","col-8")
+			$("input[name='product_other']").parent('div').attr("class","col-4")
+			$("input[name='product_other']").parent('div').css('display', 'block')
+			$("input[name='product_other']").attr('required', 'true')
+		      } else {
+			$("select[name='sale_category_id']").parent('div').attr("class","col-12")
+			$("input[name='product_other']").parent('div').css('display', 'none')
+			$("input[name='product_other']").removeAttr("required");
+		      }
+		    }
+		    btn_state($("select[name='sale_category_id']"))
+
+		    $("select[name='sale_category_id']").change(function() {
+		      btn_state($(this))
+		    })
+		  })
+		</script>
+	    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	    <link rel="stylesheet" type="text/css" href="/zhaogu_sale/static/src/css/fill_order_line.css"/>
+	    <style>
+	      .select2-selection {
+		height:44px !important;
+	      }
+	      .select2-selection__arrow {
+		height: 44px !important;
+	      }
+	      .select2-selection__rendered {
+		height: 44px !important;
+	      }
+	      .product_other {
+		display:none;
+	      }
+	      .select2-selection__rendered {
+		line-height:44px !important;
+	      }
+	    </style>
+	    <div style="height:60px;line-height:60px;text-align:center;" class="">
+	      <span style="font-weight:bold;font-size:24px;">
+		<font class="text-black" style="font-size: 18px;">请</font>
+		<font class="text-o-color-1" style="font-size: 18px;">如实</font>
+		<span style="font-size: 18px;">填写产品信息以备海关查验</span>
+		<br/>
+		<br/>
+	      </span>
+	    </div>
+	    <form>
+	      <div>
+		<input type="hidden" name="order_id" t-att-value="order_id"/>
+		<input type="hidden" name="order_line_id" t-att-value="order_line_id"/>
+		<input type="hidden" name="shipping_no" t-att-value="shipping_no"/>
+	      </div>
+	      <div t-if="error_message" class="form-group field-name">
+		<label for="name">错误信息:</label>
+		<div class="row">
+		  <div class="col-12">
+		    <input type="text" name="error_message" class="form-control-input form-control-sm" t-att-value="error_message" disabled="disabled"/>
+		  </div>
+		</div>
+	      </div>
+	      <div class="form-group field-name">
+		<label for="name">产品:</label>
+		<span class="s_website_form_mark" style="color:#1A67FF;"> *</span>
+		<div class="row">
+		  <div class="col-12">
+		    <select name="sale_category_id" id="sale-category-id" class="form-control-input form-control-sm">
+		      <option value="0"/>
+		      <option t-foreach="sale_categories" t-as="category" t-att-value="category[0]" t-esc="category[1]" t-att-selected="str(category[0])==str(sale_category_id)"/>
+		    </select>
+		  </div>
+		  <div class="product_other">
+		    <input type="text" name="product_other" placeholder='请注明' class="form-control-input form-control-sm" style="font-size:16px;border-radius:0;"/>
+		  </div>
+		</div>
+	      </div>
+	      <div class="form-group field-name">
+		<label for="name">品牌:</label>
+		<span class="s_website_form_mark" style="color:#1A67FF;"> *</span>
+		<div class="row">
+		  <div class="col-12">
+		    <select name="product_brand_id" id="product-brand-id" class="form-control-input form-control-sm" style="height:44px;">
+		      <option value="0"/>
+		      <option t-foreach="product_brands" t-as="brand" t-att-value="brand[0]" t-esc="brand[1]" t-att-selected="str(brand[0])==str(product_brand_id)"/>
+		    </select>
+		  </div>
+		</div>
+	      </div>
+	      <div class="form-group field-name">
+		<label for="name">材质:</label>
+		<span class="s_website_form_mark" style="color:#1A67FF;"> *</span>
+		<div class="row">
+		  <div class="col-12">
+		    <select name="product_material_id" class="form-control-input form-control-sm">
+		      <option value="0"/>
+		      <option t-foreach="product_materials" t-as="material" t-att-value="material[0]" t-esc="material[1]" t-att-selected="str(material[0])==str(product_material_id)"/>
+		    </select>
+		  </div>
+		</div>
+	      </div>
+	      <div class="form-group field-name">
+		<label for="name">数量:</label>
+		<span class="s_website_form_mark" style="color:#1A67FF;"> *</span>
+		<div class="row">
+		  <div class="col-12">
+		    <input type="text" name="qty" class="form-control-input form-control-sm" t-att-value="qty"/>
+		  </div>
+		</div>
+	      </div>
+	      <div class="btn-div">
+		<t t-if="order_line_id">
+		  <input type="submit" class="sub-butn" value="修改" formaction="/sale/portal/save_line/"/>
+		</t>
+		<t t-if="not order_line_id">
+		  <input type="submit" class="sub-butn" value="添加" formaction="/sale/portal/save_line/"/>
+		</t>
+		<input type="submit" class="sub-butn" value="返回" formaction="/sale/portal/fill_order/"/>
+	      </div>
+	    </form>
+	  </t>
     </template>
 
     <template id="sale_portal_orders_template" name="我的订单">
@@ -303,7 +336,6 @@
                         <div class="order-div-line-body">
                             <t t-if="line.shipping_bill_id and line.shipping_bill_id.state == 'valued' and line.shipping_bill_id.sale_invoice_payment_state == '支付未完成'">
                                 <div style="display:flex;">
-                                    <input type="hidden" id="order-id-btn" t-att-value="line.shipping_bill_id.id"/>
                                     <div t-if="not line.shipping_bill_id.has_changed or line.shipping_bill_id.has_changed and line.shipping_bill_id.is_changed_done"><a t-attf-href="/payment/shipping?order={{line.shipping_bill_id.id}}" style="margin-right:10px;"><button class="sub-butn">支付</button></a></div>
                                     <div>
                                         <a t-attf-href="/rebubble/shipping?order={{line.shipping_bill_id.id}}" style="margin-right:10px;" t-if="not line.shipping_bill_id.has_changed and line.shipping_bill_id.can_change"><button class="sub-butn">改泡</button></a>
@@ -312,7 +344,7 @@
                                     </div>
                                     <div t-if="not line.shipping_bill_id.has_changed">
                                         <input type="hidden" t-att-value="line.shipping_bill_id.id" id="order-id-btn"/>
-                                        <button t-if="not line.shipping_bill_id.has_returned" class="sub-butn" id="return-shipment">退运</button>
+                                        <button t-if="not line.shipping_bill_id.has_returned" class="sub-butn return-shipment">退运</button>
                                         <button t-else="" class="sub-butn">退运中</button>
                                     </div>
                                 </div>
@@ -334,19 +366,19 @@
                     <div>
                         <div>
                             <lable>退运收件人</lable>
-                            <input type="text" name="name"/>
+                            <input type="text" name="name" readonly="readonly" class="return-shipment-detail"/>
                         </div>
                         <div>
                             <lable>退运联系电话</lable>
-                            <input type="text" name="phone"/>
+                            <input type="text" name="phone" readonly="readonly" class="return-shipment-detail"/>
                         </div>
                         <div>
                             <lable>退运地址</lable>
-                            <input type="text" name="address"/>
+                            <input type="text" name="address" readonly="readonly" class="return-shipment-detail"/>
                         </div>
                     </div>
                     <div style="display:flex;">
-                        <button type="submit" style="flex:1;" class="sub-butn">确定</button>
+                        <button type="submit" style="flex:1;" class="sub-butn" id="return-shipment-btn">确定</button>
                         <button type="button" style="flex:1;" id="clear-btn" class="sub-butn">取消</button>
                     </div>
                 </div>
