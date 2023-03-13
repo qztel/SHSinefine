@@ -43,4 +43,14 @@
         <field name="domain">[('state','=','signed')]</field>
     </record>
 
+    <record id="action_shipping_bill_scan_code" model="ir.actions.act_window">
+        <field name="name">扫码入库</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">shipping.bill</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="shipping_bill_from_scan_code"/>
+        <field name="context">{'is_scan_code': True}</field>
+        <field name="domain">[]</field>
+    </record>
+
 </odoo>
