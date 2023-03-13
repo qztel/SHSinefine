@@ -56,7 +56,6 @@
                             <field name="sale_order_id"/>
                             <field name="sale_fetch_no"/>
                             <field name="sale_partner_id"/>
-                            <field name="site_location_id"/>
                             <field name="sale_site_id"/>
                             <field name="sale_site_contact_address"/>
                         </group>
