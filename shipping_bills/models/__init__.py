@@ -3,3 +3,4 @@ from . import shipping_bill
 from . import shipping_factor
 from . import crm_team
 from . import sale_order
+from . import shipping_large_parcel

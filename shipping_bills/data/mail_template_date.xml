@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo><data noupdate="1">
+    <record id="mail_template_shipping_large_parcel" model="mail.template">
+        <field name="name">站点包裹已发出</field>
+        <field name="model_id" ref="model_shipping_large_parcel"/>
+        <field name="subject">您站点的包裹已发出。</field>
+        <field name="email_to">{{ object.site_id.email }}</field>
+        <field name="body_html" type="html">
+            <div style="border:1px solid black;width:70%;margin:0 auto;padding:20px;">
+                <p style="margin:0px 0 12px 0;box-sizing:border-box;">您站点的包裹已于<span t-esc="object.create_date.strftime('%Y年%m月%d日 %H:%M:%S')" contenteditable="false"></span>发出。</p>
+                <p style="margin:0px 0 12px 0;box-sizing:border-box;">承运商：<span t-esc="object.logistics_provider" contenteditable="false"></span></p>
+                <p style="margin:0px 0 12px 0;box-sizing:border-box;">物流运单：<span t-esc="object.logistics_tracking_code" contenteditable="false"></span></p>
+                <table style="box-sizing:border-box;border-collapse:collapse;" class="table table-sm">
+                   <thead>
+                       <tr>
+                           <th style="width:50%;">运单号</th>
+                           <th style="width:50%">取件码</th>
+                       </tr>
+                   </thead>
+                    <tbody>
+                        <tr t-foreach="object.shipping_bill_ids" t-as="line">
+                            <td><span t-esc="line.name"/></td>
+                            <td><span t-esc="line.sale_fetch_no"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </field>
+        <field name="lang">{{ object.site_id.lang }}</field>
+        <field name="auto_delete" eval="True"/>
+    </record>
+</data>
+</odoo>
