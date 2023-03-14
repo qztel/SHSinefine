@@ -47,7 +47,7 @@
         <field name="name">扫码入库</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">shipping.bill</field>
-        <field name="view_mode">form</field>
+        <field name="view_mode">tree, form</field>
         <field name="view_id" ref="shipping_bill_from_scan_code"/>
         <field name="domain">[]</field>
     </record>
