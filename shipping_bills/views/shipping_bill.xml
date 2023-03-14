@@ -191,11 +191,11 @@
                             <field name="shipping_factor_id"/>
                         </group>
                         <group name="12">
-                            <field name="sale_order_id"/>
-                            <field name="sale_fetch_no"/>
-                            <field name="sale_partner_id"/>
-                            <field name="sale_site_id"/>
-                            <field name="sale_site_contact_address"/>
+                            <field name="sale_order_id" readonly="1"/>
+                            <field name="sale_fetch_no" readonly="1"/>
+                            <field name="sale_partner_id" readonly="1"/>
+                            <field name="sale_site_id" readonly="1"/>
+                            <field name="sale_site_contact_address" readonly="1"/>
                         </group>
                     </group>
                 </sheet>
