@@ -212,15 +212,9 @@ class ShippingBill(models.Model):
         if self.name:
             sale_order = self.env['sale.order'].search(
                 [('shipping_no', 'ilike', self.name), ('shipping_bill_id', '=', False)], limit=1)
-            if sale_order:
-                self.update({
-                    'sale_order_id': sale_order.id,
-                    'no_change': sale_order.no_change,
-                    'frontend_trigger': 'multi_action_match',
-                })
-            else:
-                self.update({
-                    'sale_order_id': False,
-                    'frontend_trigger': 'multi_action_match',
-                })
 
+            self.update({
+                'sale_order_id': sale_order.id,
+                'no_change': sale_order.no_change,
+                'frontend_trigger': 'multi_action_match',
+            })
