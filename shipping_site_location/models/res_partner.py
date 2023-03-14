@@ -9,5 +9,5 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     # 仓库位置
-    site_location_ids = fields.Many2many('site.location', string="仓库位置")
+    site_location_ids = fields.one2many('site.location', string="仓库位置")
 
