@@ -217,5 +217,4 @@ class ShippingBill(models.Model):
                 'no_change': sale_order.no_change,
                 'frontend_trigger': 'multi_action_match',
             })
-        return True
 
