@@ -182,7 +182,6 @@
                         <group name="11">
                             <field name="in_date" readonly="1" force_save="1"/>
                             <field name="name"/>
-                            <field name="frontend_trigger"/>
                             <field name="picking_code"/>
                             <field name="length"/>
                             <field name="width"/>

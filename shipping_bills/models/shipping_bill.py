@@ -96,7 +96,7 @@ class ShippingBill(models.Model):
     def _inverse_frontend_trigger(selfs):
         for self in selfs.filtered(lambda s:s.frontend_trigger):
             getattr(self, self.frontend_trigger)()
-        self.write({'frontend_trigger': False})
+            self.write({'frontend_trigger': False})
     frontend_trigger = fields.Char(inverse='_inverse_frontend_trigger')
 
     @api.model
@@ -216,6 +216,11 @@ class ShippingBill(models.Model):
                 self.update({
                     'sale_order_id': sale_order.id,
                     'no_change': sale_order.no_change,
+                    'frontend_trigger': 'multi_action_match',
+                })
+            else:
+                self.update({
+                    'sale_order_id': False,
                     'frontend_trigger': 'multi_action_match',
                 })
 
