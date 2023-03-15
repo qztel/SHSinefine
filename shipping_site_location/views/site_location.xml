@@ -1,0 +1,13 @@
+<odoo>
+    <record id="site_location_tree" model="ir.ui.view">
+        <field name="name">site_location_tree</field>
+        <field name="model">site.location</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="factor_id"/>
+                <field name="shipping_bill_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+</odoo>

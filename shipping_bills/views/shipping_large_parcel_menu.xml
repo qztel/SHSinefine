@@ -43,7 +43,7 @@
                     </group>
                     <notebook>
                         <page string="客户运单" name="Customer waybill">
-                            <field name="shipping_bill_ids">
+                            <field name="shipping_bill_ids" readonly="0">
                                 <tree>
                                     <field name="name"/>
                                     <field name="picking_code"/>

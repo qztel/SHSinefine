@@ -1,0 +1,25 @@
+<odoo>
+    <record id="shipping_bill_form_view" model="ir.ui.view">
+        <field name="name">shipping_bill_form_view</field>
+        <field name="model">shipping.bill</field>
+        <field name="inherit_id" ref="shipping_bills.shipping_bill_form"/>
+        <field name="priority" eval="37"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='shipping_factor_id']" position="after">
+                <field name="site_location_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="shipping_bill_scan_code_form_view" model="ir.ui.view">
+        <field name="name">shipping_bill_scan_code_form_view</field>
+        <field name="model">shipping.bill</field>
+        <field name="inherit_id" ref="shipping_bills.shipping_bill_from_scan_code"/>
+        <field name="priority" eval="37"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='shipping_factor_id']" position="after">
+                <field name="site_location_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
