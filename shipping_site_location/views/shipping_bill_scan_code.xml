@@ -32,6 +32,7 @@
                             <field name="sale_partner_id" readonly="1"/>
                             <field name="sale_site_id" readonly="1"/>
                             <field name="sale_site_contact_address" readonly="1"/>
+                            <field name="frontend_trigger" invisible="1"/>
                         </group>
                     </group>
                 </sheet>

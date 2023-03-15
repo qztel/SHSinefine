@@ -25,7 +25,6 @@ class ShippingBill(models.Model):
         if self.name:
             sale_order = self.env['sale.order'].search(
                 [('shipping_no', 'ilike', self.name), ('shipping_bill_id', '=', False)], limit=1)
-
             self.update({
                 'sale_order_id': sale_order.id,
                 'no_change': sale_order.no_change,
@@ -42,5 +41,7 @@ class ShippingBill(models.Model):
                 ])
                 if site_location_id:
                     self.site_location_id = site_location_id.id
+                else:
+                    self.frontend_trigger = 1
 
 
