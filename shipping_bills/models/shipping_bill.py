@@ -47,8 +47,9 @@ class ShippingBill(models.Model):
 
     # 大包裹
     large_parcel_ids = fields.Many2many(
-        'shipping.large.parcel', 'shipping_bill_rel', 'shipping_bill_id', 'large_parcel_id', '大包裹',
-        copy=False)
+        'shipping.large.parcel', 'shipping_bill_large_parcel_rel', 'shipping_bill_id', 'large_parcel_id',
+        '大包裹', copy=False)
+
 
     def _compute_sale_invoice_payment_state(selfs):
         for self in selfs:

@@ -14,7 +14,7 @@ class ShippingLargeParcel(models.Model):
     logistics_tracking_code = fields.Char('物流追踪码', readonly=True)
 
     shipping_bill_ids = fields.Many2many(
-        'shipping.bill', 'shipping_bill_rel', 'large_parcel_id', 'shipping_bill_id', '客户运单',
+        'shipping.bill', 'shipping_bill_large_parcel_rel', 'large_parcel_id', 'shipping_bill_id', '客户运单',
         copy=False)
 
     site_id = fields.Many2one('res.partner', '站点')
