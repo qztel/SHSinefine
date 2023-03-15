@@ -14,6 +14,7 @@
         'views/site_location.xml',
         'views/res_partner.xml',
         'views/shipping_bill.xml',
+        'views/shipping_bill_scan_code.xml',
         'views/action.xml',
         'views/menu.xml',
         'data/site_location.xml',

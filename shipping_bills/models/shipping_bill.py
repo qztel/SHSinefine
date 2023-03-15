@@ -93,12 +93,6 @@ class ShippingBill(models.Model):
     # 丢弃
     discarded_date = fields.Date('丢弃日期')
 
-    def _inverse_frontend_trigger(selfs):
-        for self in selfs.filtered(lambda s:s.frontend_trigger):
-            getattr(self, self.frontend_trigger)()
-            self.write({'frontend_trigger': False})
-    frontend_trigger = fields.Char(inverse='_inverse_frontend_trigger')
-
     @api.model
     def create(cls, values):
         if not values.get('ref'):
@@ -207,14 +201,4 @@ class ShippingBill(models.Model):
         for self in cls.search([('returned_date', '!=', False)]):
             self.in_days += 1
 
-    @api.onchange('name')
-    def onchange_name(self):
-        if self.name:
-            sale_order = self.env['sale.order'].search(
-                [('shipping_no', 'ilike', self.name), ('shipping_bill_id', '=', False)], limit=1)
 
-            self.update({
-                'sale_order_id': sale_order.id,
-                'no_change': sale_order.no_change,
-                'frontend_trigger': 'multi_action_match',
-            })
