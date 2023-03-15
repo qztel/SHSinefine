@@ -24,6 +24,7 @@
                             <field name="actual_weight"/>
                             <field name="uom_id"/>
                             <field name="shipping_factor_id"/>
+                            <field name="site_location_id"/>
                         </group>
                         <group name="12">
                             <field name="sale_order_id" readonly="1"/>
