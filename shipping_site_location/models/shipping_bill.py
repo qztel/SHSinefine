@@ -25,11 +25,19 @@ class ShippingBill(models.Model):
         if self.name:
             sale_order = self.env['sale.order'].search(
                 [('shipping_no', 'ilike', self.name), ('shipping_bill_id', '=', False)], limit=1)
-            self.update({
-                'sale_order_id': sale_order.id,
-                'no_change': sale_order.no_change,
-                'frontend_trigger': 'multi_action_match',
-            })
+            if sale_order:
+                self.update({
+                    'sale_order_id': sale_order.id,
+                    'no_change': sale_order.no_change,
+                    'frontend_trigger': 'multi_action_match',
+                })
+            else:
+                self.update({
+                    'sale_order_id': False,
+                    'no_change': False,
+                    'frontend_trigger': 'multi_action_match',
+                    'site_location_id': 1
+                })
 
     @api.onchange('shipping_factor_id', 'sale_site_id')
     def onchange_site_location(selfs):
@@ -41,7 +49,5 @@ class ShippingBill(models.Model):
                 ])
                 if site_location_id:
                     self.site_location_id = site_location_id.id
-                else:
-                    self.frontend_trigger = 1
 
 
