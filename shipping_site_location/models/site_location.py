@@ -12,4 +12,4 @@ class SiteLocation(models.Model):
 
     name = fields.Char('位置')
     factor_id = fields.Many2one('shipping.factor', '敏感性')
-    shipping_bill_id = fields.Many2one('shipping.bill', '运单')
+    site_partner_id = fields.Many2one('res.partner', '站点')

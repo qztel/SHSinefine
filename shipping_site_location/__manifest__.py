@@ -17,6 +17,7 @@
         'views/action.xml',
         'views/menu.xml',
         'data/site_location.xml',
+        'data/ir_actions_server.xml',
     ],
 
 }
