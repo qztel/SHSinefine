@@ -12,7 +12,11 @@ class ShippingLargeParcel(models.Model):
     name = fields.Char('包裹号')
     logistics_provider = fields.Char('物流商', readonly=True)
     logistics_tracking_code = fields.Char('物流追踪码', readonly=True)
-    shipping_bill_ids = fields.One2many('shipping.bill', 'large_parcel_id', string='客户运单', readonly=True)
+
+    shipping_bill_ids = fields.Many2many(
+        'shipping.bill', 'shipping_bill_rel', 'large_parcel_id', 'shipping_bill_id', '客户运单',
+        copy=False)
+
     site_id = fields.Many2one('res.partner', '站点')
     is_sent = fields.Boolean()
 

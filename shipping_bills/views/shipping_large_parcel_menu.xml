@@ -21,7 +21,8 @@
         <field name="arch" type="xml">
             <form string="Partners">
                 <header>
-
+                    <button name="resend_email" type="object" string="发送邮件" attrs="{'invisible': [('is_sent', '=', True)]}"/>
+                    <button name="resend_email" type="object" string="重新发送邮件" attrs="{'invisible': [('is_sent', '!=', True)]}"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box"/>
@@ -43,7 +44,7 @@
                     </group>
                     <notebook>
                         <page string="客户运单" name="Customer waybill">
-                            <field name="shipping_bill_ids" readonly="0">
+                            <field name="shipping_bill_ids">
                                 <tree>
                                     <field name="name"/>
                                     <field name="picking_code"/>
