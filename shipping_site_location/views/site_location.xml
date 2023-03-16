@@ -7,6 +7,7 @@
                 <field name="name"/>
                 <field name="factor_id"/>
                 <field name="site_partner_id"/>
+                <field name="real_weight" required="1"/>
             </tree>
         </field>
     </record>
