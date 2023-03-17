@@ -4,7 +4,7 @@
         <record id="shipping_state_bgrkdpp" model="shipping.state">
             <field name="name">包裹入库待匹配（无头件）</field>
         </record>
-        <record id="shipping_state_bgrkdpp" model="shipping.state">
+        <record id="shipping_state_bgdjf" model="shipping.state">
             <field name="name">包裹待计费</field>
         </record>
         <record id="shipping_state_bgjfdzf" model="shipping.state">
