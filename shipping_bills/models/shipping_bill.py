@@ -1,6 +1,6 @@
 # import logging
 
-from odoo import models, fields, api, _
+from odoo import models, fields, api, _, SUPERUSER_ID
 from odoo.exceptions import UserError
 import logging, math
 
@@ -15,7 +15,13 @@ class ShippingBill(models.Model):
     state = fields.Selection([('draft', '草稿'), ('paired', '已匹配'), ('valued', '已计费'),
                               ('returned', '已退运'), ('transported', '已转运'), ('arrived', '已到站点'),
                               ('signed', '已签收'), ('discarded', '丢弃')], default='draft', string='状态')
-    stage_id = fields.Many2one('shipping.state', string="阶段", ondelete='restrict', track_visibility='onchange', index=True)
+    stage_id = fields.Many2one('shipping.state', string="阶段", group_expand='_read_group_stage_ids', ondelete='restrict', tracking=True, store=True, readonly=False, copy=False, index=True)
+
+    @api.model
+    def _read_group_stage_ids(self, stages, domain, order):
+        search_domain = []
+        stage_ids = stages._search(search_domain, order=order, access_rights_uid=SUPERUSER_ID)
+        return stages.browse(stage_ids)
 
     def search_shipping_bill_state(self, name):
         return self.env['shipping.state'].search([('name', '=', name)]).id
