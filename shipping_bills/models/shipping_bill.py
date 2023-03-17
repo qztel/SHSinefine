@@ -15,7 +15,7 @@ class ShippingBill(models.Model):
     state = fields.Selection([('draft', '草稿'), ('paired', '已匹配'), ('valued', '已计费'),
                               ('returned', '已退运'), ('transported', '已转运'), ('arrived', '已到站点'),
                               ('signed', '已签收'), ('discarded', '丢弃')], default='draft', string='状态')
-    stage_id = fields.Many2one('shipping.state', string="阶段", compute="_compute_shipping_stage_id", store=True)
+    stage_id = fields.Many2one('shipping.state', string="阶段", compute="_compute_shipping_stage_id", store=True, index=True)
 
     @api.depends('state')
     def _compute_shipping_stage_id(selfs):
@@ -26,13 +26,13 @@ class ShippingBill(models.Model):
                 elif self.state == 'valued' and self.sale_invoice_payment_state == '支付已完成':
                     self.stage_id = 3
                 elif self.state == 'transported':
-                    self.sateg_id = 4
+                    self.stage_id = 4
                 elif self.state == 'arrived':
-                    self.sateg_id = 5
+                    self.stage_id = 5
                 elif self.state == 'signed':
-                    self.statg_id = 6
+                    self.stage_id = 6
                 else:
-                    self.statg_id = False
+                    self.stage_id = False
             else:
                 self.stage_id = 1
 

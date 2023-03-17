@@ -123,13 +123,13 @@
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_card oe_kanban_global_click" t-att-style="color_state != '3' ? 'background:red;':''"  style="width:250px;">
                             <table style="width:100%;font-size:8px;">
-                                <tr style="font-size:16px;">
+                                <tr>
                                     <td><strong>站点：</strong></td>
                                     <td>
                                         <strong><field name="sale_site_id"/></strong>
                                     </td>
                                 </tr>
-                                <tr style="font-size:16px;">
+                                <tr>
                                     <td><strong>运单号：</strong></td>
                                     <td>
                                         <strong><field name="name"/></strong>
