@@ -25,7 +25,7 @@
         <field name="name">运单(无头件)</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">shipping.bill</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">tree,form</field>
         <field name="view_id" ref="shipping_bill_head_less_piece"/>
         <field name="domain">[('site_location_id','=', 1)]</field>
     </record>
