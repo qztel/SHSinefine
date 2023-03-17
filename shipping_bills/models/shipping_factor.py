@@ -14,7 +14,3 @@ class ShippingFactor(models.Model):
     next_weight_to_ceil = fields.Float('续重取整')
     next_price_unit = fields.Float('续重单价')
 
-    @api.model
-    def create(self, vals_list):
-        self.name = self.env['ir.sequence'].next_by_code('shipping.large.parcel')
-        return super(ShippingFactor, self).create(vals_list)

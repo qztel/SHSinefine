@@ -23,6 +23,11 @@ class ShippingLargeParcel(models.Model):
     site_id = fields.Many2one('res.partner', '站点')
     is_sent = fields.Boolean()
 
+    @api.model
+    def create(self, vals_list):
+        self.name = self.env['ir.sequence'].next_by_code('shipping.large.parcel')
+        return super(ShippingLargeParcel, self).create(vals_list)
+
     def resend_email(selfs):
         for self in selfs:
             for shipping_bill in self.shipping_bill_ids:
