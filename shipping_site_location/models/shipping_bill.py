@@ -15,8 +15,11 @@ class ShippingBill(models.Model):
 
     def _inverse_frontend_trigger(selfs):
         for self in selfs.filtered(lambda s:s.frontend_trigger):
-            for _frontend_trigger in self.frontend_trigger.split(','):
-                getattr(self, _frontend_trigger)()
+            frontend_trigger_arr = self.frontend_trigger.split(',')
+            getattr(self, frontend_trigger_arr[0])()
+            self.state = 'paired'
+            if self.state == 'paired':
+                getattr(self, frontend_trigger_arr[1])()
             self.write({'frontend_trigger': False})
 
     frontend_trigger = fields.Char(inverse='_inverse_frontend_trigger')
