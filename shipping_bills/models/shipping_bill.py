@@ -42,7 +42,25 @@ class ShippingBill(models.Model):
     @api.onchange('state')
     def onchange_state(selfs):
         for self in selfs:
-            self.compute_shipping_stage_id()
+            if self.sale_order_id:
+                if self.state == 'valued' and self.sale_invoice_payment_state == '支付未完成':
+                    self.stage_id = 2
+                elif self.state == 'valued' and self.sale_invoice_payment_state == '支付已完成':
+                    self.stage_id = 3
+                elif self.state == 'transported':
+                    self.stage_id = 4
+                elif self.state == 'arrived':
+                    self.stage_id = 5
+                elif self.state == 'signed':
+                    self.stage_id = 6
+                elif self.state == 'returned':
+                    self.stage_id = 7
+                elif self.state == 'discarded':
+                    self.stage_id = 8
+                else:
+                    self.stage_id = False
+            else:
+                self.stage_id = 1
 
 
     ref = fields.Char(string='参考号（每天）', copy=False)
