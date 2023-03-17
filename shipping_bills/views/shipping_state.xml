@@ -3,8 +3,9 @@
         <field name="name">shipping_state_tree</field>
         <field name="model">shipping.state</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree editable="bottom">
                 <field name="name"/>
+                <field name="fold"/>
             </tree>
         </field>
     </record>
