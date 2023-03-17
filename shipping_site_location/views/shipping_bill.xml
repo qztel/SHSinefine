@@ -6,7 +6,7 @@
         <field name="priority" eval="37"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='shipping_factor_id']" position="after">
-                <field name="site_location_id" readonly="true" force_save="1"/>
+                <field name="site_location_id" readonly="1" force_save="1"/>
             </xpath>
         </field>
     </record>
