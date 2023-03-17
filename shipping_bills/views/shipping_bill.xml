@@ -87,12 +87,6 @@
                             <field name="tracking_no"/>
                         </group>
                         <group name="32">
-                            <!--<field name="has_bought_safety"/>-->
-                            <!--<field name="no_change"/>-->
-                            <!--<field name="can_change"/>-->
-                            <!--<field name="has_changed"/>-->
-                            <!--<field name="is_changed_done"/>-->
-                            <!--<field name="has_returned"/>-->
                             <field name="return_address"/>
                             <field name="return_contact"/>
                             <field name="return_mobile"/>
@@ -172,5 +166,6 @@
             </tree>
         </field>
     </record>
+
 
 </odoo>

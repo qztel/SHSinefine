@@ -6,22 +6,8 @@
         <field name="priority" eval="37"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='shipping_factor_id']" position="after">
-                <field name="site_location_id"/>
+                <field name="site_location_id" readonly="true" force_save="1"/>
             </xpath>
-        </field>
-    </record>
-
-    <record id="shipping_bill_search" model="ir.ui.view">
-        <field name="name">shipping.bill.search</field>
-        <field name="model">shipping.bill</field>
-        <field name="arch" type="xml">
-            <search string="运单">
-                <field name="site_location_id"/>
-                <group expand="0" string="Group By">
-                	<!--分组-->
-                    <filter string="站点" name="group_by_site_location_id" context="{'group_by':'site_location_id'}"/>
-                </group>
-            </search>
         </field>
     </record>
 </odoo>

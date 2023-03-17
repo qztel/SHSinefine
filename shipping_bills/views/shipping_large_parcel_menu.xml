@@ -28,7 +28,7 @@
                     <div class="oe_button_box" name="button_box"/>
                     <div class="oe_title mb24">
                         <h1>
-                            <field id="name" class="o_text_overflow" name="name" default_focus="1"/>
+                            <field id="name"/>
                         </h1>
                     </div>
 
@@ -54,8 +54,10 @@
                                     <field name="picking_code"/>
                                     <field name="sale_partner_id"/>
                                     <field name="sale_site_id"/>
-                                    <field name="in_date"/>
+                                    <field name="actual_weight"/>
                                     <field name="shipping_factor_id"/>
+                                    <field name="in_date"/>
+                                    <field name="state"/>
                                 </tree>
                             </field>
                         </page>
