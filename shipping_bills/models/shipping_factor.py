@@ -5,7 +5,7 @@ class ShippingFactor(models.Model):
     _name = 'shipping.factor'
     _description = '线路敏感性'
 
-    name = fields.Char('名称', readonly=True, default='草稿')
+    name = fields.Char('名称')
     factor = fields.Float(string='体积重系数')
     currency_id = fields.Many2one('res.currency', string='币种', required=True)
 

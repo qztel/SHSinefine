@@ -9,7 +9,7 @@ class ShippingLargeParcel(models.Model):
     _description = "大包裹"
     _rec_name = 'name'
 
-    name = fields.Char('包裹号')
+    name = fields.Char('包裹号', readonly=True, default='草稿')
     logistics_provider = fields.Char('物流商')
     logistics_tracking_code = fields.Char('物流追踪码')
     length = fields.Float('长')
