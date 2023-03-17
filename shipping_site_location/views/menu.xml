@@ -9,4 +9,7 @@
 
     <menuitem id="menu_shipping_bills_scan_code" name="扫码入库"  parent="shipping_bills.root_menu_shipping_bills"
           action="action_shipping_bill_scan_code" sequence="11"/>
+    
+    <menuitem id="menu_shipping_bills_head_less_piece" name="无头件"  parent="shipping_bills.root_menu_shipping_bills"
+          action="action_shipping_bill_head_less_piece" sequence="11"/>
 </odoo>
