@@ -16,6 +16,7 @@
         'views/shipping_bill.xml',
         'views/shipping_factor.xml',
         'views/shipping_large_parcel_menu.xml',
+        'views/shipping_state.xml',
         'views/action.xml',
         'views/menu.xml',
         'data/ir_actions_server.xml',

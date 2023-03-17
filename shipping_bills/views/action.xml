@@ -6,7 +6,7 @@
         <field name="name">运单</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">shipping.bill</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form</field>
     </record>
 
     <record id="action_shipping_factor" model="ir.actions.act_window">
@@ -47,8 +47,16 @@
         <field name="name">运单看板</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">shipping.bill</field>
-        <field name="view_mode">kanban</field>
+        <field name="view_mode">kanban,form</field>
         <field name="view_id" ref="shipping_bill_kanban"/>
+    </record>
+
+    <record id="action_shipping_state" model="ir.actions.act_window">
+        <field name="name">运单阶段</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">shipping.state</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="shipping_state_tree"/>
     </record>
 
 </odoo>
