@@ -6,7 +6,9 @@
         <field name="name">运单</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">shipping.bill</field>
+        <field name="context">{'search_default_group_by_site_location_id': 1}</field>
         <field name="view_mode">tree,form</field>
+        <field name="search_view_id"  ref="shipping_site_location.shipping_bill_search"/>
     </record>
 
     <record id="action_shipping_factor" model="ir.actions.act_window">
@@ -41,18 +43,6 @@
         <field name="view_mode">tree</field>
         <field name="view_id" ref="shipping_bill_tree_signed"/>
         <field name="domain">[('state','=','signed')]</field>
-    </record>
-
-    <record id="action_shipping_bill_scan_code" model="ir.actions.act_window">
-        <field name="name">扫码入库</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">shipping.bill</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_ids"
-                   eval="[(5, 0, 0),
-                          (0, 0, {'view_mode': 'tree', 'view_id': ref('shipping_bill_tree_scan_code')}),
-                          (0, 0, {'view_mode': 'form', 'view_id': ref('shipping_bill_from_scan_code')})]"/>
-        <field name="domain">[]</field>
     </record>
 
 </odoo>

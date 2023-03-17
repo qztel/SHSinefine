@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="menu_site_location" name="包裹存放位置" parent="stock.menu_warehouse_config"
+              action="action_site_location" sequence="2"/>
+
+    <menuitem id="menu_shipping_bills_scan_code" name="扫码入库"  parent="shipping_bills.root_menu_shipping_bills"
+          action="action_shipping_bill_scan_code" sequence="11"/>
+</odoo>

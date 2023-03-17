@@ -46,7 +46,10 @@ class ShippingBill(models.Model):
     sale_invoice_ids = fields.Many2many('account.move', string='结算单号', related='sale_order_id.invoice_ids')
 
     # 大包裹
-    large_parcel_id = fields.Many2one('shipping.large.parcel', string="大包裹")
+    large_parcel_ids = fields.Many2many(
+        'shipping.large.parcel', 'shipping_bill_large_parcel_rel', 'shipping_bill_id', 'large_parcel_id',
+        '大包裹', copy=False)
+
 
     def _compute_sale_invoice_payment_state(selfs):
         for self in selfs:
@@ -92,12 +95,6 @@ class ShippingBill(models.Model):
 
     # 丢弃
     discarded_date = fields.Date('丢弃日期')
-
-    def _inverse_frontend_trigger(selfs):
-        for self in selfs.filtered(lambda s:s.frontend_trigger):
-            getattr(self, self.frontend_trigger)()
-            self.write({'frontend_trigger': False})
-    frontend_trigger = fields.Char(inverse='_inverse_frontend_trigger')
 
     @api.model
     def create(cls, values):
@@ -207,20 +204,5 @@ class ShippingBill(models.Model):
         for self in cls.search([('returned_date', '!=', False)]):
             self.in_days += 1
 
-    @api.onchange('name')
-    def onchange_name(self):
-        if self.name:
-            sale_order = self.env['sale.order'].search(
-                [('shipping_no', 'ilike', self.name), ('shipping_bill_id', '=', False)], limit=1)
-            if sale_order:
-                self.update({
-                    'sale_order_id': sale_order.id,
-                    'no_change': sale_order.no_change,
-                    'frontend_trigger': 'multi_action_match',
-                })
-            else:
-                self.update({
-                    'sale_order_id': False,
-                    'frontend_trigger': 'multi_action_match',
-                })
+
 
