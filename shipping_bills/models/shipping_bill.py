@@ -18,7 +18,7 @@ class ShippingBill(models.Model):
     stage_id = fields.Many2one('shipping.state', string="阶段", ondelete='restrict', track_visibility='onchange', index=True)
 
     def search_shipping_bill_state(self, name):
-        return self.env['shipping.bill'].search([('name', '=', name)]).id
+        return self.env['shipping.state'].search([('name', '=', name)]).id
 
     def compute_shipping_stage_id(selfs):
         for self in selfs:
