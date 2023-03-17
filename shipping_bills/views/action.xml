@@ -49,7 +49,6 @@
         <field name="res_model">shipping.bill</field>
         <field name="view_mode">kanban</field>
         <field name="view_id" ref="shipping_bill_kanban"/>
-        <field name="domain">[('stage_id','=', True)]</field>
     </record>
 
 </odoo>
