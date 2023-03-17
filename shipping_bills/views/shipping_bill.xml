@@ -116,8 +116,8 @@
         <field name="model">shipping.bill</field>
         <field name="priority">4</field>
         <field name="arch" type="xml">
-            <kanban records_draggable="0" default_group_by="state" class="o_kanban_applicant" sample="1" create='false'>
-                <field name="state"/>
+            <kanban records_draggable="0" default_group_by="stage_id" class="o_kanban_applicant" sample="1" create='false'>
+                <field name="stage_id"/>
                 <field name="name"/>
                 <templates>
                     <t t-name="kanban-box">

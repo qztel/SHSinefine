@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="shipping_state_bgrkdpp" model="shipping.state">
+            <field name="name">包裹入库待匹配（无头件）</field>
+        </record>
+        <record id="shipping_state_bgjfdzf" model="shipping.state">
+            <field name="name">包裹计费待支付</field>
+        </record>
+        <record id="shipping_state_bgdzy" model="shipping.state">
+            <field name="name">包裹待转运</field>
+        </record>
+        <record id="shipping_state_bgzydzdqs" model="shipping.state">
+            <field name="name">包裹转运待站点签收</field>
+        </record>
+        <record id="shipping_state_khqs" model="shipping.state">
+            <field name="name">客户签收</field>
+        </record>
+        <record id="shipping_state_done" model="shipping.state">
+            <field name="name">完成</field>
+        </record>
+    </data>
+</odoo>
+
