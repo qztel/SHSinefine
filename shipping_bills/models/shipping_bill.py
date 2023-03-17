@@ -31,6 +31,10 @@ class ShippingBill(models.Model):
                     self.stage_id = 5
                 elif self.state == 'signed':
                     self.stage_id = 6
+                elif self.state == 'returned':
+                    self.stage_id = 7
+                elif self.state == 'discarded':
+                    self.stage_id = 8
                 else:
                     self.stage_id = False
             else:

@@ -5,6 +5,8 @@
         action="action_shipping_factor" sequence="3"/>
 
     <menuitem id="root_menu_shipping_bills" name="物流订单"/>
+
+    <menuitem id="root_menu_shipping_bills_kanban" name="运单看板" action="action_shipping_bill_kanban"/>
     
     <menuitem id="parent_menu_shipping_bills" name="物流订单" parent="root_menu_shipping_bills"/>
 

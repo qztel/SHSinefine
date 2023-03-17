@@ -16,6 +16,12 @@
         <record id="shipping_state_khqs" model="shipping.state">
             <field name="name">客户签收</field>
         </record>
+        <record id="shipping_state_yty" model="shipping.state">
+            <field name="name">已退运</field>
+        </record>
+        <record id="shipping_state_dq" model="shipping.state">
+            <field name="name">丢弃</field>
+        </record>
         <record id="shipping_state_done" model="shipping.state">
             <field name="name">完成</field>
         </record>

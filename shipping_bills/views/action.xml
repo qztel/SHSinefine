@@ -43,4 +43,13 @@
         <field name="domain">[('state','=','signed')]</field>
     </record>
 
+    <record id="action_shipping_bill_kanban" model="ir.actions.act_window">
+        <field name="name">运单看板</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">shipping.bill</field>
+        <field name="view_mode">kanban</field>
+        <field name="view_id" ref="shipping_bill_kanban"/>
+        <field name="domain">[('stage_id','=', True)]</field>
+    </record>
+
 </odoo>
