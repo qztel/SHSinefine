@@ -48,7 +48,7 @@
                     </group>
                     <notebook>
                         <page string="客户运单" name="Customer waybill">
-                            <field name="shipping_bill_ids">
+                            <field name="shipping_bill_ids" domain="[('state', '=', 'valued'), ('sale_invoice_payment_state', '=', '支付已完成')]">
                                 <tree>
                                     <field name="name"/>
                                     <field name="picking_code"/>

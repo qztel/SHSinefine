@@ -205,3 +205,4 @@ class ShippingBill(models.Model):
             self.in_days += 1
 
 
+

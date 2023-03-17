@@ -26,8 +26,8 @@ class ShippingLargeParcel(models.Model):
     def resend_email(selfs):
         for self in selfs:
             for shipping_bill in self.shipping_bill_ids:
-                if not shipping_bill.logistics and not shipping_bill.tracking_no:
-                    shipping_bill.update({
+                if shipping_bill.logistics and shipping_bill.tracking_no:
+                    shipping_bill.write({
                         'logistics': self.logistics_provider,
                         'tracking_no': self.logistics_tracking_code,
                     })
