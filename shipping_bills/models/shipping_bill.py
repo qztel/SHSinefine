@@ -15,52 +15,34 @@ class ShippingBill(models.Model):
     state = fields.Selection([('draft', '草稿'), ('paired', '已匹配'), ('valued', '已计费'),
                               ('returned', '已退运'), ('transported', '已转运'), ('arrived', '已到站点'),
                               ('signed', '已签收'), ('discarded', '丢弃')], default='draft', string='状态')
-    stage_id = fields.Many2one('shipping.state', string="阶段", ondelete='restrict', track_visibility='onchange', index=True)
+    stage_id = fields.Many2one('shipping.state', string="阶段")
 
     def compute_shipping_stage_id(selfs):
         for self in selfs:
             if self.sale_order_id:
                 if self.state == 'valued' and self.sale_invoice_payment_state == '支付未完成':
-                    self.stage_id = 2
+                    self.stage_id = 10
                 elif self.state == 'valued' and self.sale_invoice_payment_state == '支付已完成':
-                    self.stage_id = 3
+                    self.stage_id = 11
                 elif self.state == 'transported':
-                    self.stage_id = 4
+                    self.stage_id = 12
                 elif self.state == 'arrived':
-                    self.stage_id = 5
+                    self.stage_id = 13
                 elif self.state == 'signed':
-                    self.stage_id = 6
+                    self.stage_id = 14
                 elif self.state == 'returned':
-                    self.stage_id = 7
+                    self.stage_id = 15
                 elif self.state == 'discarded':
-                    self.stage_id = 8
+                    self.stage_id = 16
                 else:
                     self.stage_id = False
             else:
-                self.stage_id = 1
+                self.stage_id = 9
 
     @api.onchange('state')
     def onchange_state(selfs):
         for self in selfs:
-            if self.sale_order_id:
-                if self.state == 'valued' and self.sale_invoice_payment_state == '支付未完成':
-                    self.stage_id = 2
-                elif self.state == 'valued' and self.sale_invoice_payment_state == '支付已完成':
-                    self.stage_id = 3
-                elif self.state == 'transported':
-                    self.stage_id = 4
-                elif self.state == 'arrived':
-                    self.stage_id = 5
-                elif self.state == 'signed':
-                    self.stage_id = 6
-                elif self.state == 'returned':
-                    self.stage_id = 7
-                elif self.state == 'discarded':
-                    self.stage_id = 8
-                else:
-                    self.stage_id = False
-            else:
-                self.stage_id = 1
+            self.compute_shipping_stage_id()
 
 
     ref = fields.Char(string='参考号（每天）', copy=False)
