@@ -6,7 +6,7 @@
         <field name="name">运单</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">shipping.bill</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,kanban</field>
     </record>
 
     <record id="action_shipping_factor" model="ir.actions.act_window">

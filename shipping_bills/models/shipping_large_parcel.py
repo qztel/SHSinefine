@@ -12,6 +12,7 @@ class ShippingLargeParcel(models.Model):
     name = fields.Char('包裹号', readonly=True, default='草稿')
     logistics_provider = fields.Char('物流商')
     logistics_tracking_code = fields.Char('物流追踪码')
+    delivery_time = fields.Datetime('出库时间')
     length = fields.Float('长')
     width = fields.Float('宽')
     height = fields.Float('高')
@@ -36,6 +37,7 @@ class ShippingLargeParcel(models.Model):
                     shipping_bill.write({
                         'logistics': self.logistics_provider,
                         'tracking_no': self.logistics_tracking_code,
+                        'state': 'transported',
                     })
             # 发送邮件
             template = self.env.ref('shipping_bills.mail_template_shipping_large_parcel')

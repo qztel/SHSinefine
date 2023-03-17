@@ -3,7 +3,7 @@
         <field name="name">site_location_tree</field>
         <field name="model">site.location</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree editable="bottom">
                 <field name="name"/>
                 <field name="factor_id"/>
                 <field name="site_partner_id"/>
