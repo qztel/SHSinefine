@@ -15,7 +15,7 @@ class ShippingBill(models.Model):
     state = fields.Selection([('draft', '草稿'), ('paired', '已匹配'), ('valued', '已计费'),
                               ('returned', '已退运'), ('transported', '已转运'), ('arrived', '已到站点'),
                               ('signed', '已签收'), ('discarded', '丢弃')], default='draft', string='状态')
-    stage_id = fields.Many2one('shipping.state', string="阶段", compute="_compute_shipping_stage_id", store=True, index=True)
+    stage_id = fields.Many2one('shipping.state', string="阶段", compute="_compute_shipping_stage_id", store=True, readonly=False)
 
     @api.depends('state')
     def _compute_shipping_stage_id(selfs):
