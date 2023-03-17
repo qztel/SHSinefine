@@ -15,29 +15,32 @@ class ShippingBill(models.Model):
     state = fields.Selection([('draft', '草稿'), ('paired', '已匹配'), ('valued', '已计费'),
                               ('returned', '已退运'), ('transported', '已转运'), ('arrived', '已到站点'),
                               ('signed', '已签收'), ('discarded', '丢弃')], default='draft', string='状态')
-    stage_id = fields.Many2one('shipping.state', string="阶段")
+    stage_id = fields.Many2one('shipping.state', string="阶段", ondelete='restrict', track_visibility='onchange', index=True)
+
+    def search_shipping_bill_state(self, name):
+        return self.env['shipping_bill'].search([('name', '=', name)]).id
 
     def compute_shipping_stage_id(selfs):
         for self in selfs:
             if self.sale_order_id:
-                if self.state == 'valued' and self.sale_invoice_payment_state == '支付未完成':
-                    self.stage_id = 10
+                if self.state == 'paired':
+                    self.stage_id = self.search_shipping_bill_state('包裹待计费')
+                elif self.state == 'valued' and self.sale_invoice_payment_state == '支付未完成':
+                    self.stage_id = self.search_shipping_bill_state('包裹计费待支付')
                 elif self.state == 'valued' and self.sale_invoice_payment_state == '支付已完成':
-                    self.stage_id = 11
+                    self.stage_id = self.search_shipping_bill_state('包裹待转运')
                 elif self.state == 'transported':
-                    self.stage_id = 12
+                    self.stage_id = self.search_shipping_bill_state('包裹转运待站点签收')
                 elif self.state == 'arrived':
-                    self.stage_id = 13
-                elif self.state == 'signed':
-                    self.stage_id = 14
+                    self.stage_id = self.search_shipping_bill_state('客户签收')
                 elif self.state == 'returned':
-                    self.stage_id = 15
+                    self.stage_id = self.search_shipping_bill_state('已退运')
                 elif self.state == 'discarded':
-                    self.stage_id = 16
-                else:
-                    self.stage_id = False
+                    self.stage_id = self.search_shipping_bill_state('丢弃')
+                elif self.state == 'signed':
+                    self.stage_id = self.search_shipping_bill_state('完成')
             else:
-                self.stage_id = 9
+                self.stage_id = self.search_shipping_bill_state('包裹入库待匹配（无头件）')
 
     @api.onchange('state')
     def onchange_state(selfs):
