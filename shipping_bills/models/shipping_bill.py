@@ -15,44 +15,14 @@ class ShippingBill(models.Model):
     state = fields.Selection([('draft', '草稿'), ('paired', '已匹配'), ('valued', '已计费'),
                               ('returned', '已退运'), ('transported', '已转运'), ('arrived', '已到站点'),
                               ('signed', '已签收'), ('discarded', '丢弃')], default='draft', string='状态')
-    stage_id = fields.Many2one('shipping.state', string="阶段", group_expand='_read_group_stage_ids', ondelete='restrict', tracking=True, store=True, readonly=False, copy=False, index=True)
+    stage_id = fields.Many2one('shipping.state', string="阶段", group_expand='_read_group_stage_ids', ondelete='restrict',
+                               tracking=True, store=True, readonly=False, copy=False, index=True)
 
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
         search_domain = []
         stage_ids = stages._search(search_domain, order=order, access_rights_uid=SUPERUSER_ID)
         return stages.browse(stage_ids)
-
-    def search_shipping_bill_state(self, name):
-        return self.env['shipping.state'].search([('name', '=', name)]).id
-
-    def compute_shipping_stage_id(selfs):
-        for self in selfs:
-            if self.sale_order_id:
-                if self.state == 'paired':
-                    self.stage_id = self.search_shipping_bill_state('包裹待计费')
-                elif self.state == 'valued' and self.sale_invoice_payment_state == '支付未完成':
-                    self.stage_id = self.search_shipping_bill_state('包裹计费待支付')
-                elif self.state == 'valued' and self.sale_invoice_payment_state == '支付已完成':
-                    self.stage_id = self.search_shipping_bill_state('包裹待转运')
-                elif self.state == 'transported':
-                    self.stage_id = self.search_shipping_bill_state('包裹转运待站点签收')
-                elif self.state == 'arrived':
-                    self.stage_id = self.search_shipping_bill_state('客户签收')
-                elif self.state == 'returned':
-                    self.stage_id = self.search_shipping_bill_state('已退运')
-                elif self.state == 'discarded':
-                    self.stage_id = self.search_shipping_bill_state('丢弃')
-                elif self.state == 'signed':
-                    self.stage_id = self.search_shipping_bill_state('完成')
-            else:
-                self.stage_id = self.search_shipping_bill_state('包裹入库待匹配（无头件）')
-
-    @api.onchange('state')
-    def onchange_state(selfs):
-        for self in selfs:
-            self.compute_shipping_stage_id()
-
 
     ref = fields.Char(string='参考号（每天）', copy=False)
 
@@ -87,7 +57,6 @@ class ShippingBill(models.Model):
     large_parcel_ids = fields.Many2many(
         'shipping.large.parcel', 'shipping_bill_large_parcel_rel', 'shipping_bill_id', 'large_parcel_id',
         '大包裹', copy=False)
-
 
     def _compute_sale_invoice_payment_state(selfs):
         for self in selfs:
@@ -170,7 +139,7 @@ class ShippingBill(models.Model):
                 fee = shipping_factor.first_total_price
             else:
                 fee = shipping_factor.first_total_price + (
-                            weight - shipping_factor.first_weight) / shipping_factor.next_weight_to_ceil * shipping_factor.next_price_unit
+                        weight - shipping_factor.first_weight) / shipping_factor.next_weight_to_ceil * shipping_factor.next_price_unit
 
             self.write({'fee': fee, 'currency_id': shipping_factor.currency_id.id, 'state': 'valued',
                         'size_weight': weight / 1000, })
@@ -241,6 +210,4 @@ class ShippingBill(models.Model):
     def model_update_in_days(cls):
         for self in cls.search([('returned_date', '!=', False)]):
             self.in_days += 1
-
-
 

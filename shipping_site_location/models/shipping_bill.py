@@ -54,4 +54,57 @@ class ShippingBill(models.Model):
                 if site_location_id:
                     self.site_location_id = site_location_id.id
 
+    # 获取需要创建大包裹的运单，根据重量比对创建大包裹
+    def get_shipping_bill_unpacked(self):
+        shipping_bills = self.search([('name', '=', True), ('state', '=', 'valued'),
+                                      ('sale_invoice_payment_state', '=', '支付已完成'),
+                                      ('large_parcel_ids', '=', False)])
+        _term_lambda = lambda s: (s.sale_site_id.id, s.shipping_factor_id.id)
+
+        for term in set(shipping_bills.mapped(_term_lambda)):
+            this_shipping_bills = shipping_bills.filtered(lambda s: _term_lambda(s) == term)
+            current_real_weight = sum(this_shipping_bills.mapped('actual_weight'))
+            real_weight_id = self.env['site.location'].search([('site_partner_id', '=', term[0]), ('factor_id', '=', term[1])])
+
+            if not this_shipping_bills:
+                continue
+
+            if real_weight_id and current_real_weight > real_weight_id.real_weight:
+                large_parcel = self.env['shipping.large.parcel'].create({
+                    'name': self.env['ir.sequence'].next_by_code('shipping.large.parcel'),
+                    'site_id': term[0],
+                    'shipping_bill_ids': [(6, 0, this_shipping_bills.ids)]
+                })
+
+    # 根据运单状态改变阶段
+    def search_shipping_bill_state(self, name):
+        return self.env['shipping.state'].search([('name', '=', name)]).id
+
+    def compute_shipping_stage_id(selfs):
+        for self in selfs:
+            if self.sale_order_id:
+                if self.state == 'paired':
+                    self.stage_id = self.search_shipping_bill_state('包裹待计费')
+                elif self.state == 'valued' and self.sale_invoice_payment_state == '支付未完成':
+                    self.stage_id = self.search_shipping_bill_state('包裹计费待支付')
+                elif self.state == 'valued' and self.sale_invoice_payment_state == '支付已完成':
+                    self.stage_id = self.search_shipping_bill_state('包裹待转运')
+                elif self.state == 'transported':
+                    self.stage_id = self.search_shipping_bill_state('包裹转运待站点签收')
+                elif self.state == 'arrived':
+                    self.stage_id = self.search_shipping_bill_state('客户签收')
+                elif self.state == 'returned':
+                    self.stage_id = self.search_shipping_bill_state('已退运')
+                elif self.state == 'discarded':
+                    self.stage_id = self.search_shipping_bill_state('丢弃')
+                elif self.state == 'signed':
+                    self.stage_id = self.search_shipping_bill_state('完成')
+            else:
+                self.stage_id = self.search_shipping_bill_state('包裹入库待匹配（无头件）')
+
+    @api.onchange('state')
+    def onchange_state(selfs):
+        for self in selfs:
+            self.compute_shipping_stage_id()
+
 

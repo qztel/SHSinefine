@@ -14,3 +14,7 @@ class ResPartner(models.Model):
     site_location_ids = fields.One2many('site.location', 'site_partner_id', string="仓库位置")
 
     partner_vip_type = fields.Selection([('svip', 'SVIP'), ('vip', 'VIP'), ('common', '普通')], string="客户类型", default='common')
+
+    def normal_partner_vip_type(selfs):
+        for self in selfs:
+            self.partner_vip_type = 'common'

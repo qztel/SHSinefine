@@ -37,7 +37,7 @@
                             <field name="site_id"/>
                             <field name="create_date" string="创建时间"/>
                             <field name="delivery_time"/>
-                            <field name="is_sent" string="已发送"/>
+                            <field name="is_sent" string="已发送" readonly="1"/>
                         </group>
                         <group>
                             <field name="logistics_provider" required="1"/>
