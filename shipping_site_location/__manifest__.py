@@ -21,5 +21,10 @@
         'data/site_location.xml',
         'data/ir_actions_server.xml',
     ],
+    'assets': {
+            'web.assets_backend': [
+                'shipping_site_location/static/src/js/my_widget.js',
+            ],
+        },
 
 }

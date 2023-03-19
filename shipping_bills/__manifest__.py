@@ -33,7 +33,6 @@
         'wizard/shipping_bill_update_sign_wizard.xml',
         'wizard/shipping_bill_update_return_wizard.xml',
         'wizard/shipping_bill_update_discard_wizard.xml',
-
     ],
 
 }
