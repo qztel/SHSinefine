@@ -11,19 +11,12 @@ odoo.define('shipping_site_location.my_widget', function (require) {
         }),
 
         _onInput: function (ev) {
-            var self = this;
-            var e = new KeyboardEvent("keydown", {
-              bubbles: true,
-              cancelable: true,
-              keyCode: 9  // 9 表示 TAB 键的键码
-            });
-            setTimeout(function() {
+            clearTimeout(this.time_out)
+            this.time_out = setTimeout(function() {
                 var inputs = document.getElementsByTagName('input');
                 var index = Array.prototype.indexOf.call(inputs, document.activeElement);
-                var nextInput = inputs[(index) % inputs.length];
+                var nextInput = inputs[(index + 1) % inputs.length];
                 nextInput.focus();
-                console.log(nextInput)
-                nextInput.dispatchEvent(e);
             }, 1000);
         },
 
@@ -31,6 +24,7 @@ odoo.define('shipping_site_location.my_widget', function (require) {
         init: function () {
             this._super.apply(this, arguments);
             this.$input = this.$el;
+            var time_out;
         }
     });
 
