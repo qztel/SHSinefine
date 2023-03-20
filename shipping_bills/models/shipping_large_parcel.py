@@ -38,7 +38,6 @@ class ShippingLargeParcel(models.Model):
                     'tracking_no': self.logistics_tracking_code,
                     'state': 'transported',
                 })
-                shipping_bill.compute_shipping_stage_id()
             # 发送邮件
             template = self.env.ref('shipping_bills.mail_template_shipping_large_parcel')
             email = template.send_mail(self.id, raise_exception=True)

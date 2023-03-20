@@ -16,7 +16,36 @@ class ShippingBill(models.Model):
                               ('returned', '已退运'), ('transported', '已转运'), ('arrived', '已到站点'),
                               ('signed', '已签收'), ('discarded', '丢弃')], default='draft', string='状态')
     stage_id = fields.Many2one('shipping.state', string="阶段", group_expand='_read_group_stage_ids', ondelete='restrict',
-                               tracking=True, store=True, readonly=False, copy=False, index=True)
+                               compute="_compute_shipping_stage_id", store=True)
+
+    # 根据运单状态改变阶段
+    def search_shipping_bill_state(self, name):
+        return self.env['shipping.state'].search([('name', '=', name)]).id
+
+    @api.depends('state')
+    def _compute_shipping_stage_id(selfs):
+        for self in selfs:
+            if self.sale_order_id:
+                if self.state == 'draft':
+                    self.stage_id = self.search_shipping_bill_state('包裹入库待匹配（无头件）')
+                elif self.state == 'paired':
+                    self.stage_id = self.search_shipping_bill_state('包裹待计费')
+                elif self.state == 'valued' and self.sale_invoice_payment_state == '支付未完成':
+                    self.stage_id = self.search_shipping_bill_state('包裹计费待支付')
+                elif self.state == 'valued' and self.sale_invoice_payment_state == '支付已完成':
+                    self.stage_id = self.search_shipping_bill_state('包裹待转运')
+                elif self.state == 'transported':
+                    self.stage_id = self.search_shipping_bill_state('包裹转运待站点签收')
+                elif self.state == 'arrived':
+                    self.stage_id = self.search_shipping_bill_state('客户签收')
+                elif self.state == 'returned':
+                    self.stage_id = self.search_shipping_bill_state('已退运')
+                elif self.state == 'discarded':
+                    self.stage_id = self.search_shipping_bill_state('丢弃')
+                elif self.state == 'signed':
+                    self.stage_id = self.search_shipping_bill_state('完成')
+            else:
+                self.stage_id = self.search_shipping_bill_state('包裹入库待匹配（无头件）')
 
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
