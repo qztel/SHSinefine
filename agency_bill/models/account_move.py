@@ -15,7 +15,7 @@ class AccountMove(models.Model):
             self.can_create_city_commission_account_move = all([
                 self.partner_city_agency_id,
                 not self.city_commission_bill_id,
-                self.invoice_line_ids.mapped('sale_line_ids.order_id').website_id.should_city_agency_care,
+                # self.invoice_line_ids.mapped('sale_line_ids.order_id').website_id.should_city_agency_care,
             ])
     can_create_city_commission_account_move = fields.Boolean('待开月末佣金凭证',compute='_compute_can_create_city_commission_account_move',store=True)
 
