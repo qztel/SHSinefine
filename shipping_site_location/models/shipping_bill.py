@@ -83,7 +83,9 @@ class ShippingBill(models.Model):
     def compute_shipping_stage_id(selfs):
         for self in selfs:
             if self.sale_order_id:
-                if self.state == 'paired':
+                if self.state == 'draft':
+                    self.stage_id = self.search_shipping_bill_state('包裹入库待匹配（无头件）')
+                elif self.state == 'paired':
                     self.stage_id = self.search_shipping_bill_state('包裹待计费')
                 elif self.state == 'valued' and self.sale_invoice_payment_state == '支付未完成':
                     self.stage_id = self.search_shipping_bill_state('包裹计费待支付')

@@ -33,12 +33,11 @@ class ShippingLargeParcel(models.Model):
     def resend_email(selfs):
         for self in selfs:
             for shipping_bill in self.shipping_bill_ids:
-                if shipping_bill.logistics and shipping_bill.tracking_no:
-                    shipping_bill.write({
-                        'logistics': self.logistics_provider,
-                        'tracking_no': self.logistics_tracking_code,
-                        'state': 'transported',
-                    })
+                shipping_bill.write({
+                    'logistics': self.logistics_provider,
+                    'tracking_no': self.logistics_tracking_code,
+                    'state': 'transported',
+                })
             # 发送邮件
             template = self.env.ref('shipping_bills.mail_template_shipping_large_parcel')
             email = template.send_mail(self.id, raise_exception=True)
