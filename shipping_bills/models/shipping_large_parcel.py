@@ -33,7 +33,7 @@ class ShippingLargeParcel(models.Model):
     def resend_email(selfs):
         for self in selfs:
             for shipping_bill in self.shipping_bill_ids:
-                shipping_bill.write({
+                shipping_bill.update({
                     'logistics': self.logistics_provider,
                     'tracking_no': self.logistics_tracking_code,
                     'state': 'transported',
