@@ -25,17 +25,5 @@
                 records.normal_partner_vip_type()
             </field>
         </record>
-
-        <record id="ir_actions_edit_shipping_order_stage_action_match" model="ir.actions.server">
-            <field name="name">批量更改运单阶段</field>
-            <field name="type">ir.actions.server</field>
-            <field name="model_id" ref="model_shipping_bill"/>
-            <field name="binding_model_id" ref="model_shipping_bill"/>
-            <field name="binding_view_types">list</field>
-            <field name="state">code</field>
-            <field name="code">
-                records.compute_shipping_stage_id()
-            </field>
-        </record>
     </data>
 </odoo>
