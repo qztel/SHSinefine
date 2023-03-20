@@ -57,16 +57,17 @@ class AccountMove(models.Model):
         return action
 
     def save_whitelist_lines(self):
-        self.write({'whitelist_lineIds': ','.join(self.line_ids.ids)})
+        self.write({'whitelist_lineIds': ','.join([str(_id) for _id in self.line_ids.ids])})
 
     def multi_keep_whitelist_lines(selfs):
         for self in selfs.filtered(lambda s: s.whitelist_lineIds).with_context(force_delete=True):
             self.write({
-                'line_ids': [(2,line.id) for line in self.line_ids if line.id not in self.whitelist_lineIds.split(',')],
+                'line_ids': [(2,line.id) for line in self.line_ids if str(line.id) not in self.whitelist_lineIds.split(',')],
                 'whitelist_lineIds': False,
             })
 
-    def _action_post(selfs):
+    def action_post(selfs):
+        result = super().action_post()
         selfs.multi_keep_whitelist_lines()
-        return super()._action_post()
+        return result
 
