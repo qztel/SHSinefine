@@ -37,6 +37,7 @@ class ShippingLargeParcel(models.Model):
                     'logistics': self.logistics_provider,
                     'tracking_no': self.logistics_tracking_code,
                     'state': 'transported',
+                    'out_date': self.delivery_time
                 })
             # 发送邮件
             template = self.env.ref('shipping_bills.mail_template_shipping_large_parcel')

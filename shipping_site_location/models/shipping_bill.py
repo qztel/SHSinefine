@@ -56,9 +56,10 @@ class ShippingBill(models.Model):
 
     # 获取需要创建大包裹的运单，根据重量比对创建大包裹
     def get_shipping_bill_unpacked(self):
-        shipping_bills = self.search([('name', '=', True), ('state', '=', 'valued'),
+        shipping_bills = self.env['shipping.bill'].search([('state', '=', 'valued'),
                                       ('sale_invoice_payment_state', '=', '支付已完成'),
                                       ('large_parcel_ids', '=', False)])
+        print(shipping_bills)
         _term_lambda = lambda s: (s.sale_site_id.id, s.shipping_factor_id.id)
 
         for term in set(shipping_bills.mapped(_term_lambda)):

@@ -8,7 +8,7 @@
     'website': 'http://www.oscg.cn/',
     'author': 'OSCG',
     'license': 'AGPL-3',
-    'depends': ['base', 'shipping_bills',],
+    'depends': ['base', 'shipping_bills', 'zhaogu_sale'],
     'data': [
         'security/ir.model.access.csv',
         'views/site_location.xml',
