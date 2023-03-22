@@ -15,6 +15,18 @@
             <field name="state">code</field>
         </record>
 
+        <record id="ir_cron_model_judgment_package_day" model="ir.cron">
+            <field name="name">物流订单-根据包裹弃置天数判断是否丢弃包裹</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active">True</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False" />
+            <field name="model_id" ref="model_shipping_bill" />
+            <field name="code">model.model_judgment_package_day()</field>
+            <field name="state">code</field>
+        </record>
+
     </data>
 
 </odoo>

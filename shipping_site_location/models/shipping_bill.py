@@ -14,7 +14,7 @@ class ShippingBill(models.Model):
     site_location_id = fields.Many2one('site.location', string="仓库位置", compute="_compute_site_location", store=True)
 
     def _inverse_frontend_trigger(selfs):
-        for self in selfs.filtered(lambda s:s.frontend_trigger):
+        for self in selfs.filtered(lambda s: s.frontend_trigger):
             frontend_trigger_arr = self.frontend_trigger.split(',')
             getattr(self, frontend_trigger_arr[0])()
             self.state = 'paired'
@@ -42,17 +42,6 @@ class ShippingBill(models.Model):
                     'frontend_trigger': 'multi_action_match,multi_action_compute',
                 })
 
-    # @api.onchange('shipping_factor_id', 'sale_site_id')
-    # def onchange_site_location(selfs):
-    #     for self in selfs:
-    #         if self.shipping_factor_id and self.sale_site_id:
-    #             site_location_id = self.env['site.location'].search([
-    #                 ('factor_id', '=', self.shipping_factor_id.id),
-    #                 ('site_partner_id', '=', self.sale_site_id.id)
-    #             ])
-    #             if site_location_id:
-    #                 self.site_location_id = site_location_id.id
-
     @api.depends('shipping_factor_id', 'sale_site_id', 'sale_order_id')
     def _compute_site_location(selfs):
         for self in selfs:
@@ -66,18 +55,18 @@ class ShippingBill(models.Model):
             else:
                 self.site_location_id = 1
 
-
     # 获取需要创建大包裹的运单，根据重量比对创建大包裹
     def get_shipping_bill_unpacked(self):
         shipping_bills = self.env['shipping.bill'].search([('state', '=', 'valued'),
-                                      ('sale_invoice_payment_state', '=', '支付已完成'),
-                                      ('large_parcel_ids', '=', False)])
+                                                           ('sale_invoice_payment_state', '=', '支付已完成'),
+                                                           ('large_parcel_ids', '=', False)])
         _term_lambda = lambda s: (s.sale_site_id.id, s.shipping_factor_id.id)
 
         for term in set(shipping_bills.mapped(_term_lambda)):
             this_shipping_bills = shipping_bills.filtered(lambda s: _term_lambda(s) == term)
             current_real_weight = sum(this_shipping_bills.mapped('actual_weight'))
-            real_weight_id = self.env['site.location'].search([('site_partner_id', '=', term[0]), ('factor_id', '=', term[1])])
+            real_weight_id = self.env['site.location'].search(
+                [('site_partner_id', '=', term[0]), ('factor_id', '=', term[1])])
 
             if not this_shipping_bills:
                 continue
@@ -89,6 +78,9 @@ class ShippingBill(models.Model):
                     'shipping_bill_ids': [(6, 0, this_shipping_bills.ids)]
                 })
 
-
-
-
+    # 判断是否存在超过包裹存放天数的包裹，并标记可丢弃
+    def model_judgment_package_day(selfs):
+        for self in selfs.search([('state', '=', 'draft'), ('sale_order_id', '=', False)]):
+            if self.site_location_id and self.site_location_id.name == '无头位置':
+                if self.in_days > self.self.site_location_id.package_discard_day:
+                    self.disposable = True

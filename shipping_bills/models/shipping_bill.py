@@ -1,4 +1,5 @@
 # import logging
+from datetime import datetime, date
 
 from odoo import models, fields, api, _, SUPERUSER_ID
 from odoo.exceptions import UserError
@@ -222,8 +223,11 @@ class ShippingBill(models.Model):
                 if selfs.search_count([('ref', '=', self.ref), ('id', '!=', self.id)]):
                     raise UserError(f'参考号= {self.ref} 已存在')
 
+    # 更新入库天数
     @api.model
     def model_update_in_days(cls):
-        for self in cls.search([('returned_date', '!=', False)]):
-            self.in_days += 1
+        for self in cls.search([]):
+            self.in_days = (date.today() - self.in_date).days
+
+
 
