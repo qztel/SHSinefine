@@ -19,33 +19,19 @@ class ShippingBill(models.Model):
                                compute="_compute_shipping_stage_id", store=True)
 
     # 根据运单状态改变阶段
-    def search_shipping_bill_state(self, name):
-        return self.env['shipping.state'].search([('name', '=', name)]).id
+    def search_shipping_bill_state(self, state):
+        return self.env['shipping.state'].search([('state', '=', state)]).id
 
     @api.depends('state')
     def _compute_shipping_stage_id(selfs):
         for self in selfs:
-            if self.sale_order_id:
-                if self.state == 'draft':
-                    self.stage_id = self.search_shipping_bill_state('包裹入库待匹配（无头件）')
-                elif self.state == 'paired':
-                    self.stage_id = self.search_shipping_bill_state('包裹待计费')
-                elif self.state == 'valued' and self.sale_invoice_payment_state == '支付未完成':
-                    self.stage_id = self.search_shipping_bill_state('包裹计费待支付')
-                elif self.state == 'valued' and self.sale_invoice_payment_state == '支付已完成':
-                    self.stage_id = self.search_shipping_bill_state('包裹待转运')
-                elif self.state == 'transported':
-                    self.stage_id = self.search_shipping_bill_state('包裹转运待站点签收')
-                elif self.state == 'arrived':
-                    self.stage_id = self.search_shipping_bill_state('客户签收')
-                elif self.state == 'returned':
-                    self.stage_id = self.search_shipping_bill_state('已退运')
-                elif self.state == 'discarded':
-                    self.stage_id = self.search_shipping_bill_state('丢弃')
-                elif self.state == 'signed':
-                    self.stage_id = self.search_shipping_bill_state('完成')
+            if self.state != 'valued':
+                self.stage_id = self.search_shipping_bill_state(self.state)
             else:
-                self.stage_id = self.search_shipping_bill_state('包裹入库待匹配（无头件）')
+                if self.sale_invoice_payment_state == '支付未完成':
+                    self.stage_id = self.search_shipping_bill_state('valued')
+                else:
+                    self.stage_id = self.search_shipping_bill_state('payment')
 
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
