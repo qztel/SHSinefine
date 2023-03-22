@@ -8,17 +8,24 @@
     'website': 'http://www.oscg.cn/',
     'author': 'OSCG',
     'license': 'AGPL-3',
-    'depends': ['base', 'shipping_bills',],
+    'depends': ['base', 'shipping_bills', 'zhaogu_sale'],
     'data': [
         'security/ir.model.access.csv',
         'views/site_location.xml',
         'views/res_partner.xml',
         'views/shipping_bill.xml',
         'views/shipping_bill_scan_code.xml',
+        'views/shipping_bill_head_less_piece.xml',
         'views/action.xml',
         'views/menu.xml',
         'data/site_location.xml',
+        'data/ir_cron.xml',
         'data/ir_actions_server.xml',
     ],
+    'assets': {
+            'web.assets_backend': [
+                'shipping_site_location/static/src/js/my_widget.js',
+            ],
+        },
 
 }

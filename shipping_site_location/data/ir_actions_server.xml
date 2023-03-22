@@ -13,5 +13,17 @@
                 records.create_partner_site()
             </field>
         </record>
+
+        <record id="ir_actions_normal_partner_vip_type_action_match" model="ir.actions.server">
+            <field name="name">默认用户vip为默认</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="binding_model_id" ref="model_res_partner"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                records.normal_partner_vip_type()
+            </field>
+        </record>
     </data>
 </odoo>
