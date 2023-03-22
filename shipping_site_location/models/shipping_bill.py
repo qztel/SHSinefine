@@ -11,7 +11,7 @@ class ShippingBill(models.Model):
     _inherit = 'shipping.bill'
 
     # 仓库位置
-    site_location_id = fields.Many2one('site.location', string="仓库位置")
+    site_location_id = fields.Many2one('site.location', string="仓库位置", compute="_compute_site_location", store=True)
 
     def _inverse_frontend_trigger(selfs):
         for self in selfs.filtered(lambda s:s.frontend_trigger):
@@ -40,26 +40,38 @@ class ShippingBill(models.Model):
                     'sale_order_id': False,
                     'no_change': False,
                     'frontend_trigger': 'multi_action_match,multi_action_compute',
-                    'site_location_id': 1
                 })
 
-    @api.onchange('shipping_factor_id', 'sale_site_id')
-    def onchange_site_location(selfs):
+    # @api.onchange('shipping_factor_id', 'sale_site_id')
+    # def onchange_site_location(selfs):
+    #     for self in selfs:
+    #         if self.shipping_factor_id and self.sale_site_id:
+    #             site_location_id = self.env['site.location'].search([
+    #                 ('factor_id', '=', self.shipping_factor_id.id),
+    #                 ('site_partner_id', '=', self.sale_site_id.id)
+    #             ])
+    #             if site_location_id:
+    #                 self.site_location_id = site_location_id.id
+
+    @api.depends('shipping_factor_id', 'sale_site_id', 'sale_order_id')
+    def _compute_site_location(selfs):
         for self in selfs:
-            if self.shipping_factor_id and self.sale_site_id:
-                site_location_id = self.env['site.location'].search([
-                    ('factor_id', '=', self.shipping_factor_id.id),
-                    ('site_partner_id', '=', self.sale_site_id.id)
-                ])
-                if site_location_id:
+            if self.sale_order_id:
+                if self.shipping_factor_id and self.sale_site_id:
+                    site_location_id = self.env['site.location'].search([
+                        ('factor_id', '=', self.shipping_factor_id.id),
+                        ('site_partner_id', '=', self.sale_site_id.id)
+                    ])
                     self.site_location_id = site_location_id.id
+            else:
+                self.site_location_id = 1
+
 
     # 获取需要创建大包裹的运单，根据重量比对创建大包裹
     def get_shipping_bill_unpacked(self):
         shipping_bills = self.env['shipping.bill'].search([('state', '=', 'valued'),
                                       ('sale_invoice_payment_state', '=', '支付已完成'),
                                       ('large_parcel_ids', '=', False)])
-        print(shipping_bills)
         _term_lambda = lambda s: (s.sale_site_id.id, s.shipping_factor_id.id)
 
         for term in set(shipping_bills.mapped(_term_lambda)):
