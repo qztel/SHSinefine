@@ -12,6 +12,6 @@
               parent="shipping_bills.root_menu_shipping_bills" sequence="5"/>
 
     <!--包裹可丢弃-->
-    <menuitem id="menu_shipping_bills_head_less_piece" name="包裹（可丢弃）" action="action_shipping_bill_disposable"
+    <menuitem id="menu_shipping_bills_disposable" name="包裹（可丢弃）" action="action_shipping_bill_disposable"
               parent="shipping_bills.menu_shipping_bills_order_inquiry" sequence="4"/>
 </odoo>
