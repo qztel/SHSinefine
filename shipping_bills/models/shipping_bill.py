@@ -174,9 +174,15 @@ class ShippingBill(models.Model):
             if not (fee and so):
                 continue
 
+            product_name = f'运费({self.shipping_factor_id.name})'
+            product = self.env['product.product'].search([('name', '=', product_name)], limit=1)
+            if not product:
+                raise UserError('没有找到运费')
+
             so.invoice_ids.filtered(lambda i: i.state == 'posted').button_draft()
             so.invoice_ids.filtered(lambda i: i.state != 'cancel').button_cancel()
             so.action_cancel()
+            so.order_line.filtered(lambda l:l.product_id == product).unlink()
             so.action_draft()
 
             shipping_factor = self.shipping_factor_id  # 线路
@@ -191,10 +197,6 @@ class ShippingBill(models.Model):
 
             description = "计费重量（kg）：{}".format(round(self.size_weight, 1))
 
-            product_name = f'运费({self.shipping_factor_id.name})'
-            product = self.env['product.product'].search([('name', '=', product_name)], limit=1)
-            if not product:
-                raise UserError('没有找到运费')
             self.env['sale.order.line'].create({
                 "product_id": product.id,
                 "name": description,

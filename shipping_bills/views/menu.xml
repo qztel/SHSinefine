@@ -9,7 +9,7 @@
     <menuitem id="root_menu_shipping_bills_kanban" name="运单看板" action="action_shipping_bill_kanban"
               parent="root_menu_shipping_bills" sequence="2"/>
 <!--操作看板-->
-    <menuitem id="root_menu_operational_kanban_board" name="操作看板"
+    <menuitem id="root_menu_operational_kanban_board" name="订单操作"
               parent="root_menu_shipping_bills" sequence="3"/>
 <!--手动操作-->
     <menuitem id="root_menu_manual_operation" name="手动操作"
@@ -17,9 +17,7 @@
 
     <menuitem id="menu_shipping_large_parcel" name="大包裹"  parent="root_menu_manual_operation"
               action="action_shipping_large_parcel" sequence="2"/>
-<!--无头件-->
-    <menuitem id="menu_shipping_bills_head_less_piece" name="无头件"
-              parent="root_menu_shipping_bills" sequence="5"/>
+
 <!--订单查询-->
     <menuitem id="menu_shipping_bills_order_inquiry" name="订单查询"
               parent="root_menu_shipping_bills" sequence="6"/>

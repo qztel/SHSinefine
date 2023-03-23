@@ -1,4 +1,5 @@
 # See LICENSE file for full copyright and licensing details.
+from datetime import datetime
 import odoo
 from odoo import fields, models, api
 from odoo.exceptions import UserError
@@ -13,9 +14,10 @@ class ShippingLargeParcel(models.Model):
     logistics_provider = fields.Char('物流商')
     logistics_tracking_code = fields.Char('物流追踪码')
     delivery_time = fields.Datetime('出库时间')
-    length = fields.Float('长')
-    width = fields.Float('宽')
-    height = fields.Float('高')
+    length = fields.Float('长(CM)')
+    width = fields.Float('宽(CM)')
+    height = fields.Float('高(CM)')
+    volume = fields.Float('体积(m³)', default=lambda self: self.length * self.width * self.height / 10 ^ 6)
 
     shipping_bill_ids = fields.Many2many(
         'shipping.bill', 'shipping_bill_large_parcel_rel', 'large_parcel_id', 'shipping_bill_id', '客户运单',
@@ -32,6 +34,8 @@ class ShippingLargeParcel(models.Model):
 
     def resend_email(selfs):
         for self in selfs:
+            if not self.delivery_time:
+                self.delivery_time = datetime.now()
             for shipping_bill in self.shipping_bill_ids:
                 shipping_bill.update({
                     'logistics': self.logistics_provider,
