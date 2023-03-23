@@ -52,7 +52,7 @@
                         <group name="11">
                             <field name="in_date"/>
                             <field name="state"/>
-                            <field name="stage_id" widget="statusbar" invisible="1"/>
+                            <field name="stage_id" invisible="1"/>
                             <field name="name"/>
                             <field name="picking_code"/>
                             <field name="length"/>

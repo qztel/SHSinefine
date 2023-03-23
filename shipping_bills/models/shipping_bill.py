@@ -23,7 +23,7 @@ class ShippingBill(models.Model):
     def search_shipping_bill_state(self, state):
         return self.env['shipping.state'].search([('state', '=', state)]).id
 
-    @api.depends('state')
+    @api.depends('state', 'sale_invoice_payment_state')
     def _compute_shipping_stage_id(selfs):
         for self in selfs:
             if self.state != 'valued':
@@ -76,7 +76,7 @@ class ShippingBill(models.Model):
 
     def _compute_sale_invoice_payment_state(selfs):
         for self in selfs:
-            invoices = self.sale_invoice_ids
+            invoices = self.sale_invoice_ids.filtered(lambda i:i.state == 'posted')
             flag = invoices and all([invoice.payment_state == 'paid' for invoice in invoices])
             self.sale_invoice_payment_state = '支付已完成' if flag else '支付未完成'
 
@@ -227,8 +227,7 @@ class ShippingBill(models.Model):
     @api.model
     def model_update_in_days(cls):
         for self in cls.search([]):
-            if self.in_date:
-                self.in_days = (date.today() - self.in_date).days
+            self.in_days = (date.today() - self.in_date).days
 
 
 
