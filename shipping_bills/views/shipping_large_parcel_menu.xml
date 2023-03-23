@@ -42,9 +42,10 @@
                         <group>
                             <field name="logistics_provider"/>
                             <field name="logistics_tracking_code"/>
-                            <field name="length" required="1"/>
-                            <field name="width" required="1"/>
-                            <field name="height" required="1"/>
+                            <field name="length"/>
+                            <field name="width"/>
+                            <field name="height"/>
+                            <field name="volume"/>
                         </group>
                     </group>
                     <notebook>

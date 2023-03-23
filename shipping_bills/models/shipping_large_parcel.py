@@ -17,7 +17,7 @@ class ShippingLargeParcel(models.Model):
     length = fields.Float('长(CM)')
     width = fields.Float('宽(CM)')
     height = fields.Float('高(CM)')
-    volume = fields.Float('体积(m³)', default=lambda self: self.length * self.width * self.height / 10 ^ 6)
+    volume = fields.Float('体积(m³)')
 
     shipping_bill_ids = fields.Many2many(
         'shipping.bill', 'shipping_bill_large_parcel_rel', 'large_parcel_id', 'shipping_bill_id', '客户运单',
