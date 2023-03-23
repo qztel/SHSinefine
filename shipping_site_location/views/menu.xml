@@ -7,5 +7,11 @@
     <menuitem id="menu_site_location" name="包裹存放位置" parent="shipping_bills.menu_shipping_bills_config"
               action="action_site_location" sequence="4"/>
 
+    <!--无头件-->
+    <menuitem id="menu_shipping_bills_head_less_piece" name="无头件" action="action_shipping_bill_head_less_piece"
+              parent="shipping_bills.root_menu_shipping_bills" sequence="5"/>
 
+    <!--包裹可丢弃-->
+    <menuitem id="menu_shipping_bills_head_less_piece" name="包裹（可丢弃）" action="action_shipping_bill_disposable"
+              parent="shipping_bills.menu_shipping_bills_order_inquiry" sequence="4"/>
 </odoo>
