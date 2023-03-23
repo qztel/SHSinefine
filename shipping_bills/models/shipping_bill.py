@@ -174,6 +174,11 @@ class ShippingBill(models.Model):
             if not (fee and so):
                 continue
 
+            so.invoice_ids.filtered(lambda i: i.state == 'posted').button_draft()
+            so.invoice_ids.filtered(lambda i: i.state != 'cancel').button_cancel()
+            so.action_cancel()
+            so.action_draft()
+
             shipping_factor = self.shipping_factor_id  # 线路
             volume_factor = shipping_factor.factor  # 体积重系数
 
