@@ -23,16 +23,19 @@ class ShippingBill(models.Model):
     def search_shipping_bill_state(self, state):
         return self.env['shipping.state'].search([('state', '=', state)]).id
 
-    @api.depends('state', 'sale_invoice_payment_state')
+    @api.depends('state', 'sale_invoice_ids.state')
     def _compute_shipping_stage_id(selfs):
         for self in selfs:
             if self.state != 'valued':
                 self.stage_id = self.search_shipping_bill_state(self.state)
             else:
-                if self.sale_invoice_payment_state == '支付未完成':
-                    self.stage_id = self.search_shipping_bill_state('valued')
-                else:
-                    self.stage_id = self.search_shipping_bill_state('payment')
+                invoices = self.sale_invoice_ids.filtered(lambda i:i.state == 'posted')
+                flag = invoices and all([invoice.payment_state == 'paid' for invoice in invoices])
+                self.stage_id = self.search_shipping_bill_state('payment') if flag else self.search_shipping_bill_state('valued')
+#                 if self.sale_invoice_payment_state == '支付未完成':
+#                     self.stage_id = self.search_shipping_bill_state('valued')
+#                 else:
+#                     self.stage_id = self.search_shipping_bill_state('payment')
 
     @api.model
     def _read_group_stage_ids(self, stages, domain, order):
