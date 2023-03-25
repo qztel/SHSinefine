@@ -37,7 +37,7 @@ class ShippingLargeParcel(models.Model):
             if not self.delivery_time:
                 self.delivery_time = datetime.now()
             for shipping_bill in self.shipping_bill_ids:
-                shipping_bill.update({
+                shipping_bill.sudo().update({
                     'logistics': self.logistics_provider,
                     'tracking_no': self.logistics_tracking_code,
                     'state': 'transported',
@@ -45,7 +45,7 @@ class ShippingLargeParcel(models.Model):
                 })
             # 发送邮件
             template = self.env.ref('shipping_bills.mail_template_shipping_large_parcel')
-            email = template.send_mail(self.id, raise_exception=True)
-            email_email = self.env['mail.mail'].browse(email)
-            email_email.send()
+            email = template.sudo().send_mail(self.id, raise_exception=True)
+            email_email = self.env['mail.mail'].sudo().browse(email)
+            email_email.sudo().send()
             self.is_sent = True
