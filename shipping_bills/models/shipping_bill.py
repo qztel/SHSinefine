@@ -23,7 +23,7 @@ class ShippingBill(models.Model):
     def search_shipping_bill_state(self, state):
         return self.env['shipping.state'].search([('state', '=', state)]).id
 
-    @api.depends('state', 'sale_invoice_ids.state')
+    @api.depends('state', 'sale_invoice_ids.payment_state')
     def _compute_shipping_stage_id(selfs):
         for self in selfs:
             if self.state != 'valued':
