@@ -15,22 +15,32 @@ class Controller(http.Controller):
 
     @http.route('/order/nocustomer', type='http', auth='public', methods=['GET'], csrf=False, website=True)
     def sale_fill_order_create_view(self, waybill_no=False):
+        partner_type = request.env.user.partner_id.partner_vip_type
+        no_change = False
+        if partner_type in ['svip', 'vip']:
+            no_change = True
         values = {
             'user_name': request.env.user.name,
-            'waybill_no': waybill_no
+            'waybill_no': waybill_no,
+            'no_change': no_change
         }
         return request.render('zhaogu_sale.sale_portal_fill_order_create_template', values)
 
     @http.route('/sale/create/documents', type='http', auth='public', methods=['POST'], csrf=False, website=True)
     def sale_fill_order_create(self, **kwargs):
         user = request.env.user
+        partner_type = request.env.user.partner_id.partner_vip_type
+        no_change = False
+        if partner_type in ['svip', 'vip']:
+            no_change = True
         sale_shipping_no = request.env['sale.order'].sudo().search(
             [('shipping_no', '=', kwargs.get('shipping_no'))])
 
         if sale_shipping_no and sale_shipping_no.partner_id.user_ids.id != user.id:
             values = {
                 'user_name': request.env.user.name,
-                'error_message': '运单号已存在。'
+                'error_message': '运单号已存在。',
+                'no_change': no_change,
             }
             return request.render('zhaogu_sale.sale_portal_fill_order_create_template', values)
         elif sale_shipping_no and sale_shipping_no.partner_id.user_ids.id == user.id and not sale_shipping_no.shipping_bill_id:
@@ -137,10 +147,14 @@ class Controller(http.Controller):
             return request.redirect('/')
 
     @http.route('/sale/portal/save_line', type='http', auth='public', methods=['GET'], csrf=False)
-    def sale_portal_save_order_line(self, order_id, order_line_id, sale_category_id, product_brand_id, product_material_id,
+    def sale_portal_save_order_line(self, order_id, order_line_id, sale_category_id, product_other, product_brand_id, product_material_id,
                                     qty, shipping_no=None,**kwargs):
         sale_order = request.env['sale.order'].sudo().browse(int(order_id))
         try:
+            if product_other:
+                request.env['product.category.determined'].sudo().create({
+                    'name': product_other
+                })
             sale_order.portal_update_line(sale_category_id, product_brand_id, product_material_id, qty, order_line_id)
         except UserError as e:
             params = {
