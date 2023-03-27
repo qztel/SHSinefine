@@ -16,6 +16,8 @@
         'views/shipping_bill.xml',
         'views/shipping_bill_scan_code.xml',
         'views/shipping_bill_head_less_piece.xml',
+        'views/shipping_bill_disposable.xml',
+        'views/shipping_bill_return_shipment.xml',
         'views/action.xml',
         'views/menu.xml',
         'data/site_location.xml',
