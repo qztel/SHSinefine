@@ -43,7 +43,7 @@
     </record>
 
     <record id="action_shipping_bill_return_shipment" model="ir.actions.act_window">
-        <field name="name">运单(退运)</field>
+        <field name="name">包裹(退运)</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">shipping.bill</field>
         <field name="view_mode">tree,form</field>
@@ -52,6 +52,18 @@
                           (0, 0, {'view_mode': 'tree', 'view_id': ref('shipping_bill_return_shipment_tree')}),
                           (0, 0, {'view_mode': 'form', 'view_id': ref('shipping_bill_return_shipment_form')})]"/>
         <field name="domain">[('has_returned','=', True)]</field>
+    </record>
+
+    <record id="action_shipping_bill_modified_foam" model="ir.actions.act_window">
+        <field name="name">运单(改泡)</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">shipping.bill</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('shipping_bill_modified_foam_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('shipping_bill_modified_foam_form')})]"/>
+        <field name="domain">[('can_change','=', True), ('has_changed', '=', True), ('state', '=', 'valued')]</field>
     </record>
 
 </odoo>
