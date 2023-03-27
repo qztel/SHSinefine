@@ -83,10 +83,10 @@
                             <field name="tracking_no"/>
                         </group>
                         <group name="32">
-                            <field name="return_address" attrs="{'invisible': [('has_returned', '=', True)]}"/>
-                            <field name="return_contact" attrs="{'invisible': [('has_returned', '=', True)]}"/>
-                            <field name="return_mobile" attrs="{'invisible': [('has_returned', '=', True)]}"/>
-                            <field name="return_name" attrs="{'invisible': [('has_returned', '=', True)]}"/>
+                            <field name="return_address" attrs="{'invisible': [('has_returned', '=', False)]}"/>
+                            <field name="return_contact" attrs="{'invisible': [('has_returned', '=', False)]}"/>
+                            <field name="return_mobile" attrs="{'invisible': [('has_returned', '=', False)]}"/>
+                            <field name="return_name" attrs="{'invisible': [('has_returned', '=', False)]}"/>
                             <field name="in_days"/>
                         </group>
                     </group>
