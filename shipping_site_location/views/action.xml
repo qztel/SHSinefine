@@ -51,7 +51,7 @@
                    eval="[(5, 0, 0),
                           (0, 0, {'view_mode': 'tree', 'view_id': ref('shipping_bill_return_shipment_tree')}),
                           (0, 0, {'view_mode': 'form', 'view_id': ref('shipping_bill_return_shipment_form')})]"/>
-        <field name="domain">[('has_returned','=', True)]</field>
+        <field name="domain">[('state', '=', 'returned')]</field>
     </record>
 
 </odoo>
