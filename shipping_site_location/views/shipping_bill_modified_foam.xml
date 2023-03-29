@@ -24,6 +24,9 @@
         <field name="priority">20</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <button name="multi_action_change" string="改泡完成" type="object" attrs="{'invisible':['|',('state','!=','paired'),('has_changed','=',False)]}"/>
+                </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                     </div>
