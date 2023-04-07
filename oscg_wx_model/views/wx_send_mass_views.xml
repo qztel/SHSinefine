@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 
         <record id="wx_send_mass_view_tree_1377" model="ir.ui.view">
@@ -57,4 +57,4 @@
         <menuitem action="wx_send_mass_action_458" id="wx_send_mass_menuitem_313_1552142855" name="群发" parent="parent_menu_126_1542014737" sequence="10"/>
 
     </data>
-</openerp>
+</odoo>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 
         <record id="wx_articlesreply_article_view_form" model="ir.ui.view">
@@ -45,4 +45,4 @@
         <menuitem action="wx_articlesreply_article_action" id="wx_articlesreply_article_menuitem" name="图文" groups="oscg_wx_model.group_wx_op" parent="parent_menu_121" sequence="10"/>
 
     </data>
-</openerp>
+</odoo>

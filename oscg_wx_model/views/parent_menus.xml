@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 
         <menuitem id="parent_menu_119" name="微信" parent=""  sequence="10" web_icon="oscg_wx_model,static/description/icon.png"/>
@@ -11,4 +11,4 @@
         <menuitem id="parent_menu_126_1542014737" name="公众号素材" parent="parent_menu_119"  sequence="1"/>
 
     </data>
-</openerp>
+</odoo>

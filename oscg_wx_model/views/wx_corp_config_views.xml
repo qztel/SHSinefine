@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 
         <record id="wx_corp_config_view_tree_1002" model="ir.ui.view">
@@ -51,4 +51,4 @@
         <menuitem action="wx_corp_config_action_404" id="wx_corp_config_menuitem_322_1536754696" name="企业微信对接配置" parent="parent_menu_123" sequence="10" groups="oscg_wx_model.group_wx_conf,oscg_wx_model.group_wx_conf_read"/>
 
     </data>
-</openerp>
+</odoo>

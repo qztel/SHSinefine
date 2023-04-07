@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
 
         <record id="wx_user_view_form" model="ir.ui.view">
@@ -97,4 +97,4 @@
         <menuitem action="wx_user_action_server_sync" id="wx_user_sync_menuitem" name="同步用户" parent="parent_menu_120" sequence="10"/>
 
     </data>
-</openerp>
+</odoo>
