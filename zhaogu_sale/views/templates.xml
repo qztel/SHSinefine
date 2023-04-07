@@ -123,7 +123,7 @@
                     </div>
                 </div>
 
-                <label><input name="no_change" type="checkbox" value="1"/>免泡</label>
+                <label><input name="no_change" type="checkbox" t-att-checked="no_change" value="1"/>免泡</label>
 
                 <t t-if="error_message">
                     <div>
