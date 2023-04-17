@@ -36,15 +36,15 @@
 	</template>
 
 	<!-- Wallet menu -->
-<!--	<template id="header_wallet_menu" name="Wallet menu">-->
-<!--		<t t-if="website.user_id != user_id and website.wallet_product_id">-->
-<!--			<li class="nav-item">-->
-<!--				<a class="nav-link" href="/wallet">-->
-<!--					<span>Point</span>-->
-<!--				</a>-->
-<!--			</li>-->
-<!--		</t>-->
-<!--	</template>-->
+	<template id="header_wallet_menu" name="Wallet menu">
+		<t t-if="website.user_id != user_id and website.wallet_product_id">
+			<li class="nav-item">
+				<a class="nav-link" href="/wallet">
+					<span>Point</span>
+				</a>
+			</li>
+		</t>
+	</template>
 
 	<!-- Add wallet menu in all header styles-->
 	<template id="wallet_menu_template_header_default" inherit_id="website.template_header_default">
