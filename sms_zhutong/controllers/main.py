@@ -20,7 +20,6 @@ class Home(Home):
     @http.route('/iap/sms/2/send', type='json', auth='none', csrf=False)
     def sms_zhutong_message_batch_send(self, messages, account_token):
         results = []
-        regex = re.compile(r'(^(852)?[569]\d{3}\-?\d{4}$)') 
         for message in messages: 
             _logger.info("正则表达式测试开始")
             _logger.info("获取电话号码%s",str(message.get('number')))
@@ -42,11 +41,10 @@ class Home(Home):
             'Content-Type': 'application/json',
             "Authorization":"Basic" + user_info.decode()
         }
-        params = _unit_params(','.join([str(number) for number in numbers]), message,'YZM')
+        params = _unit_params(','.join([str(number) for number in numbers]), message,'YX')
 
         response = requests.post(url=url, data=json.dumps(params), headers=headers)
         result = json.loads(response.text)
-        #result = response.content.decode('utf8')
         return {
             'state': result.get('code') == 200 and 'success' or 'fail',
             'credit': 0.0,
@@ -87,7 +85,6 @@ class Home(Home):
         sr_RS= re.compile(r"(^(\+3816|06)[- \d]{5,9}$)")
         tr_TR= re.compile(r"(^(\+?90|0)?5\d{9}$)")
         vi_VN= re.compile(r"(^(\+?84|0)?((1(2([0-9])|6([2-9])|88|99))|(9((?!5)[0-9])))([0-9]{7})$)")
-        zh_CN= re.compile(r"(^(\+?0?86\-?)?1[345789]\d{9}$)")
         zh_TW= re.compile(r"(^(\+?886\-?|0)?9\d{8}$)")
         
         if re.fullmatch(ar_DZ, number):
@@ -157,8 +154,6 @@ class Home(Home):
         if re.fullmatch(vi_VN, number):
              return True
         if re.fullmatch(zh_TW, number):
-             return True
-        if re.fullmatch(zh_CN, number):
              return True
                  
 
