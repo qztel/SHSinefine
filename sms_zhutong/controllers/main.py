@@ -57,9 +57,9 @@ class Home(Home):
         ar_DZ= re.compile(r"(^(\+?213|0)(5|6|7)\d{8}$)")
         ar_SY= re.compile(r"(^(!?(\+?963)|0)?9\d{8}$)")
         ar_SA= re.compile(r"(^(!?(\+?966)|0)?5\d{8}$)")
-        # en_US= re.compile(r"(^(\+?1)?[2-9]\d{2}[2-9](?!11)\d{6}$)")
-        # cs_CZ= re.compile(r"(^(\+?420)?[1-9][0-9]{2}?[0-9]{3}?[0-9]{3}$)")
-        # de_DE= re.compile(r"(^(\+?49[ \.\-])?([\(]{1}[0-9]{1,6}[\)])?([0-9 \.\-\/]{3,20})((x|ext|extension)[ ]?[0-9]{1,4})?$)")
+        en_US= re.compile(r"(^(\+?1)?[2-9]\d{2}[2-9](?!11)\d{6}$)")
+        cs_CZ= re.compile(r"(^(\+?420)?[1-9][0-9]{2}?[0-9]{3}?[0-9]{3}$)")
+        de_DE= re.compile(r"(^(\+?49[ \.\-])?([\(]{1}[0-9]{1,6}[\)])?([0-9 \.\-\/]{3,20})((x|ext|extension)[ ]?[0-9]{1,4})?$)")
         da_DK= re.compile(r"(^(\+?45)?(\d{8})$)")
         el_GR= re.compile(r"(^(\+?30)?(69\d{8})$)")
         en_AU= re.compile(r"(^(\+?61|0)4\d{8}$)")
@@ -87,7 +87,7 @@ class Home(Home):
         sr_RS= re.compile(r"(^(\+3816|06)[- \d]{5,9}$)")
         tr_TR= re.compile(r"(^(\+?90|0)?5\d{9}$)")
         vi_VN= re.compile(r"(^(\+?84|0)?((1(2([0-9])|6([2-9])|88|99))|(9((?!5)[0-9])))([0-9]{7})$)")
-        # zh_CN= re.compile(r"(^(\+?0?86\-?)?1[345789]\d{9}$)")
+        zh_CN= re.compile(r"(^(\+?0?86\-?)?1[345789]\d{9}$)")
         zh_TW= re.compile(r"(^(\+?886\-?|0)?9\d{8}$)")
         
         if re.fullmatch(ar_DZ, number):
@@ -96,14 +96,16 @@ class Home(Home):
              return True
         if re.fullmatch(ar_SA, number):
             return True
-        # if re.fullmatch(cs_CZ, number):
-        #     return True
-        # if re.fullmatch(de_DE, number):
-        #      return True
+        if re.fullmatch(cs_CZ, number):
+            return True
+        if re.fullmatch(de_DE, number):
+             return True
         if re.fullmatch(da_DK, number):
             return True
         if re.fullmatch(el_GR, number):
              return True
+        if re.fullmatch(en_US, number):
+            return True
         if re.fullmatch(en_AU, number):
             return True
         if re.fullmatch(en_GB, number):
@@ -155,6 +157,8 @@ class Home(Home):
         if re.fullmatch(vi_VN, number):
              return True
         if re.fullmatch(zh_TW, number):
+             return True
+        if re.fullmatch(zh_CN, number):
              return True
                  
 
