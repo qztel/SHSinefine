@@ -7,7 +7,7 @@ a{ text-decoration:none; color:#666}
 a:hover{ text-decoration:none;}
 img{ max-height:100%; max-width:100%; border:0}
 html,body{ font-size:100%;width:100%; height:100%}
-body{ width:100%;margin:0 auto;color:#666;background:#f7f7f7;font-size:12px; overflow-x:hidden}
+body{ width:100%;margin:0 auto;color:#666;background:#f7f7f7; overflow-x:hidden}
 p{text-align:justify}
 .kbox{ width:100%; background:#f7f7f7; height:0.4rem}
 
@@ -44,7 +44,7 @@ p{text-align:justify}
 .mypart2 .con .pa2_tit p{ float:left; font-size:0.8rem; color:#000; font-weight:bold;}
 .mypart2 .con .pa2_tit a{ display:block; float:right; color:#666; font-size:0.75rem}
 .mypart2 .con ul{ overflow:hidden; padding-top:0.3rem; width:100%;}
-.mypart2 .con ul li{ float:left; width:20%; text-align:center; padding:0.5rem 0}
+.mypart2 .con ul li{ float:left; width:25%; text-align:center; padding:0.5rem 0}
 .mypart2 .con ul li .ddimg{ width:1.5rem; height:1.5rem; margin:0 auto; position:relative;}
 .mypart2 .con ul li .ddimg img{ width:1.5rem; height:1.5rem;}
 .mypart2 .con ul li .ddimg .num{ position:absolute;top: 0;right: -0.2rem;z-index: 99;background: #ff2150;color: #fff;width: 0.8rem;height: 0.8rem;text-align: center;line-height: 0.8rem;border-radius: 100%;}
