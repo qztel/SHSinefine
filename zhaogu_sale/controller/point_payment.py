@@ -41,18 +41,17 @@ class PointPayment(http.Controller):
             })
 
             for invoice in shipping_invoice:
-                invoice.state = 'draft'
-                val = {
-                    'name': 'Wallet Used' + ' ' + str(invoice.amount_total),
-                    'quantity': 1,
-                    'price_unit': -invoice.amount_total
-                }
                 invoice.update({
-                    'invoice_line_ids': [(0, 0, val)]
+                    'wallet_added': True,
+                    'invoice_line_ids': [(0, 0, {
+                            'name': 'Wallet Used' + ' ' + str(invoice.amount_total),
+                            'analytic_account_id': shipping_sale.analytic_account_id.id or False,
+                            'price_unit': -shipping_sale.wallet_used,
+                            'price_subtotal' : -shipping_sale.wallet_used,
+                            'quantity': 1,
+                            'discount': 0,
+                        })],
                 })
-
-                # invoice.action_post()
-                invoice.state = 'posted'
 
         return request.redirect('/sale/portal/orders?ytype=valued')
 
