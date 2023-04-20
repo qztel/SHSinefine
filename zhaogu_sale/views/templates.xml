@@ -139,7 +139,7 @@
             <div id="pop-up-permission" class="pop-up-permission">
               <div class="pop-header">提示</div>
               <div class="pop-body">
-                为了更好的为您服务，请您如实填写您的个人信息。
+                为了防止您的包裹丢失，<span style ="color:#E3170D">请准确填写住址</span>。
               </div>
               <div class="pop-footer row">
                 <div class="col-6">
