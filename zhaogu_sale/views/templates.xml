@@ -374,15 +374,15 @@
                     <div>
                         <div>
                             <lable>退运收件人</lable>
-                            <input type="text" name="name" readonly="readonly" class="return-shipment-detail"/>
+                            <input type="text" name="name" class="return-shipment-detail"/>
                         </div>
                         <div>
                             <lable>退运联系电话</lable>
-                            <input type="text" name="phone" readonly="readonly" class="return-shipment-detail"/>
+                            <input type="text" name="phone" class="return-shipment-detail"/>
                         </div>
                         <div>
                             <lable>退运地址</lable>
-                            <input type="text" name="address" readonly="readonly" class="return-shipment-detail"/>
+                            <input type="text" name="address" class="return-shipment-detail"/>
                         </div>
                     </div>
                     <div style="display:flex;">
