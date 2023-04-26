@@ -19,9 +19,9 @@ class Controller(http.Controller):
         partner = request.env.user.partner_id
         order = request.website.sale_get_order()
         wishlist = request.env['product.wishlist'].with_context(display_default_code=False).current()
-        banner = choice(request.env['web.protal.img'].search([]))
+        banner = request.env['web.protal.img'].search([])
         if banner:
-            choice(request.env['web.protal.img'].search([]))
+            banner = choice(request.env['web.protal.img'].search([]))
         else:
             banner=[]
         values = {
