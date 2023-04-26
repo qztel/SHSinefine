@@ -20,6 +20,10 @@ class Controller(http.Controller):
         order = request.website.sale_get_order()
         wishlist = request.env['product.wishlist'].with_context(display_default_code=False).current()
         banner = choice(request.env['web.protal.img'].search([]))
+        if banner:
+            choice(request.env['web.protal.img'].search([]))
+        else:
+            banner=[]
         values = {
             'partner': partner,
             'website_sale_order': order,
