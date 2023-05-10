@@ -73,6 +73,11 @@ class PortalAccount(CustomerPortal):
         })
         return request.render("wechat_sign.portal_my_teams", values)
 
+    @http.route(['/my', '/my/home'], type='http', auth="user", website=True)
+    def home(self, **kw):
+        if request.session.uid and request.session.uid != 2 and not is_valid_email(request.env['res.users'].browse(request.session.uid).login):
+            return  request.redirect('/bind/email', 301, False) 
+        return super().home(**kw)
 
 class AuthSignupHome(AuthSignupHome):
 
@@ -175,3 +180,5 @@ class Home(main.Home):
                     return request.render('wechat_sign.bind_email', {'error': 'Invaild email'})
                     
         return request.render('wechat_sign.bind_email')
+
+
