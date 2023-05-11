@@ -178,7 +178,8 @@ class Home(main.Home):
                     return request.redirect('/web/login')
                 else:
                     return request.render('wechat_sign.bind_email', {'error': 'Invaild email'})
-                    
+            else:
+                    return request.render('wechat_sign.bind_email', {'error': 'Empty email'})        
         return request.render('wechat_sign.bind_email')
 
 
