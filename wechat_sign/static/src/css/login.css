@@ -14,6 +14,7 @@
     text-align: center;
     font-size: 16px;
 }
+.mobile_tip{display: none;}
 @media (max-width: 768px) {
     .qrcode_login{
         position: absolute;
@@ -22,6 +23,8 @@
         margin-left: -60px;
         bottom:auto;
         z-index: 9999999999999;
-
     }
+    .mobile_tip{display: block;}
+    .pc_tip{display: none;}
+
   }

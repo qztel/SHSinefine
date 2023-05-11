@@ -37,7 +37,8 @@
            
             <image
             t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('QR', '%sweb/signup' % request.httprequest.url_root, 120, 120)" />
-            <p>微信扫码快速登录</p>
+                <p class="pc_tip">微信扫码快速登录</p>
+                <p class="mobile_tip">长按识别二维码</p>
             </div>
         </xpath>
     </template>
