@@ -14,13 +14,12 @@
     text-align: center;
     font-size: 16px;
 }
-@media (min-width: 768px) {
+@media (max-width: 768px) {
     .qrcode_login{
         position: absolute;
         left: 50%;
         top: 100%;
         margin-left: -60px;
-        bottom: 0;
 
     }
   }
