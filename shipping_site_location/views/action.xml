@@ -27,7 +27,7 @@
         <field name="res_model">shipping.bill</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="shipping_bill_head_less_piece"/>
-        <field name="domain">[('sale_order_id','=', False)]</field>
+        <field name="domain">[('is_no_header','=', True)]</field>
     </record>
 
     <record id="action_shipping_bill_disposable" model="ir.actions.act_window">
