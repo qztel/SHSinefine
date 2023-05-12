@@ -165,7 +165,7 @@ class ShippingBill(models.Model):
 
     def multi_action_change(selfs):
         selfs.multi_action_compute()
-        selfs.write({'is_changed_done': True})
+        selfs.write({'is_changed_done': True, 'state': 'valued'})
 
     def action_remind_payment(selfs):
         for self in selfs:
