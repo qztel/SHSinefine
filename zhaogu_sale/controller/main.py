@@ -158,7 +158,7 @@ class Controller(http.Controller):
                 request.env['product.category.determined'].sudo().create({
                     'name': product_other
                 })
-            sale_order.portal_update_line(sale_category_id, product_brand_id, product_material_id, qty, order_line_id)
+            sale_order.portal_update_line(sale_category_id, product_brand_id, product_material_id, qty, order_line_id, product_other)
         except UserError as e:
             params = {
                 'order_id':order_id, 'error_message':str(e), 'order_line_id':order_line_id,
