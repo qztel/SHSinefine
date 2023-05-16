@@ -5,7 +5,7 @@
         <field name="model">shipping.large.parcel</field>
         <field name="inherit_id" ref="shipping_bills.shipping_large_parcel_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//page/field[@name='order_line']/tree/field[@name='product_id']" position="after">
+            <xpath expr="//field[@name='shipping_bill_ids']/tree/field[@name='sale_site_id']" position="after">
                 <field name="sale_order_line_ids" widget="many2many_tags" string="海关编码"/>
             </xpath>
         </field>
