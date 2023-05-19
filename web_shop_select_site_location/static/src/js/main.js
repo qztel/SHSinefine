@@ -12,7 +12,7 @@ $(document).ready(function() {
       $('#select-site-table').css('display', 'block')
     } else {
       $('#select-site-table').css('display', 'none')
-      $('#select-site-table').val('0')
+      $('#select-site').val('0')
     }
   })
 
