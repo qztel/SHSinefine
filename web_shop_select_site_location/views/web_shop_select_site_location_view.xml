@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="website_wallet_on_payment_page" inherit_id="website_sale.payment" active="True" customize_show="True" name="Show Website Wallet">
+		<xpath expr="//t[@t-if='website_sale_order.amount_total']" position="before">
+			<div class="col-lg-12" style="margin: 32px 0; padding: 1.25rem; border: 1px solid rgba(0, 0, 0, 0.125);border-radius: 0.25rem;">
+                <div class="website-select-site">
+                    <div class="checkbox">
+                        <div id="select-header" style="font-size: 16px;">
+                            <label style="font-size: 18px; cursor:auto; color: #337AB7; padding-left: 0px;"> 选择站点 </label>
+                        </div>
+                    </div>
+                    <div>
+                        <select name="select_site" id="select-site" class="form-control s_website_form_input">
+                            <optgroup label="站点">
+                                <t t-foreach="request.env['crm.team'].search([('site_id', '!=', False)])" t-as="site">
+                                    <option t-att-value="site.id">
+                                        <span t-esc="site.name"/>
+                                    </option>
+                                </t>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+			</div>
+		</xpath>
+	</template>
+</odoo>
