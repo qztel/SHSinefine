@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="website_shop_select_site_page" inherit_id="website_sale_delivery.payment_delivery" active="True" customize_show="True" name="Website Select Site">
+    <template id="website_shop_select_site_page" inherit_id="website_sale_delivery.payment_delivery" name="Website Select Site">
         <xpath expr="//div[@id='delivery_carrier']" position="after">
             <script crossorigin="anonymous" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" src="https://lib.baomitu.com/jquery/3.6.0/jquery.js"/>
             <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"/>
             <script src="/web_shop_select_site_location/static/src/js/main.js"/>
+            <t t-set="order" t-value="request.website.sale_get_order()"/>
             <div class="col-lg-12" id="select-site-table" style="margin: 32px 0; padding: 1.25rem; border: 1px solid rgba(0, 0, 0, 0.125);border-radius: 0.25rem;">
                 <div class="website-select-site">
                     <div class="checkbox">
@@ -18,7 +19,10 @@
                             <optgroup label="站点">
                                 <option value="0">请选择</option>
                                 <t t-foreach="request.env['crm.team'].sudo().search([('site_id', '!=', False)])" t-as="site">
-                                    <option t-att-value="site.id">
+                                    <option t-if="order.partner_team_site_id.id == site.site_id.id" t-att-value="site.site_id.id" selected="selected">
+                                        <span t-esc="site.name"/>
+                                    </option>
+                                    <option t-else="" t-att-value="site.site_id.id">
                                         <span t-esc="site.name"/>
                                     </option>
                                 </t>
@@ -28,6 +32,14 @@
                     </div>
                 </div>
             </div>
+        </xpath>
+    </template>
+
+    <template id="payment_delivery_methods" inherit_id="website_sale_delivery.payment_delivery_methods" name="Website Select Site">
+        <xpath expr="//input[@name='delivery_type']" position="replace">
+            <t t-set="order" t-value="request.website.sale_get_order()"/>
+            <input t-if="order.carrier_id.id == delivery.id" checked="checked" t-att-value="delivery.id" t-att-id="'delivery_%i' % delivery.id" type="radio" name="delivery_type" t-att-checked="order.carrier_id and order.carrier_id.id == delivery.id and 'checked' or False" t-att-class="'d-none' if delivery_nb == 1 else ''"/>
+            <input t-else="" t-att-value="delivery.id" t-att-id="'delivery_%i' % delivery.id" type="radio" name="delivery_type" t-att-checked="order.carrier_id and order.carrier_id.id == delivery.id and 'checked' or False" t-att-class="'d-none' if delivery_nb == 1 else ''"/>
         </xpath>
     </template>
 </odoo>
