@@ -17,7 +17,7 @@ class WenShopSelectSiteLocation(http.Controller):
     @http.route(['/select/delivery/type'], type='http', auth="user", website=True)
     def website_select_delivery_type(self, **post):
         order = request.website.sale_get_order()
-        if post.get('site_id'):
+        if post.get('site_id') != 'false':
             site_partner = request.env['crm.team'].browse(int(post.get('site_id'))).site_id.id
         else:
             site_partner = order.partner_id.team_id.site_id
