@@ -2,11 +2,11 @@ $(document).ready(function() {
   $('#select-site').select2()
   $('#select-site-table').css('display', 'none')
 
-  const type_id = false
-  const site_id = false
+  let type_id = false
+  let site_id = false
 
   $(".o_delivery_carrier_select").click(function() {
-    const way = $(this).children('label').text()
+    let way = $(this).children('label').text()
     type_id = $(this).children('input').val()
 
     delivery_type_select_ajax(type_id, site_id)
@@ -17,7 +17,6 @@ $(document).ready(function() {
       $('#select-site-table').css('display', 'none')
       $('#select-site').val('0')
       $('.select2-selection__rendered').text('请选择')
-      console.log($('#select-site').val())
     }
   })
 
