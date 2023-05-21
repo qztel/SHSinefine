@@ -14,7 +14,7 @@ odoo_session = requests.Session()
 
 class WenShopSelectSiteLocation(http.Controller):
 
-    @http.route(['/select/delivery/type'], type='http', auth="user", website=True, methods=['POST'])
+    @http.route(['/select/delivery/type'], type='http', auth="user", website=True)
     def website_select_delivery_type(self, **post):
         order = request.website.sale_get_order()
         if post.get('site_id') != '':
