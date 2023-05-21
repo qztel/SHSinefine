@@ -29,14 +29,21 @@ $(document).ready(function() {
 
 
   function delivery_type_select_ajax(type_id, val_id) {
-    url = '/select/delivery/type'
-    let val = JSON.stringify({'type_id': type_id, 'site_id': site_id})
-    let data = {
-      value: val,
-      csrf_token: csrf_token
-    }
-    $.post(url,data,function(result){
-       console.log(result)
-    })
+    $.ajax({
+      type:"post",
+      url:'/select/delivery/type',
+      data: {
+          type_id: type_id,
+          site_id: site_id,
+          csrf_token: csrf_token
+      },
+      async:true,
+      success:function(res){
+        console.log(res)
+      },
+      error: function (xhr, textStatus, errorThrown) {
+
+      }
+  })
   }
 })
