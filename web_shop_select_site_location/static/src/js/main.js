@@ -2,8 +2,8 @@ $(document).ready(function() {
   $('#select-site').select2()
   $('#select-site-table').css('display', 'none')
 
-  let type_id = false
-  let site_id = false
+  let type_id = ''
+  let site_id = ''
   let csrf_token = $("input[name='csrf_token']").val()
 
   $(".o_delivery_carrier_select").click(function() {
