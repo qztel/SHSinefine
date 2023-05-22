@@ -6,7 +6,7 @@
     """,
     'category': 'Hidden',
     'version':'1.0',
-    'depends':['base', 'web', 'website', 'website_sale'],
+    'depends':['base', 'web', 'website', 'website_sale', 'shipping_bills'],
     'data':[
         "views/web_shop_select_site_location_view.xml",
     ],

@@ -14,15 +14,15 @@ odoo_session = requests.Session()
 
 class WenShopSelectSiteLocation(http.Controller):
 
-    @http.route(['/select/delivery/type'], type='http', auth="public", website=True)
+    @http.route(['/select/pending/sites'], type='http', auth="public", website=True)
     def website_select_delivery_type(self, **post):
         order = request.website.sale_get_order()
-        if post['site_id'] != '':
-            site_partner = request.env['crm.team'].browse(int(post['site_id'])).site_id.id
+        site = post['site_id']
+        if site != '0':
+            site_id = request.env['crm.team'].sudo().browse(int(site)).site_id.id
         else:
-            site_partner = order.partner_id.team_id.site_id
+            site_id = order.partner_id.team_id.site_id.id
         order.sudo().write({
-            'carrier_id': int(post['type_id']),
-            'partner_team_site_id':site_partner
+            'partner_team_site_id': site_id,
         })
         return '200'
