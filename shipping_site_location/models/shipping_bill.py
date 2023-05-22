@@ -42,13 +42,13 @@ class ShippingBill(models.Model):
                 self.update({
                     'sale_order_id': sale_order.id,
                     'no_change': sale_order.no_change,
-                    'frontend_trigger': 'multi_action_match,multi_action_compute',
+                    'frontend_trigger': 'multi_action_match',
                 })
             else:
                 self.update({
                     'sale_order_id': False,
                     'no_change': False,
-                    'frontend_trigger': 'multi_action_match,multi_action_compute',
+                    'frontend_trigger': 'multi_action_match',
                 })
 
     def _compute_site_location(selfs):
