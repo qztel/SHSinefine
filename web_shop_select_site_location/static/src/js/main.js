@@ -4,11 +4,13 @@ $(document).ready(function() {
 
   let csrf_token = $("input[name='csrf_token']").val()
   let site_id = 0
-  let partner_id = $("input[name='partner_site_id']").val()
-
-  $('#select-site').val(partner_id)
-  site_id = partner_id
-  delivery_type_select_ajax(site_id)
+//  let partner_id = $("input[name='partner_site_id']").val()
+//  let partner_name = $("input[name='site_name']").val()
+//
+//  $('#select-site').val(partner_id)
+//  $('.select2-selection__rendered').text(partner_name)
+//  site_id = partner_id
+//  delivery_type_select_ajax(site_id)
 
   $(".o_delivery_carrier_select").click(function() {
     let way = $(this).children('label').text()
