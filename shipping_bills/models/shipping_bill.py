@@ -181,6 +181,7 @@ class ShippingBill(models.Model):
 
             product_name = f'运费({self.shipping_factor_id.name})'
             product = self.env['product.product'].search([('name', '=', product_name)], limit=1)
+            modification_fee = self.env['product.product'].search([('name', 'ilike', '改泡')], limit=1)
             if not product:
                 raise UserError('没有找到运费')
 
@@ -202,6 +203,7 @@ class ShippingBill(models.Model):
 
             description = "计费重量（kg）：{}".format(round(self.size_weight, 1))
 
+
             self.env['sale.order.line'].create({
                 "product_id": product.id,
                 "name": description,
@@ -210,6 +212,27 @@ class ShippingBill(models.Model):
                 "price_unit": fee,
                 'order_id': so.id
             })
+
+            if self.has_changed:
+                self.env['sale.order.line'].create({
+                    "product_id": modification_fee.id,
+                    "name": "改泡费",
+                    "product_uom_qty": 1.0,
+                    "product_uom": modification_fee.uom_id.id,
+                    "price_unit": self.env['modification.fee'].search([('name', '=', '改泡费')], limit=1).price,
+                    'order_id': so.id
+                })
+
+                if self.sale_partner_id.partner_vip_type == 'svip':
+                    self.env['sale.order.line'].create({
+                        "product_id": modification_fee.id,
+                        "name": "SVIP减免改泡费",
+                        "product_uom_qty": 1.0,
+                        "product_uom": modification_fee.uom_id.id,
+                        "price_unit": -(self.env['modification.fee'].search([('name', '=', '改泡费')], limit=1).price),
+                        'order_id': so.id
+                    })
+
             so.action_confirm()
             invoice = so._create_invoices(True)
             invoice.action_post()
