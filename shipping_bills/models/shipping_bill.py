@@ -223,7 +223,7 @@ class ShippingBill(models.Model):
                     'order_id': so.id
                 })
 
-                if self.sale_partner_id.partner_vip_type == 'svip':
+                if self.sale_partner_id.partner_vip_type in ['svip', 'vip']:
                     self.env['sale.order.line'].create({
                         "product_id": modification_fee.id,
                         "name": "SVIP减免改泡费",
