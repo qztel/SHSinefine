@@ -16,13 +16,17 @@ class Controller(http.Controller):
     @http.route('/order/nocustomer', type='http', auth='public', methods=['GET'], csrf=False, website=True)
     def sale_fill_order_create_view(self, waybill_no=False):
         partner_type = request.env.user.partner_id.partner_vip_type
-        no_change = False
-        if partner_type in ['svip', 'vip']:
-            no_change = True
+
+        # 不可改泡
+        no_change = True
+
+        if partner_type == 'svip':
+            no_change = False
+
         values = {
             'user_name': request.env.user.name,
             'waybill_no': waybill_no,
-            'no_change': no_change
+            'no_change': no_change,
         }
         return request.render('zhaogu_sale.sale_portal_fill_order_create_template', values)
 
