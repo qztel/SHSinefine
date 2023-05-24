@@ -19,6 +19,7 @@
                     <group name="1">
                         <group name="11">
                             <field name="in_date" readonly="1" force_save="1"/>
+                            <field name="state" invisible="1"/>
                             <field name="name" widget="my_char_field"/>
                             <field name="picking_code" widget="my_char_field"/>
                             <field name="length"/>
