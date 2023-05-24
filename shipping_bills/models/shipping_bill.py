@@ -226,7 +226,7 @@ class ShippingBill(models.Model):
                 if self.sale_partner_id.partner_vip_type in ['svip', 'vip']:
                     self.env['sale.order.line'].create({
                         "product_id": modification_fee.id,
-                        "name": "SVIP减免改泡费",
+                        "name": f'{self.sale_partner_id.partner_vip_type}减免改泡费',
                         "product_uom_qty": 1.0,
                         "product_uom": modification_fee.uom_id.id,
                         "price_unit": -(self.env['modification.fee'].search([('name', '=', '改泡费')], limit=1).price),
