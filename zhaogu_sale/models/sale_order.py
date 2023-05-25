@@ -36,7 +36,11 @@ class SaleOrder(models.Model):
 
         if sale_category_name == '其他（请注明）':
             product = self.env['product.product'].create({
-                'name': sale_category_name + '-' + self.env['ir.sequence'].next_by_code('product.category.determined')
+                'name': sale_category_name + '-' + self.env['ir.sequence'].next_by_code('product.category.determined'),
+                'sale_category_id': sale_category_id,
+                'material_id': material_id,
+                'type': 'product',
+                'list_price': 0.0,
             })
 
             self.write({'order_line': [(0, 0, {
