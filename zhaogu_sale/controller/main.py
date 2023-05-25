@@ -159,10 +159,6 @@ class Controller(http.Controller):
                                     qty, shipping_no=None,**kwargs):
         sale_order = request.env['sale.order'].sudo().browse(int(order_id))
         try:
-            if product_other:
-                request.env['product.category.determined'].sudo().create({
-                    'name': product_other
-                })
             sale_order.portal_update_line(sale_category_id, product_brand_id, product_material_id, qty, order_line_id, product_other)
         except UserError as e:
             params = {
