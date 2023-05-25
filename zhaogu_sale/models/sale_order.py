@@ -58,7 +58,6 @@ class SaleOrder(models.Model):
                 'material_quality_id': int(material_id),
                 'product_brand_id': int(brand_id),
                 'order_id': self.id,
-                'product_id': product.id,
                 'order_line_id': sale_order_line.id
             })
         else:

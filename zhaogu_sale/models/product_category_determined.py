@@ -12,6 +12,6 @@ class ProductCategoryDetermined(models.Model):
     product_brand_id = fields.Many2one('product.brand', string="品牌")
     order_id = fields.Many2one('sale.order', string="订单号")
     order_line_id = fields.Many2one('sale.order.line', string="订单行")
-    product_id = fields.Many2one('product.product', string="对应产品")
+    product_id = fields.Many2one('product.product', string="对应产品", related="order_line_id.product_id")
 
 
