@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="website_shop_select_site_page" inherit_id="website_sale_delivery.payment_delivery" name="Website Select Site">
-        <t t-set="order" t-value="request.website.sale_get_order()"/>
+        <xpath expr="//div[@id='delivery_carrier']" position="after">
+            <t t-set="order" t-value="request.website.sale_get_order()"/>
             <input type="hidden" name="partner_site_id" t-att-value="order.partner_id.team_id.id"/>
             <script crossorigin="anonymous" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" src="https://lib.baomitu.com/jquery/3.6.0/jquery.js"/>
             <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
@@ -33,5 +34,6 @@
                     </div>
                 </div>
             </div>
+        </xpath>
     </template>
 </odoo>
