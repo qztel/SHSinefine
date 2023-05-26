@@ -25,4 +25,9 @@ class WenShopSelectSiteLocation(http.Controller):
         order.sudo().write({
             'partner_team_site_id': site_id,
         })
-        return '200'
+        res = {
+            'state': '200',
+            'site_address': site_id.contact_address
+        }
+
+        return json.dumps(res)
