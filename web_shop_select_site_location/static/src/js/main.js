@@ -37,7 +37,11 @@ $(document).ready(function() {
       async:true,
       success:function(res){
         val = JSON.parse(res)
-        $('#site-address').text(val['site_address'])
+        if (val['site_address']) {
+          $('#site-address').text(val['site_address'])
+        } else {
+          $('#site-address').text('')
+        }
       },
       error: function (xhr, textStatus, errorThrown) {
         console.log(xhr, textStatus, errorThrown)
