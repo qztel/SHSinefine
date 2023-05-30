@@ -42,7 +42,7 @@ class PointPayment(http.Controller):
                     'wallet_transaction_id': wallet_id.id
                 })
 
-                invoice_id.update({
+                invoice_order.update({
                     'wallet_added': True,
                     'invoice_line_ids': [(0, 0, {
                             'name': 'Wallet Used' + ' ' + str(invoice_order.amount_total),
