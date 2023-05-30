@@ -41,7 +41,7 @@
                             <td><span t-field="wallet.partner_id.name"/></td>
                             <td><span t-field="wallet.sale_order_id.name"/></td>
                             <td>
-                                <span t-field="'{0:,.2f}'.format(wallet.amount)"/>
+                                <span t-esc="'{0:,.2f}'.format(wallet.amount)"/>
                             </td>
                             <td><span t-field="wallet.currency_id.name"/>
                             </td>

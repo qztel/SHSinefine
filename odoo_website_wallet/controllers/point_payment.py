@@ -20,7 +20,7 @@ class PointPayment(http.Controller):
         invoice_id = post['invoice_id']
         invoice_order = request.env['account.move'].browse(int(invoice_id))
 
-        all_shipping_bill = request.env['shipping.bill']
+        all_shipping_bill = request.env['shipping.bill'].search([('sale_partner_id', '=', partner.id)])
         shipping_order = all_shipping_bill.filtered(lambda l: invoice_order.id in l.sale_invoice_ids.ids)
 
         point_balance = partner.wallet_balance
