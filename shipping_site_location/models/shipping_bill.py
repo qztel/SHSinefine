@@ -14,6 +14,8 @@ class ShippingBill(models.Model):
     site_location_id = fields.Many2one('site.location', string="仓库位置", compute="_compute_site_location")
     remark = fields.Char('备注')
     is_no_header = fields.Boolean('无头件')
+    return_cost = fields.Float('退运成本')
+    return_note = fields.Char('退运备注')
 
     def _inverse_frontend_trigger(selfs):
         for self in selfs.filtered(lambda s: s.frontend_trigger):
