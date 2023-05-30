@@ -83,4 +83,10 @@
         <field name="view_id" ref="modification_fee_view_tree"/>
     </record>
 
+    <record model="ir.actions.act_window" id="action_shipping_large_parcel">
+        <field name="name">大包裹</field>
+        <field name="res_model">shipping.large.parcel</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
 </odoo>

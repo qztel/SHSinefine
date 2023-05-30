@@ -45,10 +45,17 @@ class ShippingBill(models.Model):
     in_date = fields.Date(string='入库日期', tracking=True, default=fields.Date.today)
     name = fields.Char('运单号', copy=False, tracking=True, )
     picking_code = fields.Char('仓库取件码', copy=False, tracking=True, )
+
     length = fields.Float(string='长度(cm)', tracking=True, )
     width = fields.Float(string='宽度(cm)', tracking=True, )
     height = fields.Float(string='高度(cm)', tracking=True, )
     actual_weight = fields.Float('实际重量(KG)', digits=(10, 1), tracking=True, )
+
+    origin_length = fields.Float(string='长度(cm)')
+    origin_width = fields.Float(string='宽度(cm)')
+    origin_height = fields.Float(string='高度(cm)')
+    origin_actual_weight = fields.Float('实际重量(KG)', digits=(10, 1))
+
     uom_id = fields.Many2one('uom.uom', '单位')
     shipping_factor_id = fields.Many2one('shipping.factor', '线路敏感性', required=True, tracking=True, )
 
@@ -129,6 +136,9 @@ class ShippingBill(models.Model):
     def create(cls, values):
         if not values.get('ref'):
             values['ref'] = cls.env['ir.sequence'].next_by_code('shipping.bill')
+
+        for _field in ['length','width','height','actual_weight',]:
+            values[f'origin_{_field}'] = values.get(_field, False)
         return super().create(values)
 
     # 匹配预报单
@@ -151,17 +161,25 @@ class ShippingBill(models.Model):
 
             if self.no_change:
                 size_weight = self.actual_weight
+                first_weight = shipping_factor.vip_first_weight
+                first_total_price = shipping_factor.vip_first_total_price
+                next_price_unit = shipping_factor.vip_next_price_unit
+                next_weight_to_ceil = shipping_factor.vip_next_weight_to_ceil
             else:
                 size_weight = max([self.actual_weight, volume / shipping_factor.factor])
+                first_weight = shipping_factor.first_weight
+                first_total_price = shipping_factor.first_total_price
+                next_price_unit = shipping_factor.next_price_unit
+                next_weight_to_ceil = shipping_factor.next_weight_to_ceil
 
             weight = math.ceil(
-                size_weight * 1000 / shipping_factor.next_weight_to_ceil) * shipping_factor.next_weight_to_ceil
+                size_weight * 1000 / next_weight_to_ceil) * next_weight_to_ceil
 
-            if weight < shipping_factor.first_weight:
-                fee = shipping_factor.first_total_price
+            if weight < first_weight:
+                fee = first_total_price
             else:
-                fee = shipping_factor.first_total_price + (
-                        weight - shipping_factor.first_weight) / shipping_factor.next_weight_to_ceil * shipping_factor.next_price_unit
+                fee = first_total_price + (
+                        weight - first_weight) / next_weight_to_ceil * next_price_unit
 
             self.write({'fee': fee, 'currency_id': shipping_factor.currency_id.id, 'state': 'valued',
                         'size_weight': weight / 1000, })
