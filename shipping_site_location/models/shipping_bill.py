@@ -56,7 +56,7 @@ class ShippingBill(models.Model):
 
     def _compute_site_location(selfs):
         for self in selfs:
-            if self.sale_order_id:
+            if self.sale_order_id and self.sale_order_id.partner_team_site_id:
                 if self.shipping_factor_id and self.sale_site_id:
                     site_location_id = self.env['site.location'].search([
                         ('factor_id', '=', self.shipping_factor_id.id),
