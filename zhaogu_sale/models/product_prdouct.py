@@ -11,7 +11,8 @@ class ProductProduct(models.Model):
 
     @api.model
     def model_find_from_portal(cls, sale_category_id, material_id):
-        self = cls.search([('sale_category_id','=',sale_category_id),('material_id','=',material_id),],limit=1)
+        self = cls.search([('sale_category_id','=',sale_category_id),
+                           ('material_id','=',material_id),('active', '=', True)],limit=1)
         if not self:
             sale_category = cls.env['product.sale.category'].browse(sale_category_id)
             material = cls.env['product.material'].browse(material_id)
