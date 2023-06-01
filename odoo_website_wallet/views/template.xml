@@ -146,7 +146,7 @@
 				<h4>点卡</h4>
 				<hr class="mt-1 mb-0"/>
 				<div><strong>余额：</strong><span t-esc="request.env.user.partner_id.wallet_balance"/></div>
-				<div><a role="button" target="_blank" href="/wallet" class="btn btn-link"><span class="fa fa-diamond" data-original-title="" title="" aria-describedby="tooltip888648"/> 点卡充值</a></div>
+				<div><a role="button" target="_blank" href="/add/wallet/balance" class="btn btn-link"><span class="fa fa-diamond" data-original-title="" title="" aria-describedby="tooltip888648"/> 点卡充值</a></div>
 				<div><a role="button" target="_blank" href="/my/wallet-transactions" class="btn btn-link"><span class="fa fa-money"/> 消费记录</a></div>
 			</div>
         </xpath>

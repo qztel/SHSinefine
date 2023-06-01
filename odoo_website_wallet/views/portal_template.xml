@@ -14,60 +14,62 @@
     </template>
     
     <template id="portal_my_wallet_transactions" name="My Wallet Transactions">
-      <t t-call="portal.portal_layout">
-        <br/>
-        <h3 class="text-center">点卡交易
-        </h3>
-        <br/>
-        <t t-if="not wallets">
-            <p>您的帐户当前没有点卡交易。</p>
-        </t>
-        <div t-if="wallets" class="panel panel-default">
-            <div class="table-responsive"><table class="table table-hover o_portal_my_doc_table">
-                <thead>
-                  <tr class="active">
-                      <th>交易类型</th>
-                      <th>用户</th>
-                      <th>销售单号</th>
-                      <th>金额</th>
-                      <th>币种</th>
-                    </tr>
-                </thead>
-                <t t-foreach="wallets" t-as="wallet">
-                    <t t-if='wallet.wallet_type == "debit"'>
-                        <tr style='background-color:rgba(255, 0, 24, 0.37);'>
-                            <td> <span t-field="wallet.wallet_type"/>
-                            </td>
-                            <td><span t-field="wallet.partner_id.name"/></td>
-                            <td><span t-field="wallet.sale_order_id.name"/></td>
-                            <td>
-                                <span t-esc="'{0:,.2f}'.format(wallet.amount)"/>
-                            </td>
-                            <td><span t-field="wallet.currency_id.name"/>
-                            </td>
-                        </tr>
-                    </t>
-                    
-                    <t t-if='wallet.wallet_type == "credit"'>
-                        <tr style='background-color:rgba(0, 128, 0, 0.34);'>
-                            <td> <span t-field="wallet.wallet_type"/>
-                            </td>
-                            <td><span t-field="wallet.partner_id.name"/></td>
-                            <td><span t-field="wallet.sale_order_id.name"/></td>
-                            <td>
-                                <span t-field="wallet.amount"/>
-                            </td>
-                            <td><span t-field="wallet.currency_id.name"/>
-                            </td>
-                        </tr>
-                    </t>
-                </t>
-            </table></div>
-            <div t-if="pager" class="o_portal_pager text-center">
-              <t t-call="portal.pager"/>
-            </div>
-        </div>
-      </t>
+      <t t-call="website.layout">
+		  <script crossorigin="anonymous" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" src="https://lib.baomitu.com/jquery/3.6.0/jquery.js"/>
+		  <script src="/odoo_website_wallet/static/src/js/portal_template.js"/>
+          <script src="/odoo_website_wallet/static/src/css/portal_template.css"/>
+			<t t-set="additional_title">点卡充值</t>
+			<div class="wrap">
+				<div class="container o_website_payment">
+					<h1>点卡充值</h1>
+					<div id="wrap">
+						<div class="container oe_website_sale">
+							<form t-attf-action="/wallet/balance/confirm" method="post">
+								<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+								<div class="row">
+									<div class="col-md-8 oe_cart">
+										<div class="row">
+											<div class="col-md-12">
+												<div t-if="error_message" class="alert alert-danger">
+													<t t-foreach="error_message" t-as="err">
+														<t t-esc="err"/>
+														<br/>
+													</t>
+												</div>
+											</div>
+											<div t-attf-class="form-group col-12 s_website_form_field mt32 #{error and 'name' in error and 'has-error' or ''}">
+												<div class="row s_col_no_resize s_col_no_bgcolor">
+													<label class="col-md-2 col-sm-3 control-label" for="name">
+														<span class="s_website_form_label_content">金额:</span>
+													</label>
+													<div class="col-sm">
+														<!--<input type="number" class="form-control s_website_form_input" name="amount" required="True"/>-->
+														<input id="price-200" class="price-input" type="radio" required="required" name="amount" value="200"/>
+														<input id="price-500" class="price-input" type="radio" required="required" name="amount" value="500"/>
+														<input id="price-1000" class="price-input" type="radio" required="required" name="amount" value="1000"/>
+														<div class="row">
+														  <div class="select-click select-not-enabled"><label class="price-label" for="price-200">200元</label></div>
+														  <div class="select-click select-not-enabled"><label class="price-label" for="price-500">500元</label></div>
+														  <div class="select-click select-not-enabled"><label class="price-label" for="price-1000">1000元</label></div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group col-12">
+												<div class="row s_col_no_resize s_col_no_bgcolor">
+													<div class="col-md-2 col-sm-3 control-label"/>
+													<button type="submit" id="add_wallet_payment" class="btn btn-primary ml16">充值</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</t>
     </template>
     
     
