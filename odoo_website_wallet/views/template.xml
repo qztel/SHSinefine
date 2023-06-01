@@ -154,60 +154,62 @@
 
 	<template id="add_wallet_balance">
 		<t t-call="website.layout">
-			<script crossorigin="anonymous" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" src="https://lib.baomitu.com/jquery/3.6.0/jquery.js"/>
-			<script src="/odoo_website_wallet/static/src/js/portal_template.js"/>
-			<link rel="stylesheet" href="/odoo_website_wallet/static/src/css/portal_template.css"/>
-			<t t-set="additional_title">点卡充值</t>
-			<div class="wrap">
-				<div class="container o_website_payment">
-					<h1>点卡充值</h1>
-					<div id="wrap">
-						<div class="container oe_website_sale">
-							<form t-attf-action="/wallet/balance/confirm" method="post">
-								<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-								<div class="row">
-									<div class="col-md-8 oe_cart">
-										<div class="row">
-											<div class="col-md-12">
-												<div t-if="error_message" class="alert alert-danger">
-													<t t-foreach="error_message" t-as="err">
-														<t t-esc="err"/>
-														<br/>
-													</t>
+			<li t-if="invoice.payment_state != 'paid'">
+				<script crossorigin="anonymous" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" src="https://lib.baomitu.com/jquery/3.6.0/jquery.js"/>
+				<script src="/odoo_website_wallet/static/src/js/portal_template.js"/>
+				<link rel="stylesheet" href="/odoo_website_wallet/static/src/css/portal_template.css"/>
+				<t t-set="additional_title">点卡充值</t>
+				<div class="wrap">
+					<div class="container o_website_payment">
+						<h1>点卡充值</h1>
+						<div id="wrap">
+							<div class="container oe_website_sale">
+								<form t-attf-action="/wallet/balance/confirm" method="post">
+									<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+									<div class="row">
+										<div class="col-md-8 oe_cart">
+											<div class="row">
+												<div class="col-md-12">
+													<div t-if="error_message" class="alert alert-danger">
+														<t t-foreach="error_message" t-as="err">
+															<t t-esc="err"/>
+															<br/>
+														</t>
+													</div>
 												</div>
-											</div>
-											<div t-attf-class="form-group col-12 s_website_form_field mt32 #{error and 'name' in error and 'has-error' or ''}">
-												<div class="row s_col_no_resize s_col_no_bgcolor">
-													<label class="col-md-2 col-sm-3 control-label" for="name">
-														<span class="s_website_form_label_content">金额:</span>
-													</label>
-													<div class="col-sm">
-														<!--<input type="number" class="form-control s_website_form_input" name="amount" required="True"/>-->
-														<input id="price-200" class="price-input" type="radio" required="required" name="amount" value="200"/>
-														<input id="price-500" class="price-input" type="radio" required="required" name="amount" value="500"/>
-														<input id="price-1000" class="price-input" type="radio" required="required" name="amount" value="1000"/>
-														<div class="row">
-															<div class="select-click select-not-enabled"><label class="price-label" for="price-200">200元</label></div>
-															<div class="select-click select-not-enabled"><label class="price-label" for="price-500">500元</label></div>
-															<div class="select-click select-not-enabled"><label class="price-label" for="price-1000">1000元</label></div>
+												<div t-attf-class="form-group col-12 s_website_form_field mt32 #{error and 'name' in error and 'has-error' or ''}">
+													<div class="row s_col_no_resize s_col_no_bgcolor">
+														<label class="col-md-2 col-sm-3 control-label" for="name">
+															<span class="s_website_form_label_content">金额:</span>
+														</label>
+														<div class="col-sm">
+															<!--<input type="number" class="form-control s_website_form_input" name="amount" required="True"/>-->
+															<input id="price-200" class="price-input" type="radio" required="required" name="amount" value="200"/>
+															<input id="price-500" class="price-input" type="radio" required="required" name="amount" value="500"/>
+															<input id="price-1000" class="price-input" type="radio" required="required" name="amount" value="1000"/>
+															<div class="row">
+																<div class="select-click select-not-enabled"><label class="price-label" for="price-200">200元</label></div>
+																<div class="select-click select-not-enabled"><label class="price-label" for="price-500">500元</label></div>
+																<div class="select-click select-not-enabled"><label class="price-label" for="price-1000">1000元</label></div>
+															</div>
 														</div>
 													</div>
 												</div>
-											</div>
-											<div class="form-group col-12">
-												<div class="row s_col_no_resize s_col_no_bgcolor">
-													<div class="col-md-2 col-sm-3 control-label"/>
-													<button type="submit" id="add_wallet_payment" class="btn btn-primary ml16">充值</button>
+												<div class="form-group col-12">
+													<div class="row s_col_no_resize s_col_no_bgcolor">
+														<div class="col-md-2 col-sm-3 control-label"/>
+														<button type="submit" id="add_wallet_payment" class="btn btn-primary ml16">充值</button>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</form>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</li>
 		</t>
 	</template>
 
