@@ -68,89 +68,89 @@
 
     <template id="sale_portal_fill_order_create_template" name="包裹预报">
         <t t-call="website.layout">
-            <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-            <link rel="stylesheet" type="text/css" href="/zhaogu_sale/static/src/css/fill_order.css"/>
-            <script crossorigin="anonymous" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" src="https://lib.baomitu.com/jquery/3.6.0/jquery.js"/>
-            <script>
-                $(document).ready(function() {
-                $('.clear-button').click(function() {
-                $('#pop-up-permission').css('display','none')
-                })
-                $('#sub-mit-btn').click(function() {
-                let data = {
-                csrf_token: $('#csrf-token').val(),
-                }
-                $.ajax({
-                type:"post",
-                url: '/user/detail/edit',
-                data: data,
-                async:true,
-                success:function(res){
-                if (res == '200') {
-                $('#sub-mit-btn-ok').click()
-                } else {
-                $('#pop-up-permission').css('display', 'block')
-                }
-                },
-                error: function (xhr, textStatus, errorThrown) {
+	    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	    <link rel="stylesheet" type="text/css" href="/zhaogu_sale/static/src/css/fill_order.css"/>
+	    <script crossorigin="anonymous" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" src="https://lib.baomitu.com/jquery/3.6.0/jquery.js"/>
+	    <script>
+			$(document).ready(function() {
+			$('.clear-button').click(function() {
+			  $('#pop-up-permission').css('display','none')
+			})
+				$('#sub-mit-btn').click(function() {
+					let data = {
+					      csrf_token: $('#csrf-token').val(),
+					    }
+					$.ajax({
+						  type:"post",
+						  url: '/user/detail/edit',
+						  data: data,
+						  async:true,
+						  success:function(res){
+						    if (res == '200') {
+			      $('#sub-mit-btn-ok').click()
+						   } else {
+						     $('#pop-up-permission').css('display', 'block')
+						   }
+						  },
+						  error: function (xhr, textStatus, errorThrown) {
 
-                }
-                })
-                })
-                })
-            </script>
-            <div style="height:60px;line-height:60px;text-align:center;">
-                <span style="font-weight:bold;font-size:24px;">包裹预报</span>
-            </div>
-            <form action="/sale/create/documents" method="post">
-                <input type="hidden" name="csrf_token" id="csrf-token" t-att-value="request.csrf_token()"/>
-                <div class="form-group field-name" style="margin:10px 0;">
-                    <label for="name">用户</label>
-                    <span class="s_website_form_mark" style="color:#1A67FF;"> *</span>
-                    <div class="row">
-                        <div class="col-12">
-                            <input type="text" name="user_name" t-att-value="user_name" disabled="disabled" class="form-control-input form-control-sm"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group field-name" style="margin:10px 0;">
-                    <label for="name">运单号:</label>
-                    <span class="s_website_form_mark" style="color:#1A67FF;"> *</span>
-                    <div class="row">
-                        <div class="col-12">
-                            <input type="text" name="shipping_no" t-att-value="waybill_no" t-att-readonly="waybill_no" class="form-control-input form-control-sm"/>
-                        </div>
-                    </div>
-                </div>
-                <label class=""><input name="no_change" type="checkbox" t-att-disabled="no_change" value="1"/> VIP预存客户专用免泡</label>
-                <t t-if="error_message">
-                    <div>
-                        <span>错误信息:</span>
-                        <input type="text" name="error_message" t-att-value="error_message" disabled="disabled" class="form-control-input form-control-sm"/>
-                    </div>
-                </t>
-                <div style="display:flex;">
-                    <input type="button" id="sub-mit-btn" class="sub-butn" value="提交"/>
-                    <input style="display:none;" type="submit" id="sub-mit-btn-ok" class="sub-butn" value="提交"/>
-                </div>
-            </form>
-            <div id="pop-up-permission" class="pop-up-permission">
-                <div class="pop-header">提示</div>
-                <div class="pop-body">
-                    为了防止您的包裹丢失，<span style ="color:#E3170D">请准确填写住址</span>。
-                </div>
-                <div class="pop-footer row">
-                    <div class="col-6">
-                        <a href="/my/account?redirect=https://trans.sinefine.store/order/nocustomer">
-                            <span class="submit-button">确认</span>
-                        </a>
-                    </div>
-                    <div class="col-6">
-                        <span class="submit-button clear-button">取消</span>
-                    </div>
-                </div>
-            </div>
-        </t>
+						  }
+						  })
+				})
+			})
+		    </script>
+	    <div style="height:60px;line-height:60px;text-align:center;">
+	      <span style="font-weight:bold;font-size:24px;">包裹预报</span>
+	    </div>
+	    <form action="/sale/create/documents" method="post">
+	      <input type="hidden" name="csrf_token" id="csrf-token" t-att-value="request.csrf_token()"/>
+	      <div class="form-group field-name" style="margin:10px 0;">
+		<label for="name">用户</label>
+		<span class="s_website_form_mark" style="color:#1A67FF;"> *</span>
+		<div class="row">
+		  <div class="col-12">
+		    <input type="text" name="user_name" t-att-value="user_name" disabled="disabled" class="form-control-input form-control-sm"/>
+		  </div>
+		</div>
+	      </div>
+	      <div class="form-group field-name" style="margin:10px 0;">
+		<label for="name">运单号:</label>
+		<span class="s_website_form_mark" style="color:#1A67FF;"> *</span>
+		<div class="row">
+		  <div class="col-12">
+		    <input type="text" name="shipping_no" t-att-value="waybill_no" t-att-readonly="waybill_no" class="form-control-input form-control-sm"/>
+		  </div>
+		</div>
+	      </div>
+	      <label class=""><input name="no_change" type="checkbox" t-att-disabled="no_change" value="1"/> SVIP预存客户专用免泡</label>
+	      <t t-if="error_message">
+		<div>
+		  <span>错误信息:</span>
+		  <input type="text" name="error_message" t-att-value="error_message" disabled="disabled" class="form-control-input form-control-sm"/>
+		</div>
+	      </t>
+	      <div style="display:flex;">
+		<input type="button" id="sub-mit-btn" class="sub-butn" value="提交"/>
+		<input style="display:none;" type="submit" id="sub-mit-btn-ok" class="sub-butn" value="提交"/>
+	      </div>
+	    </form>
+	    <div id="pop-up-permission" class="pop-up-permission">
+	      <div class="pop-header">提示</div>
+	      <div class="pop-body">
+			为了防止您的包裹丢失，<span style="color:#E3170D">请准确填写住址</span>。
+		      </div>
+	      <div class="pop-footer row">
+		<div class="col-6">
+		  <a href="/my/account?redirect=https://trans.sinefine.store/order/nocustomer">
+		    <span class="submit-button">确认</span>
+		  </a>
+		</div>
+		<div class="col-6">
+		  <span class="submit-button clear-button">取消</span>
+		</div>
+	      </div>
+	    </div>
+	  </t>
     </template>
 
     <template id="sale_portal_fill_order_line_template" name="添加明细行">
