@@ -121,6 +121,41 @@ class ShippingBill(models.Model):
                         },
                     }
                     self.wx_information_send(token, data)
+                elif vals.get('state') == 'signed':
+                    data = {
+                        "touser": openid,
+                        "template_id": "39cHpuIfpSc6Vi_iclQ1Mg2skCg_-jC3nFNnuVXK4A4",
+                        "url": "",
+                        "miniprogram": {},
+                        "client_msg_id": "",
+                        "data": {
+                            "first": {
+                                "value": "您好，您的包裹已签收。",
+                                "color": "#173177"
+                            },
+                            "keyword1": {
+                                "value": self.sale_site_id.name,
+                                "color": "#173177"
+                            },
+                            "keyword2": {
+                                "value": self.picking_code,
+                                "color": "#173177"
+                            },
+                            "keyword3": {
+                                "value": self.sale_partner_id.name,
+                                "color": "#173177"
+                            },
+                            "keyword4": {
+                                "value": str('{0:,.2f}'.format(self.fee)),
+                                "color": "#173177"
+                            },
+                            "remark": {
+                                "value": "点击查看详情。",
+                                "color": "#173177"
+                            },
+                        },
+                    }
+                    self.wx_information_send(token, data)
         return result
 
     def multi_action_compute(selfs):
