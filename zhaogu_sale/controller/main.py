@@ -35,6 +35,10 @@ class Controller(http.Controller):
     def sale_fill_order_create(self, **kwargs):
         user = request.env.user
         partner_type = request.env.user.partner_id.partner_vip_type
+        if kwargs.get('select_site') != '0':
+            partner_team_site_id = int(kwargs.get('select_site'))
+        else:
+            partner_team_site_id = user.partner_id.team_id.site_id.id
         no_change = False
         if partner_type in ['svip', 'vip']:
             no_change = True
@@ -55,7 +59,7 @@ class Controller(http.Controller):
                 'partner_id': user.partner_id.id,
                 'shipping_no': kwargs.get('shipping_no'),
                 'no_change': bool(kwargs.get('no_change')),
-                'partner_team_site_id': user.partner_id.team_id.site_id.id
+                'partner_team_site_id': partner_team_site_id
             }
             sale_order = request.env['sale.order'].sudo().create(values)
             return request.redirect('/sale/portal/fill_order?order_id=' + str(sale_order.id))

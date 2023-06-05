@@ -2,16 +2,16 @@ $(document).ready(function() {
     $('#select-site').select2()
     $('#select-site-table').css('display', 'none')
 
-    $(".o_delivery_carrier_select").click(function() {
-    let way = $(this).children('label').text()
-
-    if (way == '站点自提'){
-      $('#select-site-table').css('display', 'block')
-    } else {
-      $('#select-site-table').css('display', 'none')
-      $('#select-site').val('0')
-      $('.select2-selection__rendered').text('请选择')
-    }
+    $("#site-select-input").click(function() {
+      let way = $(this).is(":checked")
+      console.log(way)
+      if (way){
+        $('#select-site-table').css('display', 'block')
+      } else {
+        $('#select-site-table').css('display', 'none')
+        $('#select-site').val('0')
+        $('.select2-selection__rendered').text('请选择')
+      }
     })
 
 
