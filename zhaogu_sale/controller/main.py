@@ -16,7 +16,7 @@ class Controller(http.Controller):
     @http.route('/order/nocustomer', type='http', auth='public', methods=['GET'], csrf=False, website=True)
     def sale_fill_order_create_view(self, waybill_no=False):
         partner_type = request.env.user.partner_id.partner_vip_type
-
+        partner = request.env.user.partner_id
         # 不可改泡
         no_change = True
 
@@ -27,6 +27,7 @@ class Controller(http.Controller):
             'user_name': request.env.user.name,
             'waybill_no': waybill_no,
             'no_change': no_change,
+            'partner': partner
         }
         return request.render('zhaogu_sale.sale_portal_fill_order_create_template', values)
 
