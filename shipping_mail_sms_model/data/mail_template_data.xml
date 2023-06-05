@@ -5,7 +5,6 @@
             <field name="name">站点确认包裹到达</field>
             <field name="model_id" ref="shipping_bills.model_shipping_bill"/>
             <field name="subject">站点确认包裹到达</field>
-            <field name="email_from">"{{ object.company_id.name }}" &lt;{{ (object.company_id.email or user.email) }}&gt;</field>
             <field name="email_to">{{ object.sale_partner_id.email }}</field>
             <field name="body_html" type="html">
                 <div>test</div>
@@ -18,7 +17,6 @@
             <field name="name">客户签收包裹</field>
             <field name="model_id" ref="shipping_bills.model_shipping_bill"/>
             <field name="subject">您的包裹已签收</field>
-            <field name="email_from">"{{ object.company_id.name }}" &lt;{{ (object.company_id.email or user.email) }}&gt;</field>
             <field name="email_to">{{ object.sale_partner_id.email }}</field>
             <field name="body_html" type="html">
                 <div>test</div>
