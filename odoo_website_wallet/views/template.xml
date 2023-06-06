@@ -130,7 +130,7 @@
 						</div>
 						<div class="balance-sufficient">
 							<button type="submit" style="flex:1;" class="sub-butn">确定</button>
-							<button type="button" style="flex:1;" id="clear-point" class="sub-butn">取消</button>
+							<button type="button" style="flex:1;" class="sub-butn clear-x">取消</button>
 						</div>
 						<div>
 							<button type="button" class="not-balance" readonly="readonly">余额不足</button>
