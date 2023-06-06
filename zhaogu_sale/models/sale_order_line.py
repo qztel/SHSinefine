@@ -16,8 +16,7 @@ class SaleOrderLine(models.Model):
     def name_get(self):
         result = []
         for record in self:
-            name = '%s - %s' % (so_line.order_id.name, so_line.product_id.name)
+            name = '%s - %s' % (record.order_id.name, record.product_id.name)
             result.append((record.id, name))
         return result
-
 
