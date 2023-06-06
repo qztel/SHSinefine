@@ -13,4 +13,11 @@ class SaleOrderLine(models.Model):
 
     brand_is_in_blacklist = fields.Boolean('黑名单',related='product_brand_id.is_in_blacklist',store=True)
 
+    def name_get(self):
+        result = []
+        for record in self:
+            name = '%s - %s' % (so_line.order_id.name, so_line.product_id.name)
+            result.append((record.id, name))
+        return result
+
 
