@@ -13,5 +13,6 @@ class ProductCategoryDetermined(models.Model):
     order_id = fields.Many2one('sale.order', string="订单号")
     order_line_id = fields.Many2one('sale.order.line', string="订单行")
     product_id = fields.Many2one('product.product', string="对应产品", related="order_line_id.product_id")
+    active = fields.Boolean(default=True)
 
 

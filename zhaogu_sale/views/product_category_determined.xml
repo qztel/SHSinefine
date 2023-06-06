@@ -5,7 +5,7 @@
         <field name="name">product_category_determined_tree</field>
         <field name="model">product.category.determined</field>
         <field name="arch" type="xml">
-            <tree editable="bottom">
+            <tree>
                 <field name="name"/>
                 <field name="product_id"/>
                 <field name="order_id"/>
