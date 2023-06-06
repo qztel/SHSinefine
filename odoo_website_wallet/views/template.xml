@@ -82,7 +82,7 @@
 	<!--		</xpath>    -->
 	<!--	</template>-->
 
-	<template id="account_wallet_on_payment_page" website_id="3" inherit_id="account.portal_invoice_page" active="True" customize_show="True" name="Account Website Wallet">
+	<template id="account_wallet_on_payment_page" inherit_id="account.portal_invoice_page" active="True" customize_show="True" name="Account Website Wallet">
 		<xpath expr="//li[@t-if='invoice.invoice_user_id']" position="before">
 			<script src="https://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"/>
 			<script type="text/javascript" src="/odoo_website_wallet/static/src/js/account_payment.js"/>
@@ -140,7 +140,7 @@
 	</template>
 
 <!--	个人中心点卡展示-->
-	<template id="oscg_my_portal_view" website_id="3" inherit_id="portal.portal_layout" name="Oscg My Portal View" priority="40">
+	<template id="oscg_my_portal_view" inherit_id="portal.portal_layout" name="Oscg My Portal View" priority="40">
 		<xpath expr="//div[@class='o_portal_my_details']" position="after">
 			<br/>
 			<div class="o_portal_my_details">
@@ -154,7 +154,7 @@
 	</template>
 
 <!--	海淘购物车移除继续购物按钮-->
-	<template id="point_cart_inherit" website_id="3" inherit_id="website_sale.cart" name="Shopping Cart" priority="1">
+	<template id="point_cart_inherit" inherit_id="website_sale.cart" name="Shopping Cart" priority="1">
 		<xpath expr="//a[@class='btn btn-secondary mb32 d-none d-xl-inline-block']" position="replace"></xpath>
 	</template>
 

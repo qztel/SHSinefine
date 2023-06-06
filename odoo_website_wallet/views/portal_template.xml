@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     
-    <template id="portal_my_home_wallet_transaction" website_id="3" name="Portal My Home : Wallet Transactions" inherit_id="portal.portal_my_home" priority="40">
+    <template id="portal_my_home_wallet_transaction" name="Portal My Home : Wallet Transactions" inherit_id="portal.portal_my_home" priority="40">
         <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
             <div class="o_portal_docs list-group">
                 <t t-if="wallet_count" t-call="portal.portal_docs_entry">
@@ -13,7 +13,7 @@
         </xpath>
     </template>
     
-    <template id="portal_my_wallet_transactions" website_id="3" name="My Wallet Transactions">
+    <template id="portal_my_wallet_transactions" name="My Wallet Transactions">
       <t t-call="portal.portal_layout">
         <br/>
         <h3 class="text-center">点卡交易
@@ -69,7 +69,5 @@
         </div>
       </t>
     </template>
-    
-    
-    
+
 </odoo>
