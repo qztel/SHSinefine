@@ -122,7 +122,7 @@
 					<div class="point-payment-detail">
 						<div>
 							<div>使用点卡支付</div>
-							<span class="clear-x">×</span>
+							<span class="clear-x clear-point">×</span>
 						</div>
 						<div>
 							<div>点卡余额：<span t-esc="website.currency_id.symbol"/><span t-esc="partner_wallet"/></div>
@@ -130,7 +130,7 @@
 						</div>
 						<div class="balance-sufficient">
 							<button type="submit" style="flex:1;" class="sub-butn">确定</button>
-							<button type="button" style="flex:1;" class="sub-butn clear-x">取消</button>
+							<button type="button" style="flex:1;" class="sub-butn clear-point">取消</button>
 						</div>
 						<div>
 							<button type="button" class="not-balance" readonly="readonly">余额不足</button>
