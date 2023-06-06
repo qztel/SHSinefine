@@ -16,7 +16,7 @@ $(document).ready(function() {
         $('.not-balance').css('display', 'block')
       }
     })
-    $('.clear-point').click(function () {
+    $('.clear-point-inpt').click(function () {
       $('#point-payment-form').css('display','none')
     })
 });

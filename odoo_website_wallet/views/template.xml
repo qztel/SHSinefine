@@ -103,7 +103,7 @@
 							<div>
 								<b>您当前的点卡余额为</b>
 								<span style="font-size: 18px; color: #337AB7; font-weight: 700;" t-esc="website.currency_id.symbol"/>
-								<span style="font-size: 18px; color: #337AB7; font-weight: 700;" t-esc="partner_wallet"/>
+								<span style="font-size: 18px; color: #337AB7; font-weight: 700;" t-esc="'{:,.2f}'.format(partner_wallet)"/>
 							</div>
 						</div>
 					</t>
@@ -111,37 +111,36 @@
 						您的点卡余额不足：
 						<div>
 							<span style="font-size: 18px; color: #337AB7; font-weight: 700;" t-esc="website.currency_id.symbol"/>
-							<span style="font-size: 18px; color: #337AB7; font-weight: 700;" t-esc="partner_wallet or 0.0"/>
+							<span style="font-size: 18px; color: #337AB7; font-weight: 700;" t-esc="'{:,.2f}'.format(partner_wallet) or 0.0"/>
 						</div>
 					</t>
 				</div>
-
-				<form action="/shpping/point/payment" method="post" id="point-payment-form">
-					<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-					<input type="hidden" id="invoice-id" name="invoice_id" t-att-value="invoice.id"/>
-					<div class="point-payment-detail">
-						<div>
-							<div>使用点卡支付</div>
-							<span class="clear-x clear-point">×</span>
-						</div>
-						<div>
-							<div>点卡余额：<span t-esc="website.currency_id.symbol"/><span t-esc="partner_wallet"/></div>
-							<div>本次扣款金额：<span t-esc="invoice.amount_total"/></div>
-						</div>
-						<div class="balance-sufficient">
-							<button type="submit" style="flex:1;" class="sub-butn">确定</button>
-							<button type="button" style="flex:1;" class="sub-butn clear-point">取消</button>
-						</div>
-						<div>
-							<button type="button" class="not-balance" readonly="readonly">余额不足</button>
-						</div>
-					</div>
-				</form>
 			</li>
+			<form action="/shpping/point/payment" method="post" id="point-payment-form">
+				<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+				<input type="hidden" id="invoice-id" name="invoice_id" t-att-value="invoice.id"/>
+				<div class="point-payment-detail">
+					<div>
+						<div>使用点卡支付</div>
+						<span class="clear-x clear-point-inpt">×</span>
+					</div>
+					<div>
+						<div>点卡余额：<span t-esc="website.currency_id.symbol"/><span t-esc="'{:,.2f}'.format(partner_wallet)"/></div>
+						<div>本次扣款金额：<span t-esc="'{:,.2f}'.format(invoice.amount_total)"/></div>
+					</div>
+					<div class="balance-sufficient">
+						<button type="submit" style="flex:1;" class="sub-butn">确定</button>
+						<button type="button" style="flex:1;" class="sub-butn clear-point-inpt">取消</button>
+					</div>
+					<div>
+						<button type="button" class="not-balance" readonly="readonly">余额不足</button>
+					</div>
+				</div>
+			</form>
 		</xpath>
 	</template>
 
-<!--	个人中心点卡展示-->
+	<!--	个人中心点卡展示-->
 	<template id="oscg_my_portal_view" inherit_id="portal.portal_layout" name="Oscg My Portal View" priority="40">
 		<xpath expr="//div[@class='o_portal_my_details']" position="after">
 			<br/>
