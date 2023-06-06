@@ -84,58 +84,60 @@
 
 	<template id="account_wallet_on_payment_page" inherit_id="account.portal_invoice_page" active="True" customize_show="True" name="Account Website Wallet">
 		<xpath expr="//li[@t-if='invoice.invoice_user_id']" position="before">
-			<script src="https://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"/>
-			<script type="text/javascript" src="/odoo_website_wallet/static/src/js/account_payment.js"/>
-			<link rel="stylesheet" href="/odoo_website_wallet/static/src/css/account_payment.css"/>
-			<t t-set="partner_wallet" t-value="website.sudo().get_wallet_balance(website.currency_id)"/>
-			<input type="hidden" name="invoice_total" t-att-value="invoice.amount_total"/>
-			<input type="hidden" name="point_balance" t-att-value="partner_wallet"/>
+			<li t-if="invoice.payment_state != 'paid'">
+				<script src="https://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"/>
+				<script type="text/javascript" src="/odoo_website_wallet/static/src/js/account_payment.js"/>
+				<link rel="stylesheet" href="/odoo_website_wallet/static/src/css/account_payment.css"/>
+				<t t-set="partner_wallet" t-value="website.sudo().get_wallet_balance(website.currency_id)"/>
+				<input type="hidden" name="invoice_total" t-att-value="invoice.amount_total"/>
+				<input type="hidden" name="point_balance" t-att-value="partner_wallet"/>
 
-			<div class="col-lg-12 point-payment" style="padding: 1.25rem">
-				<t t-if="request.env.user.partner_id.wallet_balance &gt; 0">
-					<div class="website-wallet" t-if="website.wallet_product_id">
-						<div class="checkbox">
-							<div style="font-size: 16px;">
-								<label style="font-size: 18px; cursor:auto; color: #337AB7; padding-left: 0px;cursor:pointer;"> 使用电子点卡支付 </label>
+				<div class="col-lg-12 point-payment" style="padding: 1.25rem">
+					<t t-if="request.env.user.partner_id.wallet_balance &gt; 0">
+						<div class="website-wallet" t-if="website.wallet_product_id">
+							<div class="checkbox">
+								<div style="font-size: 16px;">
+									<label style="font-size: 18px; cursor:auto; color: #337AB7; padding-left: 0px;cursor:pointer;"> 使用电子点卡支付 </label>
+								</div>
+							</div>
+							<div>
+								<b>您当前的点卡余额为</b>
+								<span style="font-size: 18px; color: #337AB7; font-weight: 700;" t-esc="website.currency_id.symbol"/>
+								<span style="font-size: 18px; color: #337AB7; font-weight: 700;" t-esc="partner_wallet"/>
 							</div>
 						</div>
+					</t>
+					<t t-else="">
+						您的点卡余额不足：
 						<div>
-							<b>您当前的点卡余额为</b>
 							<span style="font-size: 18px; color: #337AB7; font-weight: 700;" t-esc="website.currency_id.symbol"/>
-							<span style="font-size: 18px; color: #337AB7; font-weight: 700;" t-esc="partner_wallet"/>
+							<span style="font-size: 18px; color: #337AB7; font-weight: 700;" t-esc="partner_wallet or 0.0"/>
+						</div>
+					</t>
+				</div>
+
+				<form action="/shpping/point/payment" method="post" id="point-payment-form">
+					<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+					<input type="hidden" id="invoice-id" name="invoice_id" t-att-value="invoice.id"/>
+					<div class="point-payment-detail">
+						<div>
+							<div>使用点卡支付</div>
+							<span class="clear-x">×</span>
+						</div>
+						<div>
+							<div>点卡余额：<span t-esc="website.currency_id.symbol"/><span t-esc="partner_wallet"/></div>
+							<div>本次扣款金额：<span t-esc="invoice.amount_total"/></div>
+						</div>
+						<div class="balance-sufficient">
+							<button type="submit" style="flex:1;" class="sub-butn">确定</button>
+							<button type="button" style="flex:1;" id="clear-point" class="sub-butn">取消</button>
+						</div>
+						<div>
+							<button type="button" class="not-balance" readonly="readonly">余额不足</button>
 						</div>
 					</div>
-				</t>
-				<t t-else="">
-					您的点卡余额不足：
-					<div>
-						<span style="font-size: 18px; color: #337AB7; font-weight: 700;" t-esc="website.currency_id.symbol"/>
-						<span style="font-size: 18px; color: #337AB7; font-weight: 700;" t-esc="partner_wallet or 0.0"/>
-					</div>
-				</t>
-			</div>
-
-			<form action="/shpping/point/payment" method="post" id="point-payment-form">
-				<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-				<input type="hidden" id="invoice-id" name="invoice_id" t-att-value="invoice.id"/>
-				<div class="point-payment-detail">
-					<div>
-						<div>使用点卡支付</div>
-						<span class="clear-x">×</span>
-					</div>
-					<div>
-						<div>点卡余额：<span t-esc="website.currency_id.symbol"/><span t-esc="partner_wallet"/></div>
-						<div>本次扣款金额：<span t-esc="invoice.amount_total"/></div>
-					</div>
-					<div class="balance-sufficient">
-						<button type="submit" style="flex:1;" class="sub-butn">确定</button>
-						<button type="button" style="flex:1;" id="clear-point" class="sub-butn">取消</button>
-					</div>
-					<div>
-						<button type="button" class="not-balance" readonly="readonly">余额不足</button>
-					</div>
-				</div>
-			</form>
+				</form>
+			</li>
 		</xpath>
 	</template>
 
@@ -160,64 +162,62 @@
 
 	<template id="add_wallet_balance">
 		<t t-call="website.layout">
-			<li t-if="invoice.payment_state != 'paid'">
-				<script crossorigin="anonymous" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" src="https://lib.baomitu.com/jquery/3.6.0/jquery.js"/>
-				<script src="/odoo_website_wallet/static/src/js/portal_template.js"/>
-				<link rel="stylesheet" href="/odoo_website_wallet/static/src/css/portal_template.css"/>
-				<t t-set="additional_title">点卡充值</t>
-				<div class="wrap">
-					<div class="container o_website_payment">
-						<h1>点卡充值</h1>
-						<div id="wrap">
-							<div class="container oe_website_sale">
-								<form t-attf-action="/wallet/balance/confirm" method="post">
-									<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-									<div class="row">
-										<div class="col-md-8 oe_cart">
-											<div class="row">
-												<div class="col-md-12">
-													<div t-if="error_message" class="alert alert-danger">
-														<t t-foreach="error_message" t-as="err">
-															<t t-esc="err"/>
-															<br/>
-														</t>
-													</div>
+			<script crossorigin="anonymous" integrity="sha512-n/4gHW3atM3QqRcbCn6ewmpxcLAHGaDjpEBu4xZd47N0W2oQ+6q7oc3PXstrJYXcbNU1OHdQ1T7pAP+gi5Yu8g==" src="https://lib.baomitu.com/jquery/3.6.0/jquery.js"/>
+			<script src="/odoo_website_wallet/static/src/js/portal_template.js"/>
+			<link rel="stylesheet" href="/odoo_website_wallet/static/src/css/portal_template.css"/>
+			<t t-set="additional_title">点卡充值</t>
+			<div class="wrap">
+				<div class="container o_website_payment">
+					<h1>点卡充值</h1>
+					<div id="wrap">
+						<div class="container oe_website_sale">
+							<form t-attf-action="/wallet/balance/confirm" method="post">
+								<input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+								<div class="row">
+									<div class="col-md-8 oe_cart">
+										<div class="row">
+											<div class="col-md-12">
+												<div t-if="error_message" class="alert alert-danger">
+													<t t-foreach="error_message" t-as="err">
+														<t t-esc="err"/>
+														<br/>
+													</t>
 												</div>
-												<div t-attf-class="form-group col-12 s_website_form_field mt32 #{error and 'name' in error and 'has-error' or ''}">
-													<div class="row s_col_no_resize s_col_no_bgcolor">
-														<label class="col-md-2 col-sm-3 control-label" for="name">
-															<span class="s_website_form_label_content">金额:</span>
-														</label>
-														<div class="col-sm">
-															<!--<input type="number" class="form-control s_website_form_input" name="amount" required="True"/>-->
-															<input id="price-100" class="price-input" type="radio" required="required" name="amount" value="100"/>
-															<input id="price-200" class="price-input" type="radio" required="required" name="amount" value="200"/>
-															<input id="price-500" class="price-input" type="radio" required="required" name="amount" value="500"/>
-															<input id="price-1000" class="price-input" type="radio" required="required" name="amount" value="1000"/>
-															<div class="row">
-																<div class="select-click select-not-enabled"><label class="price-label" for="price-100">100</label></div>
-																<div class="select-click select-not-enabled"><label class="price-label" for="price-200">200</label></div>
-																<div class="select-click select-not-enabled"><label class="price-label" for="price-500">500</label></div>
-																<div class="select-click select-not-enabled"><label class="price-label" for="price-1000">1000</label></div>
-															</div>
+											</div>
+											<div t-attf-class="form-group col-12 s_website_form_field mt32 #{error and 'name' in error and 'has-error' or ''}">
+												<div class="row s_col_no_resize s_col_no_bgcolor">
+													<label class="col-md-2 col-sm-3 control-label" for="name">
+														<span class="s_website_form_label_content">金额:</span>
+													</label>
+													<div class="col-sm">
+														<!--<input type="number" class="form-control s_website_form_input" name="amount" required="True"/>-->
+														<input id="price-100" class="price-input" type="radio" required="required" name="amount" value="100"/>
+														<input id="price-200" class="price-input" type="radio" required="required" name="amount" value="200"/>
+														<input id="price-500" class="price-input" type="radio" required="required" name="amount" value="500"/>
+														<input id="price-1000" class="price-input" type="radio" required="required" name="amount" value="1000"/>
+														<div class="row">
+															<div class="select-click select-not-enabled"><label class="price-label" for="price-100">100</label></div>
+															<div class="select-click select-not-enabled"><label class="price-label" for="price-200">200</label></div>
+															<div class="select-click select-not-enabled"><label class="price-label" for="price-500">500</label></div>
+															<div class="select-click select-not-enabled"><label class="price-label" for="price-1000">1000</label></div>
 														</div>
 													</div>
 												</div>
-												<div class="form-group col-12">
-													<div class="row s_col_no_resize s_col_no_bgcolor">
-														<div class="col-md-2 col-sm-3 control-label"/>
-														<button type="submit" id="add_wallet_payment" class="btn btn-primary ml16">充值</button>
-													</div>
+											</div>
+											<div class="form-group col-12">
+												<div class="row s_col_no_resize s_col_no_bgcolor">
+													<div class="col-md-2 col-sm-3 control-label"/>
+													<button type="submit" id="add_wallet_payment" class="btn btn-primary ml16">充值</button>
 												</div>
 											</div>
 										</div>
 									</div>
-								</form>
-							</div>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
-			</li>
+			</div>
 		</t>
 	</template>
 
