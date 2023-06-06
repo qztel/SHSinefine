@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="shopping_cart_lines_view" name="Shopping Cart Lines View" inherit_id="website_sale.cart_lines" priority="40">
+    <template id="shopping_cart_lines_view" website_id="3" name="Shopping Cart Lines View" inherit_id="website_sale.cart_lines" priority="40">
         <xpath expr="//td[@class='text-center td-qty']" position="replace">
             <td class="text-center td-qty">
                 <div class="css_quantity input-group mx-auto justify-content-center">
