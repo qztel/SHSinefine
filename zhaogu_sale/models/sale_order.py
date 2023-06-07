@@ -39,7 +39,7 @@ class SaleOrder(models.Model):
                 'name': sale_category_name + '-' + self.env['ir.sequence'].next_by_code('product.category.determined'),
                 'sale_category_id': sale_category_id,
                 'material_id': material_id,
-                'type': 'product',
+                'type': 'service',
                 'list_price': 0.0,
             })
 
