@@ -188,16 +188,19 @@
 														<span class="s_website_form_label_content">金额:</span>
 													</label>
 													<div class="col-sm">
-														<!--<input type="number" class="form-control s_website_form_input" name="amount" required="True"/>-->
-														<input id="price-100" class="price-input" type="radio" required="required" name="amount" value="100"/>
-														<input id="price-200" class="price-input" type="radio" required="required" name="amount" value="200"/>
-														<input id="price-500" class="price-input" type="radio" required="required" name="amount" value="500"/>
-														<input id="price-1000" class="price-input" type="radio" required="required" name="amount" value="1000"/>
+														<div>
+															<!--<input id="price-00001" class="price-input" type="radio" required="required" name="amount" value="0.01"/>-->
+															<input id="price-100" class="price-input" type="radio" required="required" name="amount" value="100"/>
+															<input id="price-200" class="price-input" type="radio" required="required" name="amount" value="200"/>
+															<input id="price-500" class="price-input" type="radio" required="required" name="amount" value="500"/>
+															<input id="price-1000" class="price-input" type="radio" required="required" name="amount" value="1000"/>
+														</div>
 														<div class="row">
-															<div class="select-click select-not-enabled"><label class="price-label" for="price-100">100</label></div>
-															<div class="select-click select-not-enabled"><label class="price-label" for="price-200">200</label></div>
-															<div class="select-click select-not-enabled"><label class="price-label" for="price-500">500</label></div>
-															<div class="select-click select-not-enabled"><label class="price-label" for="price-1000">1000</label></div>
+															<!--<div class="select-click select-not-enabled"><label class="price-label" for="price-00001">0.01</label></div>-->
+															<div class="select-click select-not-enabled marg-bt"><label class="price-label" for="price-100">100</label></div>
+															<div class="select-click select-not-enabled marg-bt"><label class="price-label" for="price-200">200</label></div>
+															<div class="select-click select-not-enabled marg-bt"><label class="price-label" for="price-500">500</label></div>
+															<div class="select-click select-not-enabled marg-bt"><label class="price-label" for="price-1000">1000</label></div>
 														</div>
 													</div>
 												</div>
