@@ -75,7 +75,7 @@ class PortalAccount(CustomerPortal):
 
     @http.route(['/my', '/my/home'], type='http', auth="user", website=True)
     def home(self, **kw):
-        if request.session.uid and request.session.uid != 2 and is_valid_email(request.env['res.users'].browse(request.session.uid).login):
+        if request.session.uid and request.session.uid != 2 and not is_valid_email(request.env['res.users'].browse(request.session.uid).login):
             return  request.redirect('/bind/email', 301, False) 
         return super().home(**kw)
 
@@ -154,7 +154,7 @@ class Home(main.Home):
     def web_client(self, s_action=None, **kw):
         #import pdb;pdb.set_trace()
         
-        if request.session.uid and request.session.uid != 2 and is_valid_email(request.env['res.users'].browse(request.session.uid).login):
+        if request.session.uid and request.session.uid != 2 and not is_valid_email(request.env['res.users'].browse(request.session.uid).login):
             return  request.redirect('/bind/email', 301, False) 
         return super().web_client(s_action, **kw)
 
