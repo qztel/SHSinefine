@@ -198,7 +198,7 @@ class Controller(http.Controller):
         values = {'sale_orders':sale_orders}
         return request.render('zhaogu_sale.sale_portal_orders_template', values)
 
-    @route(['/my/account'], type='http', auth='user', website=True)
+    @http.route(['/my/account'], type='http', auth='user', website=True)
     def account(self, redirect=None, **post):
         user = request.env.user
         if post and request.httprequest.method == 'POST':
