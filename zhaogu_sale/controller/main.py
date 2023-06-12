@@ -5,7 +5,7 @@ import logging
 
 from odoo import http
 from odoo.exceptions import UserError
-from odoo.http import request
+from odoo.http import request, content_disposition, Controller, route
 from werkzeug.urls import url_join, url_encode
 
 _logger = logging.getLogger(__name__)
