@@ -198,7 +198,7 @@ class Controller(http.Controller):
         values = {'sale_orders':sale_orders}
         return request.render('zhaogu_sale.sale_portal_orders_template', values)
 
-class CustomerPortal(Controller):
+class CustomerPortal(http.Controller):
 
     @http.route()
     def account(self, redirect=None, **post):
