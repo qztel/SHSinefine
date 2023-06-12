@@ -224,6 +224,7 @@ class CustomerPortal(http.Controller):
                         values[field] = False
                 values.update({'zip': values.pop('zipcode', '')})
                 partner.sudo().write(values)
+                _logger.info("test测试数据")
                 user.sudo().write({
                     'email': post['email']
                 })
