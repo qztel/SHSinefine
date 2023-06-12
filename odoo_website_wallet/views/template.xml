@@ -157,6 +157,7 @@
 <!--	海淘购物车移除继续购物按钮-->
 	<template id="point_cart_inherit" inherit_id="website_sale.cart" name="Shopping Cart" priority="1">
 		<xpath expr="//a[@class='btn btn-secondary mb32 d-none d-xl-inline-block']" position="replace"></xpath>
+		<xpath expr="//a[@class='btn btn-secondary mb32']" position="replace"/>
 	</template>
 
 	<template id="add_wallet_balance">
