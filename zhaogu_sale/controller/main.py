@@ -226,7 +226,8 @@ class CustomerPortal2(CustomerPortal):
                 values.update({'zip': values.pop('zipcode', '')})
                 partner.sudo().write(values)
                 user.sudo().write({
-                    'email': post['email']
+                    'email': post['email'],
+                    'login': post['email']
                 })
                 if redirect:
                     return request.redirect(redirect)
