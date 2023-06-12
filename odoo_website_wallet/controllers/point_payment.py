@@ -47,8 +47,8 @@ class PointPayment(http.Controller):
                     'invoice_line_ids': [(0, 0, {
                             'name': 'Wallet Used' + ' ' + str(invoice_order.amount_total),
                             'analytic_account_id': shipping_sale.analytic_account_id.id or False,
-                            'price_unit': -invoice_order.wallet_used,
-                            'price_subtotal' : -invoice_order.wallet_used,
+                            'price_unit': -shipping_sale.wallet_used,
+                            'price_subtotal' : -shipping_sale.wallet_used,
                             'quantity': 1,
                             'discount': 0,
                         })],
