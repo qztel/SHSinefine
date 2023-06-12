@@ -7,6 +7,7 @@ from odoo import http
 from odoo.exceptions import UserError
 from odoo.http import request, content_disposition, Controller, route
 from werkzeug.urls import url_join, url_encode
+from odoo.addons.portal.controllers.portal import CustomerPortal, pager as portal_pager
 
 _logger = logging.getLogger(__name__)
 
@@ -198,10 +199,10 @@ class Controller(http.Controller):
         values = {'sale_orders':sale_orders}
         return request.render('zhaogu_sale.sale_portal_orders_template', values)
 
-class CustomerPortal(http.Controller):
+class CustomerPortal2(CustomerPortal):
 
-    @route(['/my/account'], type='http', auth='user', website=True)
-    def account_t(self, redirect=None, **post):
+    @http.route()
+    def account(self, redirect=None, **post):
         values = self._prepare_portal_layout_values()
         partner = request.env.user.partner_id
         user = request.env.user
@@ -224,7 +225,6 @@ class CustomerPortal(http.Controller):
                         values[field] = False
                 values.update({'zip': values.pop('zipcode', '')})
                 partner.sudo().write(values)
-                _logger.info("test测试数据")
                 user.sudo().write({
                     'email': post['email']
                 })
