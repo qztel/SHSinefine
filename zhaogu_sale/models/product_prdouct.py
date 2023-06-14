@@ -28,10 +28,10 @@ class ProductProduct(models.Model):
     @api.constrains('sale_category_id','material_id',)
     def check_sale_category__material_unique(selfs):
         for self in selfs:
-            if self.sale_category_id and self.material_id:
+            if self.sale_category_id and self.material_id and self.sale_category_id.name != '其他（请注明）':
                 product_list = selfs.search_count([('sale_category_id','=',self.sale_category_id.id),
                     ('material_id','=',self.material_id.id),('id','!=',self.id), ('active', '=', True)])
-                if product_list and not product_list.filtered(lambda l: '其他（请注明）' in l.name):
+                if product_list:
                     raise UserError(f'产品中 {self.sale_category_id.name} + {self.material_id.name}'\
                         f' 已存在')
 
