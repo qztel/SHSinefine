@@ -190,11 +190,11 @@ class Controller(http.Controller):
                                                                    ('partner_id', '=', partner)]).filtered(lambda l:l.shipping_bill_id.sale_invoice_payment_state == '支付未完成')
         elif ytype == 'valued':
             sale_orders = request.env['sale.order'].sudo().search(
-                [('state', '=', 'valued'), ('partner_id', '=', partner)]).filtered(
+                [('shipping_bill_state', '=', 'valued'), ('partner_id', '=', partner)]).filtered(
                 lambda l: l.shipping_bill_id.sale_invoice_payment_state == '支付已完成')
         elif ytype == 'arrived':
             sale_orders = request.env['sale.order'].sudo().search(
-                [('state', 'in', ['arrived', 'transported']), ('partner_id', '=', partner)])
+                [('shipping_bill_state', 'in', ['arrived', 'transported']), ('partner_id', '=', partner)])
         else:
             return request.redirect(request.httprequest.referrer)
 
