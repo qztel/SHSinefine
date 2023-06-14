@@ -29,8 +29,9 @@ class ProductProduct(models.Model):
     def check_sale_category__material_unique(selfs):
         for self in selfs:
             if self.sale_category_id and self.material_id:
-                if selfs.search_count([('sale_category_id','=',self.sale_category_id.id),
-                    ('material_id','=',self.material_id.id),('id','!=',self.id), ('active', '=', True)]):
+                product_list = selfs.search_count([('sale_category_id','=',self.sale_category_id.id),
+                    ('material_id','=',self.material_id.id),('id','!=',self.id), ('active', '=', True)])
+                if product_list and product_list.filtered(lambda l: '其他（请注明）' not in l.name):
                     raise UserError(f'产品中 {self.sale_category_id.name} + {self.material_id.name}'\
                         f' 已存在')
 
