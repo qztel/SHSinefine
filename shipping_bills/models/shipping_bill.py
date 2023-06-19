@@ -104,11 +104,11 @@ class ShippingBill(models.Model):
 
     # 已退运
     has_bought_safety = fields.Boolean('购买保险')
-    no_change = fields.Boolean('免泡')
+    no_change = fields.Boolean('免泡', tracking=True)
     can_change = fields.Boolean('可改泡')
     has_changed = fields.Boolean('申请改泡')
     is_changed_done = fields.Boolean('改泡完成')
-    has_returned = fields.Boolean('退运')
+    has_returned = fields.Boolean('退运', tracking=True)
     return_address = fields.Char('退运地址')
     return_contact = fields.Char('退运收件人')
     return_mobile = fields.Char('退运联系电话')
