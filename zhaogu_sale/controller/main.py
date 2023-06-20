@@ -60,7 +60,8 @@ class Controller(http.Controller):
                 'partner_id': user.partner_id.id,
                 'shipping_no': kwargs.get('shipping_no'),
                 'no_change': bool(kwargs.get('no_change')),
-                'partner_team_site_id': partner_team_site_id
+                'partner_team_site_id': partner_team_site_id,
+                'website': request.website.id
             }
             sale_order = request.env['sale.order'].sudo().create(values)
             return request.redirect('/sale/portal/fill_order?order_id=' + str(sale_order.id))
