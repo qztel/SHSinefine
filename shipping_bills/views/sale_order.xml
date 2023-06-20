@@ -28,6 +28,7 @@
                 <field name="shipping_no"/>
                 <field name="name"/>
                 <field name="create_date"/>
+                <field name="company_id" invisible="1"/>
             </tree>
         </field>
     </record>
