@@ -129,7 +129,7 @@ class ShippingBill(models.Model):
     signed_date = fields.Date('客户签收日期')
 
     # 丢弃
-    disposable = fields.Boolean('可丢弃')
+    disposable = fields.Boolean('可丢弃', tracking=True)
     discarded_date = fields.Date('丢弃日期')
 
     @api.model

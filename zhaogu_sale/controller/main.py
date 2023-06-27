@@ -46,7 +46,7 @@ class Controller(http.Controller):
         sale_shipping_no = request.env['sale.order'].sudo().search(
             [('shipping_no', '=', kwargs.get('shipping_no'))])
 
-        if sale_shipping_no and sale_shipping_no.partner_id.user_ids.id != user.id:
+        if sale_shipping_no and sale_shipping_no.partner_id.id != user.partner_id.id:
             values = {
                 'user_name': request.env.user.name,
                 'error_message': '运单号已存在。',
@@ -55,6 +55,13 @@ class Controller(http.Controller):
             return request.render('zhaogu_sale.sale_portal_fill_order_create_template', values)
         elif sale_shipping_no and sale_shipping_no.partner_id.user_ids.id == user.id and not sale_shipping_no.shipping_bill_id:
             return request.redirect('/sale/portal/fill_order?order_id=' + str(sale_shipping_no.id))
+        elif sale_shipping_no and sale_shipping_no.partner_id.user_ids.id == user.id and sale_shipping_no.shipping_bill_id:
+            values = {
+                'user_name': request.env.user.name,
+                'error_message': '运单号已存在。',
+                'no_change': no_change,
+            }
+            return request.render('zhaogu_sale.sale_portal_fill_order_create_template', values)
         else:
             values = {
                 'partner_id': user.partner_id.id,
