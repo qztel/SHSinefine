@@ -22,27 +22,27 @@ $(document).ready(function() {
     })
 
     function delivery_type_select_ajax(site_id) {
-    $.ajax({
-      type:"post",
-      url:'/select/pending/sites',
-      data: {
-          site_id: site_id,
-          csrf_token: csrf_token
-      },
-      async:true,
-      success:function(res){
-        val = JSON.parse(res)
-        if (val['site_address']) {
-          $('#site-address').text(val['site_address'])
-        } else {
-          $('#site-address').text('')
-        }
-      },
-      error: function (xhr, textStatus, errorThrown) {
-        console.log(xhr, textStatus, errorThrown)
-      }
-    })
-  }
+      $.ajax({
+          type:"post",
+          url:'/select/pending/sites',
+          data: {
+              site_id: site_id,
+              csrf_token: csrf_token
+          },
+          async:true,
+          success:function(res){
+            val = JSON.parse(res)
+            if (val['site_address']) {
+              $('#site-address').text(val['site_address'])
+            } else {
+              $('#site-address').text('')
+            }
+          },
+          error: function (xhr, textStatus, errorThrown) {
+            console.log(xhr, textStatus, errorThrown)
+          }
+        })
+    }
 
 
     $('.clear-button').click(function() {
