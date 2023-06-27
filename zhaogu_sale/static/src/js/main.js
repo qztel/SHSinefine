@@ -7,8 +7,10 @@ $(document).ready(function() {
 
     $("#site-select-input").click(function() {
       let way = $(this).is(":checked")
+      site_id = $('#select-site').val()
       if (way){
         $('#select-site-table').css('display', 'block')
+        delivery_type_select_ajax(site_id)
       } else {
         $('#select-site-table').css('display', 'none')
         $('#select-site').val('0')
