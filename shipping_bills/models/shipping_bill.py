@@ -70,7 +70,12 @@ class ShippingBill(models.Model):
     # 已计费
     size_weight = fields.Float('计费重量', tracking=True, )
     fee = fields.Float(string='费用', tracking=True, )
-    currency_id = fields.Many2one('res.currency', '币种', tracking=True, )
+    currency_id = fields.Many2one('res.currency', '币种', tracking=True)
+
+    def _compute_size_weight(selfs):
+        for self in selfs:
+            self.volume_weight = (self.length * self.width * self.height) / self.shipping_factor_id.factor
+    volume_weight = fields.Float('体积重', compute="_compute_size_weight")
 
     # 已付款
     sale_invoice_ids = fields.Many2many('account.move', string='结算单号', related='sale_order_id.invoice_ids')

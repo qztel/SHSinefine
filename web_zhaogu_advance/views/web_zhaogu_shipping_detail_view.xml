@@ -69,6 +69,10 @@
                   <div class="col-6">实重（kg）：</div>
                   <div class="col-6 text-right"><span t-field="shipping.actual_weight"/></div>
                 </div>
+                <div class="row">
+                  <div class="col-6">体积重（kg）：</div>
+                  <div class="col-6 text-right"><span t-field="shipping.volume_weight"/></div>
+                </div>
                 <!--<div class="row">-->
                 <!--  <div class="col-6">体积：</div>-->
                 <!--  <div class="col-6 text-right"><span t-esc="shipping.length * shipping.width * shipping.height"/></div>-->
