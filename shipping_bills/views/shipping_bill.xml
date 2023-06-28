@@ -172,7 +172,7 @@
         <field name="model">shipping.bill</field>
         <field name="priority">20</field>
         <field name="arch" type="xml">
-            <tree editable="bottom">
+            <tree editable="bottom"  default_order="create_date asc">
                 <field name="ref" readonly="1"/>
                 <field name="in_date" readonly="1"/>
                 <field name="name" readonly="1"/>

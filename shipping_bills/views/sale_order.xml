@@ -23,7 +23,7 @@
         <field name="name">to_be_stored_sale_order_form_view</field>
         <field name="model">sale.order</field>
         <field name="arch" type="xml">
-            <tree editable="bottom" edit="0" create="0" delete="0" default_order="create_date asc">
+            <tree editable="bottom" edit="0" create="0" delete="0">
                 <field name="name" string="参考ID"/>
                 <field name="partner_id"/>
                 <field name="shipping_no"/>

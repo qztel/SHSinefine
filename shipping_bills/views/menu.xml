@@ -49,7 +49,7 @@
               parent="root_menu_shipping_bills" sequence="6"/>
 
     <menuitem id="menu_shipping_bills_out" name="待出库订单" parent="menu_shipping_bills_order_inquiry"
-          action="action_sale_order_to_be_stored" sequence="1"/>
+          action="action_shipping_bill_out" sequence="1"/>
 
     <menuitem id="menu_shipping_bills_arrived" name="站点订单" parent="menu_shipping_bills_order_inquiry"
               action="action_shipping_bill_arrived" sequence="2"/>
