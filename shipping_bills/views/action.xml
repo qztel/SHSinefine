@@ -47,7 +47,7 @@
         <field name="res_model">shipping.bill</field>
         <field name="view_mode">tree</field>
         <field name="view_id" ref="shipping_bill_tree_out"/>
-        <field name="domain">[('sale_invoice_payment_state','=','支付已完成')]</field>
+        <field name="domain">[('sale_invoice_payment_state','=','支付已完成'), ('state', '=', 'valued')]</field>
     </record>
 
     <record id="action_shipping_bill_arrived" model="ir.actions.act_window">
